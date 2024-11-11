@@ -1,6 +1,6 @@
 package bean;
 
-public class Appointment implements java.io.Serializable{
+public class AnualRecord implements java.io.Serializable{
 
 	private String anual_record_id;
 	private String class_id;
