@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>教職員情報変更完了</title>
+    <title>保護者情報変更完了</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -55,12 +55,12 @@
 </head>
 <body>
     <div class="update-container">
-        <h2>教職員情報が更新されました！</h2>
-        <p>教職員情報の更新が正常に完了しました。</p>
+        <h2>保護者情報が更新されました！</h2>
+        <p>保護者情報の更新が正常に完了しました。</p>
         <p>変更内容をご確認ください。</p>
         <div class="btn-container">
             <!-- 戻るボタンを中央に配置 -->
-            <a href="Teacher_update.jsp" class="btn">戻る</a>
+            <a href="Guardian_update.jsp" class="btn">戻る</a>
         </div>
     </div>
 </body>
