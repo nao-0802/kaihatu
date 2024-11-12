@@ -28,7 +28,7 @@ public class LoginExecuteAction_guardian extends Action {
 		password = req.getParameter("password");//パスワード
 
 		//DBからデータ取得 3
-		guardian = GuardianDao.login(id, password);//教員データ取得
+		guardian = guardianDao.login(id, password);//教員データ取得
 
 		//ビジネスロジック 4
 		//DBへデータ保存 5
@@ -39,7 +39,7 @@ public class LoginExecuteAction_guardian extends Action {
 			// セッション情報を取得
 			HttpSession session = req.getSession(true);
 			// 認証済みフラグを立てる
-			guardian.setAuthenticated(true);
+			//guardian.setAuthenticated(true);
 			// セッションにログイン情報を保存
 			session.setAttribute("user", guardian);
 

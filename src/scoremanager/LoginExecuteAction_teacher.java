@@ -28,7 +28,7 @@ public class LoginExecuteAction_teacher extends Action {
 		password = req.getParameter("password");//パスワード
 
 		//DBからデータ取得 3
-		teacher = TeacherDao.login(id, password);//教員データ取得
+		teacher = teacherDao.login(id, password);//教員データ取得
 
 		//ビジネスロジック 4
 		//DBへデータ保存 5
@@ -39,7 +39,7 @@ public class LoginExecuteAction_teacher extends Action {
 			// セッション情報を取得
 			HttpSession session = req.getSession(true);
 			// 認証済みフラグを立てる
-			teacher.setAuthenticated(true);
+			//teacher.setAuthenticated(true);
 			// セッションにログイン情報を保存
 			session.setAttribute("user", teacher);
 

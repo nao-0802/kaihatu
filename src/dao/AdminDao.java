@@ -44,9 +44,9 @@ public class AdminDao extends Dao {
         return admin;
     }
     public Admin login(String admin_id, String password) throws Exception {
-		// 教員クラスのインスタンスを取得
+		// 管理者クラスのインスタンスを取得
 		Admin admin = get(admin_id);
-		// 教員がnullまたはパスワードが一致しない場合
+		// 管理者がnullまたはパスワードが一致しない場合
 		if (admin == null || !admin.getPassword().equals(password)) {
 			return null;
 		}

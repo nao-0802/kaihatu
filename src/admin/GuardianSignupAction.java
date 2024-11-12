@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns={"/admin/admin_create"})
-public class AdminSignupAction extends HttpServlet {
+@WebServlet(urlPatterns={"/admin/guardian_create"})
+public class GuardianSignupAction extends HttpServlet {
 	public void doGet (
 			HttpServletRequest request, HttpServletResponse response
 		) throws ServletException, IOException {
 
-		request.getRequestDispatcher("/admin/admin_create.jsp")
+		request.getRequestDispatcher("/admin/guardian_create.jsp")
 			.forward(request, response);
 	}
 }
