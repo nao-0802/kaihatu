@@ -2,10 +2,10 @@
 <!-- %@include file="../header.html" % -->
 
 <form action="Login.action" method="post">
-<h2 name="Title">すてっぷのーと</h2>
-<p>ID:<input type="text" name="Id"></p>
-<p>パスワード:<input type="password" name="Password"></p>
-<button name="Login_btn">ログイン</button>
+<h2 name="title">すてっぷのーと</h2>
+<p>ID:<input type="text" name="teacherID"></p>
+<p>パスワード:<input type="password" name="password"></p>
+<button name="login_btn">ログイン</button>
 </form>
 
 <!--  %@include file="../footer.html" % -->

@@ -1,7 +1,9 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<!--  %@include file="../header.html" % -->
+<!-- %@include file="../header.html" % -->
+<!-- %@include file="akaunto.jsp" % -->
 
-${admin.adminID}
-<!-- 管理者名 -->
+<a href="">教職員</a>
+<br>
+<a href="">保護者</a>
 
-<!--  %@include file="../footer.html" % -->
+<!-- %@include file="../footer.html" % -->
