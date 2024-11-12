@@ -24,11 +24,11 @@ public class LoginExecuteAction_admin extends Action {
 		Admin admin = null;
 
 		//リクエストパラメータ―の取得 2
-		id = req.getParameter("adminID");// 管理者ID
+		id = req.getParameter("admin_id");// 管理者ID
 		password = req.getParameter("password");//パスワード
 
 		//DBからデータ取得 3
-		admin = AdminDao.login(id, password);//教員データ取得
+		admin = adminDao.login(id, password);//教員データ取得
 
 		//ビジネスロジック 4
 		//DBへデータ保存 5
@@ -39,7 +39,7 @@ public class LoginExecuteAction_admin extends Action {
 			// セッション情報を取得
 			HttpSession session = req.getSession(true);
 			// 認証済みフラグを立てる
-			admin.setAuthenticated(true);
+			//admin.setAuthenticated(true);
 			// セッションにログイン情報を保存
 			session.setAttribute("user", admin);
 
