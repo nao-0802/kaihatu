@@ -10,7 +10,7 @@ import bean.Admin;
 import dao.AdminDao;
 
 @WebServlet(urlPatterns={"/kouka/create"})
-public class AdminSignupActionExecute {
+public class AdminSignupExecuteAction {
 
 	public void doGet(
 		HttpServletRequest request, HttpServletResponse response
@@ -18,7 +18,7 @@ public class AdminSignupActionExecute {
 		PrintWriter out=response.getWriter();
 
 		try{
-			String Admin_id=request.getParameter("adminID");
+			String Admin_id=request.getParameter("admin_id");
 			String Password=request.getParameter("password");
 
 			Admin p = new Admin();
