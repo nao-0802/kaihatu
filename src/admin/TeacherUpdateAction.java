@@ -32,7 +32,7 @@ public class TeacherUpdateAction extends Action {
         req.setAttribute("password", thisTeacher.getPassword()); // パスワード
 
         // 更新画面へフォワード
-        req.getRequestDispatcher("teacher_update.jsp").forward(req, res);
+        req.getRequestDispatcher("Teacher_update.jsp").forward(req, res);
     }
   }
 

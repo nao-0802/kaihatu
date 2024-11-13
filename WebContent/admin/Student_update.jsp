@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>教職員情報更新</title>
+    <title>生徒情報更新</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,8 +20,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            box-sizing: border-box;
+            width: 300px;
         }
         h2 {
             text-align: center;
@@ -45,78 +44,65 @@
         .btn {
             width: 100%;
             padding: 10px;
-            background-color: #28a745;
+            background-color: #28a745; /* 緑色 */
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         .btn:hover {
-            background-color: #218838;
+            background-color: #218838; /* 濃い緑 */
         }
         .error-message {
             color: red;
             text-align: center;
             margin-bottom: 15px;
         }
-        .btn-back {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            display: inline-block;
-            text-align: center;
-            margin-top: 10px;
-            box-sizing: border-box;
-        }
-        .btn-back:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
     <div class="update-container">
-        <h2>教職員情報更新</h2>
-        <c:if test="${not empty errorMessage}">
-            <div class="error-message">${errorMessage}</div>
-        </c:if>
+        <h2>生徒情報更新</h2>
 
-        <form action="teacherUpdate" method="POST" onsubmit="return validateForm()">
+        <!-- エラーメッセージの表示 -->
+        <div class="error-message" id="error-message" style="display: ${not empty errorMessage ? 'block' : 'none'};">
+            ${errorMessage != null ? errorMessage : ''}
+        </div>
+
+        <!-- 生徒情報更新フォーム -->
+        <form action="student/update" method="POST" onsubmit="return validateForm()">
             <div class="form-group">
-                <label for="teacher_name">名前:</label>
-                <input type="text" id="teacher_name" name="teacher_name" class="form-control" value="${teacher.teacher_name}" required>
-            </div>
-            <div class="form-group">
-                <label for="class_id">クラスID:</label>
-                <input type="text" id="class_id" name="class_id" class="form-control" value="${teacher.class_id}" required>
+                <label for="student_name">生徒氏名:</label>
+                <input type="text" id="student_name" name="student_name" class="form-control" value="${student_name != null ? student_name : ''}" required>
             </div>
             <div class="form-group">
                 <label for="password">パスワード:</label>
                 <input type="password" id="password" name="password" class="form-control" required>
             </div>
+            <div class="form-group">
+                <label for="class_id">クラスID:</label>
+                <input type="text" id="class_id" name="class_id" class="form-control" value="${class_id != null ? class_id : ''}" required>
+            </div>
             <button type="submit" class="btn">更新</button>
         </form>
-
-        <!-- 戻るボタン -->
-        <a href="Account_Info_List.jsp" class="btn-back">戻る</a>
     </div>
 
     <script>
         function validateForm() {
-            const teacherName = document.getElementById('teacher_name').value;
-            const classId = document.getElementById('class_id').value;
+            const student_name = document.getElementById('student_name').value;
             const password = document.getElementById('password').value;
+            const class_id = document.getElementById('class_id').value;
             const errorMessage = document.getElementById('error-message');
             errorMessage.style.display = 'none';
 
-            if (!teacherName || !classId || !password) {
-                errorMessage.textContent = 'すべてのフィールドを入力してください。';
+            // 未入力の場合の処理
+            if (!student_name || !password || !class_id) {
+                errorMessage.textContent = '生徒氏名、パスワード、クラスIDを入力してください。';
                 errorMessage.style.display = 'block';
-                return false;
+                return false; // フォームの送信を防ぐ
             }
 
+            // フォームは正常
             return true;
         }
     </script>

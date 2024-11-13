@@ -31,14 +31,14 @@ public class GuardianUpdateAction extends Action {
         if (guardianId == null || guardianId.isEmpty() || guardianName == null || guardianName.isEmpty() || email == null || email.isEmpty() || password == null || password.isEmpty()) {
             // 必須項目が空の場合、エラーメッセージを設定
             req.setAttribute("errorMessage", "すべてのフィールドを入力してください。");
-            req.getRequestDispatcher("guardian_update.jsp").forward(req, res);  // 再度更新ページにフォワード
+            req.getRequestDispatcher("Guardian_update.jsp").forward(req, res);  // 再度更新ページにフォワード
             return;
         }
 
         // guardianIdが"g"で始まるか確認（文字数制限はなし）
         if (!guardianId.startsWith("g")) {
             req.setAttribute("errorMessage", "保護者IDは「g」で始まる必要があります。");
-            req.getRequestDispatcher("guardian_update.jsp").forward(req, res);  // 更新ページに戻る
+            req.getRequestDispatcher("Guardian_update.jsp").forward(req, res);  // 更新ページに戻る
             return;
         }
 
@@ -54,11 +54,11 @@ public class GuardianUpdateAction extends Action {
         if (success) {
             // 更新成功した場合
             req.setAttribute("guardian", updatedGuardian);  // 更新された保護者情報をリクエストにセット
-            req.getRequestDispatcher("guardian_update_done.jsp").forward(req, res);  // 更新完了ページにフォワード
+            req.getRequestDispatcher("Guardian_update_done.jsp").forward(req, res);  // 更新完了ページにフォワード
         } else {
             // 更新失敗した場合
             req.setAttribute("errorMessage", "更新に失敗しました。再試行してください。");
-            req.getRequestDispatcher("guardian_update.jsp").forward(req, res);  // 更新ページに戻る
+            req.getRequestDispatcher("Guardian_update.jsp").forward(req, res);  // 更新ページに戻る
         }
     }
 }
