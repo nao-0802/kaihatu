@@ -41,7 +41,7 @@ public class ContactBook implements java.io.Serializable{
 	public void setDay(Date day){
 		this.day=day;
 	}
-	public void getContactDetails(String contact_details){
+	public void setContactDetails(String contact_details){
 		this.contact_details=contact_details;
 	}
 	public void setCheck(boolean check){

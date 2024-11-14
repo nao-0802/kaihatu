@@ -28,6 +28,9 @@ public class SleepRecord implements java.io.Serializable{
 	public void setSleepId(String sleep_id){
 		this.sleep_id=sleep_id;
 	}
+	public void setStudentId(String student_id){
+		this.student_id=student_id;
+	}
 	public void setDay(Date day){
 		this.day=day;
 	}

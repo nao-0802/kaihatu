@@ -16,7 +16,7 @@ public class BulletinBoard implements java.io.Serializable{
 	public String getContent(){
 		return content;
 	}
-	public String TeacherId(){
+	public String getTeacherId(){
 		return teacher_id;
 	}
 	public void setPostId(String post_id){

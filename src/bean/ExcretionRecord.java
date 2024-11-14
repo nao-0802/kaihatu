@@ -32,6 +32,9 @@ public class ExcretionRecord implements java.io.Serializable{
 	public void setExcretionId(String excretion_id){
 		this.excretion_id=excretion_id;
 	}
+	public void setStudentId(String student_id){
+		this.student_id=student_id;
+	}
 	public void setDay(Date day){
 		this.day=day;
 	}
