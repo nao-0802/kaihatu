@@ -2,7 +2,7 @@
     <wb-module deploy-name="kaihatu">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="kaihatu"/>
         <property name="java-output-path" value="/kaihatu/build/classes"/>
+        <property name="context-root" value="kaihatu"/>
     </wb-module>
 </project-modules>
