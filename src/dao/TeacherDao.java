@@ -69,6 +69,38 @@ public class TeacherDao extends Dao {
         return list;
     }
 
+    public List<Teacher> getAllTeachers() throws Exception {
+        List<Teacher> list = new ArrayList<>();
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        ResultSet rSet = null;
+
+        try {
+            statement = connection.prepareStatement("SELECT teacher_id, teacher_name, password, class_id, flag FROM teachers");
+            rSet = statement.executeQuery();
+            list = postfilter(rSet);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return list;
+    }
+
     // Teacherを保存または更新するメソッド
     public boolean save(Teacher teacher) throws Exception {
         Connection connection = getConnection();
