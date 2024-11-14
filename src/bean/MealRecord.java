@@ -32,6 +32,9 @@ public class MealRecord implements java.io.Serializable{
 	public void setMealId(String meal_id){
 		this.meal_id=meal_id;
 	}
+	public void setStudentId(String student_id){
+		this.student_id=student_id;
+	}
 	public void setDay(Date day){
 		this.day=day;
 	}

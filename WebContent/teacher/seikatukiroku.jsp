@@ -1,61 +1,42 @@
-package scoremanager;
+<%@page contentType="text/html; charset=UTF-8" %>
+<!-- %@include file="../header.html" % -->
+<!-- %@include file="../menu.html" % -->
 
-import java.util.ArrayList;
-import java.util.List;
+<details id=sleep> <summary>睡眠</summary>
+    <form action="sleep.action">
+        <label><input type="radio" name="sleep_amount" value="寝た">寝た</label><br>
+        <label><input type="radio" name="sleep_amount" value="起きた">起きた</label><br>
+        <button name="sleep_btn">記録</button>
+    </form>
+</details>
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+<details id=meal> <summary>食事</summary>
+    <form action="MealRecordAction">
+        <label><input type="radio" name="meal_amount" value="全量">全量</label><br>
+        <label><input type="radio" name="meal_amount" value="半量">半量</label><br>
+        <label><input type="radio" name="meal_amount" value="少量">少量</label><br>
+        <button name="meal_btn">記録</button>
+    </form>
+</details>
 
-import bean.Guardian;
-import dao.GuardianDao;
-import tool.Action;
+<details id=excretion> <summary>排泄</summary>
+    <form action="excretion.action">
+        <details id=joutai>
+            <summary>
+            <span class="close">状態</span>
+            </summary>
+            <label><input type="radio" name="excretion_amount" value="ころ">ころころ</label><br>
+            <label><input type="radio" name="excretion_amount" value="mizu">水っぽい</label><br>
+            <label><input type="radio" name="excretion_amount" value="その他">その他</label><br>
+            <details id=sonota>
+            <summary>
+                <span class="open"></span>
+            </summary>
+            <input type="text" name="excretion_amount">
+            </details>
+        </details>
+        <button name="excretion_btn">記録</button>
+    </form>
+</details>
 
-
-public class MealExecuteAction_guardian extends Action {
-
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		//ローカル変数の宣言 1
-		String url = "";
-		String meal_id = ""; 食事記録
-		String sutdent_id = ""; 生徒ID
-		MealRecordDao mealrecordDao = new MealRecordDao();
-		MealRecord mealrecord = null;
-
-		//リクエストパラメータ―の取得 2
-		meal_id = req.getParameter("meal_id");// 食事記録ID
-		student_id = req.getParameter("student_id");//生徒ID
-
-		//DBからデータ取得 3
-		mealrecord = MealRecordDao.login(meal_id, student_id);//データ取得
-
-
-		//条件で手順4~7の内容が分岐
-		if (mealrecord != null) {// 認証成功の場合
-			// セッション情報を取得
-			HttpSession session = req.getSession(true);
-			// 認証済みフラグを立てる
-			//mealrecord.setAuthenticated(true);
-			// セッションにログイン情報を保存
-			session.setAttribute("user", mealrecord);
-
-			//リダイレクト
-			url = "";
-			res.sendRedirect(url);
-		} else {
-			// 認証失敗の場合
-			// エラーメッセージをセット
-			List<String> errors = new ArrayList<>();
-			errors.add("IDまたはパスワードが確認できませんでした");
-			req.setAttribute("errors", errors);
-			// 入力されたIDをセット
-			req.setAttribute("meal_id", meal_id);
-			//フォワード
-			url = "login-error.jsp";
-			req.getRequestDispatcher(url).forward(req, res);
-		}
-
-	}
-
-}
+<!--  %@include file="../footer.html" % -->
