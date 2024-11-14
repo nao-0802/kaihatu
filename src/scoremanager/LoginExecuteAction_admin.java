@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Admin;
+import bean.Guardian;
+import bean.Teacher;
 import dao.AdminDao;
+import dao.GuardianDao;
+import dao.TeacherDao;
 import tool.Action;
 
 
@@ -22,13 +26,19 @@ public class LoginExecuteAction_admin extends Action {
 		String password = "";
 		AdminDao adminDao = new AdminDao();
 		Admin admin = null;
+		TeacherDao teacherDao = new TeacherDao();
+		Teacher teacher=null;
+		GuardianDao guardianDao = new GuardianDao();
+		Guardian guardian = null;
 
 		//リクエストパラメータ―の取得 2
 		id = req.getParameter("admin_id");// 管理者ID
 		password = req.getParameter("password");//パスワード
 
 		//DBからデータ取得 3
-		admin = adminDao.login(id, password);//教員データ取得
+		admin = adminDao.login(id, password);//管理者データ取得
+		teacher = teacherDao.get();//教職員データ取得
+		guardian = guardianDao.get();//保護者データ取得
 
 		//ビジネスロジック 4
 		//DBへデータ保存 5
@@ -42,10 +52,11 @@ public class LoginExecuteAction_admin extends Action {
 			//admin.setAuthenticated(true);
 			// セッションにログイン情報を保存
 			session.setAttribute("user", admin);
+			req.setAttribute("teacher", teacher);
+			req.setAttribute("guardian", guardian);
 
-			//リダイレクト
-			url = "main/Menu.action";
-			res.sendRedirect(url);
+			req.getRequestDispatcher("login-out.jsp")
+				.forward(req, res);
 		} else {
 			// 認証失敗の場合
 			// エラーメッセージをセット
