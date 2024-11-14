@@ -1,15 +1,14 @@
 <%@page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<form action="ClassSelectExecuteAction" method="post">
 
-<select name="Grade_sel">
+	<p>クラスの名前</p>
+	<select name="Class_name">
+		<c:forEach var="p" items="${list}">
+			<option value="${p.class_id}">${p.class_name}</option>
+		</c:forEach>
+	</select>
 
-</select>
-<p>年</p>
-<select name="Class_sel">
-<c:forEach var="p" items="${list}">
-	${p.classnum }
-</c:forEach>
-</select>
-<p>組</p>
-<input type="button" name="Enter_Roon_btn" value="入室">
+	<input type="submit" name="Enter_Room_btn" value="入室">
+</form>
