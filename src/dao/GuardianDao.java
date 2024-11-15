@@ -68,6 +68,43 @@ public class GuardianDao extends Dao {
         return list;
     }
 
+    public List<Guardian> getAllGuardians() throws Exception {
+        List<Guardian> list = new ArrayList<>();
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        ResultSet rSet = null;
+
+        try {
+            statement = connection.prepareStatement("SELECT guardian_id, guardian_name FROM guardians");
+            rSet = statement.executeQuery();
+            while (rSet.next()) {
+                Guardian guardian = new Guardian();
+                guardian.setGuardianId(rSet.getString("guardian_id"));
+                guardian.setGuardianName(rSet.getString("guardian_name"));
+                list.add(guardian);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return list;
+    }
+
     // Guardianを保存または更新するメソッド
     public boolean save(Guardian guardian) throws Exception {
         Connection connection = getConnection();
