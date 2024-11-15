@@ -1,5 +1,6 @@
 package scoremanager;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -7,15 +8,18 @@ import javax.servlet.http.HttpSession;
 import tool.Action;
 
 public class LogoutAction_admin extends Action {
-	public String execute(
+	public void execute(
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HttpSession session=request.getSession();
+		HttpSession session = request.getSession();
 
-		if (session.getAttribute("admin")!=null) {
+		if (session.getAttribute("admin") != null) {
 			session.removeAttribute("admin");
-			return "logout-out.jsp";
+			RequestDispatcher dispatcher = request.getRequestDispatcher("logout-out.jsp");
+			dispatcher.forward(request, response);
+		} else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("logout-error.jsp");
+			dispatcher.forward(request, response);
 		}
-		return "logout-error.jsp";
 	}
 }

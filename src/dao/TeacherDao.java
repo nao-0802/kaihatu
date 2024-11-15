@@ -227,4 +227,46 @@ public class TeacherDao extends Dao {
 
         return result;
     }
+    public Teacher get(String teacher_id) throws Exception {
+        Teacher teacher = null;
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement("SELECT * FROM teacher WHERE teacher_id = ?");
+            statement.setString(1, teacher_id);
+            ResultSet rSet = statement.executeQuery();
+            if (rSet.next()) {
+                teacher = new Teacher();
+                teacher.setTeacherId(rSet.getString("teacher_id"));
+                teacher.setPassword(rSet.getString("password"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+        return teacher;
+    }
+    public Teacher login(String teacher_id, String password) throws Exception {
+		// 管理者クラスのインスタンスを取得
+		Teacher teacher = get(teacher_id);
+		// 管理者がnullまたはパスワードが一致しない場合
+		if (teacher == null || !teacher.getPassword().equals(password)) {
+			return null;
+		}
+		return teacher;
+	}
 }

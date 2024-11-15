@@ -32,6 +32,26 @@ public class GuardianDao extends Dao {
         return list;
     }
 
+    public List<Guardian> search(String keyword) throws Exception {
+        List<Guardian> list = new ArrayList<>();
+        String sql = "SELECT guardian_id, guardian_name FROM guardians WHERE guardian_name LIKE ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, "%" + keyword + "%");
+            try (ResultSet rSet = statement.executeQuery()) {
+                while (rSet.next()) {
+                    Guardian guardian = new Guardian();
+                    guardian.setGuardianId(rSet.getString("guardian_id"));
+                    guardian.setGuardianName(rSet.getString("guardian_name"));
+                    list.add(guardian);
+                }
+            }
+        }
+        return list;
+    }
+
+
     // 指定されたguardian_idのGuardianを取得するメソッド
     public List<Guardian> filter(String guardianId) throws Exception {
         List<Guardian> list = new ArrayList<>();
@@ -228,4 +248,48 @@ public class GuardianDao extends Dao {
 
         return result;
     }
+
+    public Guardian get(String guardian_id) throws Exception {
+        Guardian guardian = null;
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement("SELECT * FROM guardian WHERE guardian_id = ?");
+            statement.setString(1, guardian_id);
+            ResultSet rSet = statement.executeQuery();
+            if (rSet.next()) {
+                guardian = new Guardian();
+                guardian.setGuardianId(rSet.getString("guardian_id"));
+                guardian.setPassword(rSet.getString("password"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+        return guardian;
+    }
+
+    public Guardian login(String guardian_id, String password) throws Exception {
+		// 保護者クラスのインスタンスを取得
+		Guardian guardian = get(guardian_id);
+		// 管理者がnullまたはパスワードが一致しない場合
+		if (guardian == null || !guardian.getPassword().equals(password)) {
+			return null;
+		}
+		return guardian;
+	}
 }
