@@ -2,7 +2,6 @@ package admin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import bean.Guardian;
 import dao.GuardianDao;
@@ -11,8 +10,8 @@ import tool.Action;
 public class GuardianUpdateAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        HttpSession session = req.getSession(); // セッションを取得
-        Guardian guardian = (Guardian) session.getAttribute("user"); // セッションからログイン中の保護者情報を取得
+        //HttpSession session = req.getSession(); // セッションを取得
+       // Guardian guardian = (Guardian) session.getAttribute("user"); // セッションからログイン中の保護者情報を取得
 
         String guardianId = "";  // 受信した保護者ID
         String guardianName = ""; // 受信した保護者氏名
@@ -49,7 +48,7 @@ public class GuardianUpdateAction extends Action {
         updatedGuardian.setPassword(password);       // パスワード
 
         // 保護者情報の更新処理
-        boolean success = guardianDao.update(updatedGuardian);  // 更新処理
+        boolean success = guardianDao.save(updatedGuardian);  // 更新処理
 
         if (success) {
             // 更新成功した場合

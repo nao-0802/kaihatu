@@ -28,19 +28,11 @@ public class GuardianSignupExecuteAction {
 				p.setPassword(Password);
 
 				GuardianDao dao =	new GuardianDao();
-				int line=dao.insert(p);
-
-				if (line>0) {
-//					out.println("追加に成功しました。");
-					request.getRequestDispatcher("/admin/createTrue.jsp")
-					.forward(request, response);
-				}
-				else {
-					request.getRequestDispatcher("/admin/createFalse.jsp")
-					.forward(request, response);
-				}
+				dao.save(p);
 			} catch (Exception e) {
 				e.printStackTrace(out);
 			}
+			request.getRequestDispatcher("/admin/createTrue.jsp")
+			.forward(request, response);
 		}
 }

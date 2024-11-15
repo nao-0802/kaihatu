@@ -1,21 +1,31 @@
 package admin;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import dao.GuardianDao;
+import tool.Action;
 
-public class GuardianDeleteExecuteAction {
-	public static void main(String[] args) {
-        // 削除するTeacherのIDを指定（例として1を指定）
-        int guardianIdToDelete = 1;
+public class GuardianDeleteExecuteAction extends Action {
 
-        // TeacherDAOをインスタンス化して削除実行
-        GuardianDao guardianDAO = new GuardianDao();
-        boolean isDeleted = guardianDAO.deleteTeacherById(guardianIdToDelete);
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // GuardianDaoのインスタンスを作成
+        GuardianDao gDao = new GuardianDao();
 
-        // 削除結果の出力
-        if (isDeleted) {
-            System.out.println("Teacher with ID " + guardianIdToDelete + " was successfully deleted.");
+        // リクエストから削除対象のguardian_idを取得
+        String guardianId = req.getParameter("guardian_id");
+
+        // 削除操作を実行
+        Boolean chk = gDao.delete(guardianId);
+
+        // 削除が成功した場合、完了ページに転送
+        if (chk) {
+            req.getRequestDispatcher("guardian_delete_done.jsp").forward(req, res);
         } else {
-            System.out.println("Failed to delete teacher with ID " + guardianIdToDelete);
+            // 削除に失敗した場合、エラーページまたはメッセージを設定
+            req.setAttribute("message", "Failed to delete Guardian.");
+            req.getRequestDispatcher("guardian_delete_failed.jsp").forward(req, res);
         }
     }
 }
