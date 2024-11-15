@@ -1,5 +1,8 @@
 package teacher;
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +25,8 @@ public class StudentRecordAction extends HttpServlet {
             request.setAttribute("errorMessage", "学生情報が見つかりません。");
         }
 
-        // StudentListActionへフォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/student_list.jsp");
+        // カルテ詳細画面にフォワード
+        RequestDispatcher dispatcher = request.getRequestDispatcher("student_record_detail.jsp");
         dispatcher.forward(request, response);
     }
 }

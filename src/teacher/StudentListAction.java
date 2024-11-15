@@ -21,13 +21,13 @@ public class StudentListAction extends HttpServlet {
             request.setAttribute("studentList", studentList);
         }
 
-        // エラーメッセージがあれば、それもセット
-        if (errorMessage != null && !errorMessage.isEmpty()) {
-            request.setAttribute("errorMessage", errorMessage);
-        }
+//        // エラーメッセージがあれば、それもセット
+//        if (errorMessage != null && !errorMessage.isEmpty()) {
+//            request.setAttribute("errorMessage", errorMessage);
+//        }
 
         // student_list.jspへフォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/student_list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("student_list.jsp");
         dispatcher.forward(request, response);
     }
 }
