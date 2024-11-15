@@ -16,7 +16,7 @@ public class GuardianDeleteAction extends Action {
         //Admin admin = (Admin)session.getAttribute("user");
 
         // 削除対象のguardian_idを取得
-        String guardianId = req.getParameter("gua			rdian_id");
+        String guardianId = req.getParameter("guardian_id");
 
         GuardianDao gDao = new GuardianDao();
         Guardian guardian = gDao.get(guardianId);
