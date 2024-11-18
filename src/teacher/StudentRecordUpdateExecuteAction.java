@@ -1,88 +1,62 @@
 package teacher;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import bean.StudentRecord;
-import util.DatabaseConnection;
+import bean.Student;
+import bean.Teacher;
+import dao.StudentDao;
 
-@WebServlet("/teacher/StudentRecordUpdateExecuteAction")
 public class StudentRecordUpdateExecuteAction extends HttpServlet {
-
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        HttpSession session = req.getSession(); // セッションを取得
+        Teacher teacher = (Teacher) session.getAttribute("user"); // ログインしている教師情報をセッションから取得
 
-        try {
-            // フォームから送信されたデータを取得
-            String studentRecordId = request.getParameter("studentRecordId");
-            String name = request.getParameter("name");
-            String classId = request.getParameter("classId");
-            int guardianId = Integer.parseInt(request.getParameter("guardianId"));
-            java.sql.Date birthdate = java.sql.Date.valueOf(request.getParameter("birthdate"));
-            String allergy = request.getParameter("allergy");
-            String features = request.getParameter("features");
-            String annualRecord = request.getParameter("annualRecord");
+        String studentRecordId = req.getParameter("student_record_id"); // 生徒カルテID
+        String name = req.getParameter("name"); // 生徒名
+        String classId = req.getParameter("class_id"); // クラスID
+        String guardianId = req.getParameter("guardian_id"); // 保護者ID
+        String birthdate = req.getParameter("birthdate"); // 生年月日
+        String allergy = req.getParameter("allergy"); // アレルギー
+        String features = req.getParameter("features"); // 特徴
+        String annualRecord = req.getParameter("annual_record"); // 年次記録
 
-            // StudentRecord オブジェクトにフォームデータを設定
-            StudentRecord record = new StudentRecord();
-            record.setStudentRecordId(studentRecordId);
-            record.setName(name);
-            record.setClassId(classId);
-            record.setGuardianId(guardianId);
-            record.setBirthdate(birthdate);
-            record.setAllergy(allergy);
-            record.setFeatures(features);
-            record.setAnnualRecord(annualRecord);
+        Student updatedStudent = new Student(); // 送信用の生徒情報
+        StudentDao studentDao = new StudentDao(); // StudentDaoのインスタンス
 
-            // データベース接続
-            conn = DatabaseConnection.getConnection();
+        // 更新された生徒カルテ情報の作成
+        updatedStudent.setStudentRecordId(studentRecordId); // 生徒カルテID
+        updatedStudent.setName(name);
+        updatedStudent.setClassID(classId);
+        updatedStudent.setGuardianId(guardianId); // 保護者ID
+        updatedStudent.setBirthdate(birthdate); // 生年月日
+        updatedStudent.setAllergy(allergy); // アレルギー
+        updatedStudent.setFeatures(features); // 特徴
+        updatedStudent.setAnnualRecord(annualRecord); // 年次記録
+        updatedStudent.setSchool(teacher.getSchool()); // ログイン中の教師の学校情報を設定
 
-            // 更新用SQL文
-            String sql = "UPDATE t_student_record SET name = ?, class_id = ?, guardian_id = ?, birthdate = ?, allergy = ?, features = ?, annual_record = ? WHERE student_record_id = ?";
+        // 生徒カルテ情報の更新処理
+        boolean success = studentDao.updateStudentRecord(updatedStudent);
 
-            // PreparedStatementを作成し、パラメータを設定
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, record.getName());
-            stmt.setString(2, record.getClassId());
-            stmt.setInt(3, record.getGuardianId());
-            stmt.setDate(4, record.getBirthdate());
-            stmt.setString(5, record.getAllergy());
-            stmt.setString(6, record.getFeatures());
-            stmt.setString(7, record.getAnnualRecord());
-            stmt.setString(8, record.getStudentRecordId());
-
-            // SQLを実行して更新
-            stmt.executeUpdate();
-
-            // 更新完了後、生徒一覧画面にリダイレクト
-            response.sendRedirect("student_list.jsp");
-
-        } catch (SQLException e) {
-            // エラー発生時はエラーログを記録し、エラーページに遷移
-            e.printStackTrace();
-            response.sendRedirect("error.jsp");
-        } finally {
-            // リソースの解放
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        if (success) {
+            // 更新成功した場合
+            req.setAttribute("student", updatedStudent); // 更新された生徒情報をリクエストにセット
+            req.getRequestDispatcher("Student_record_update_done.jsp").forward(req, res); // 更新完了ページにフォワード
+        } else {
+            // 更新失敗した場合
+            System.out.println("★更新に失敗しました");
+            req.setAttribute("name", name); // 入力された名前を再セット
+            req.setAttribute("class_id", classId); // 入力されたクラスIDを再セット
+            req.setAttribute("guardian_id", guardianId); // 入力された保護者IDを再セット
+            req.setAttribute("birthdate", birthdate); // 入力された生年月日を再セット
+            req.setAttribute("allergy", allergy); // 入力されたアレルギーを再セット
+            req.setAttribute("features", features); // 入力された特徴を再セット
+            req.setAttribute("annual_record", annualRecord); // 入力された年次記録を再セット
+            req.getRequestDispatcher("Student_record_error.jsp").forward(req, res); // エラー表示ページにフォワード
         }
     }
 }
