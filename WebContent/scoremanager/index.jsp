@@ -8,7 +8,7 @@
 <title></title>
 <script>
 //ログインページにリダイレクト
-location.href="/kaihatu/scoremanager/Login.action";
+location.href="/kaihatu/scoremanager/LoginAdmin.action";
 </script>
 </head>
 <body>
