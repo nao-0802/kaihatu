@@ -260,6 +260,49 @@ public class TeacherDao extends Dao {
         }
         return teacher;
     }
+    public List<Teacher> search(String keyword) throws Exception {
+        List<Teacher> list = new ArrayList<>();
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        ResultSet rSet = null;
+
+        try {
+            // SQLクエリ: 教師名または教師IDで検索
+            String sql = "SELECT teacher_id, teacher_name, password, class_id, flag FROM teachers WHERE teacher_name LIKE ? OR teacher_id LIKE ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + keyword + "%");
+            statement.setString(2, "%" + keyword + "%");
+            rSet = statement.executeQuery();
+            list = postfilter(rSet);  // 結果をリストに変換
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            // リソースを閉じる処理
+            if (rSet != null) {
+                try {
+                    rSet.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return list;
+    }
     public Teacher login(String teacher_id, String password) throws Exception {
 		// 管理者クラスのインスタンスを取得
 		Teacher teacher = get(teacher_id);
