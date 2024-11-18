@@ -1,21 +1,31 @@
 package admin;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import dao.TeacherDao;
+import tool.Action;
 
-public class TeacherDeleteExecuteAction {
-    public static void main(String[] args) {
-        // 削除するTeacherのIDを指定（例として1を指定）
-        int teacherIdToDelete = 1;
+public class TeacherDeleteExecuteAction extends Action {
 
-        // TeacherDAOをインスタンス化して削除実行
-        TeacherDao teacherDAO = new TeacherDao();
-        boolean isDeleted = teacherDAO.deleteTeacherById(teacherIdToDelete);
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // TeacherDaoのインスタンスを作成
+        TeacherDao teacherDao = new TeacherDao();
 
-        // 削除結果の出力
+        // リクエストから削除対象のteacher_idを取得
+        String teacherId = req.getParameter("teacher_id");
+
+        // 削除操作を実行
+        boolean isDeleted = teacherDao.delete(teacherId);
+
+        // 削除が成功した場合、完了ページに転送
         if (isDeleted) {
-            System.out.println("Teacher with ID " + teacherIdToDelete + " was successfully deleted.");
+            req.getRequestDispatcher("teacher_delete_done.jsp").forward(req, res);
         } else {
-            System.out.println("Failed to delete teacher with ID " + teacherIdToDelete);
+            // 削除に失敗した場合、エラーページまたはメッセージを設定
+            req.setAttribute("message", "Failed to delete Teacher.");
+            req.getRequestDispatcher("teacher_delete_failed.jsp").forward(req, res);
         }
     }
 }

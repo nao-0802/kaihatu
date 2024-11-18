@@ -74,8 +74,9 @@ summary {
     </form>
 </details>
 
-<form action="renrakutyou.jsp">
+<form action="">
 <button>連絡帳を書く</button>
 </form>
+<!-- <input type="button" onclick="location.href='#'" value="連絡帳を書く"> -->
 
 <!--  %@include file="../footer.html" % -->

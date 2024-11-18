@@ -12,6 +12,7 @@ public class LifeRecordAction extends Action{
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
+
 		String student_id = req.getParameter("student_id");
 		StudentRecordDao dao = new StudentRecordDao();
 		List<StudentRecord> list = dao.search(student_id);

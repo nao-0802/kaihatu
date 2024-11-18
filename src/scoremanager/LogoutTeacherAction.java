@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import tool.Action;
 
-public class LogoutAction_teacher extends Action {
+public class LogoutTeacherAction extends Action {
 	public void execute(
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
 

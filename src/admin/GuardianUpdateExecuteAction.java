@@ -1,63 +1,59 @@
 package admin;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Guardian;  // Guardianクラスをインポート
-import dao.GuardianDao;  // GuardianDaoをインポート
+import bean.Guardian;
+import dao.GuardianDao;
+import tool.Action;
 
-
-
-public class GuardianUpdateExecuteAction extends HttpServlet {
+public class GuardianUpdateExecuteAction extends Action {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        //HttpSession session = req.getSession(); // セッションを取得
-       // Guardian guardian = (Guardian) session.getAttribute("user"); // ログインしている保護者情報をセッションから取得
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        GuardianDao guardianDao = new GuardianDao();
 
-        String guardian_id = "";  // 入力された保護者ID
-        String guardian_name = "";  // 入力された保護者名
-        String email = "";  // 入力されたメールアドレス
-        String password = "";  // 入力されたパスワード
-        Guardian updatedGuardian = new Guardian();  // 送信用の保護者情報
-        GuardianDao guardianDao = new GuardianDao();  // GuardianDaoのインスタンス
+        // リクエストパラメータを取得
+        String guardianId = req.getParameter("guardian_id");
+        String guardianName = req.getParameter("guardian_name");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
 
-        // リクエストパラメータの取得
-        guardian_id = req.getParameter("guardian_id");
-        guardian_name = req.getParameter("guardian_name");
-        email = req.getParameter("email");
-        password = req.getParameter("password");
+        // 入力チェック（クラス番号や必須項目の確認）
+        if (guardianId == null || guardianId.isEmpty() ||
+            guardianName == null || guardianName.isEmpty() ||
+            email == null || email.isEmpty() ||
+            password == null || password.isEmpty()) {
+            // 必須項目が入力されていない場合
+            req.setAttribute("guardian_id", guardianId);
+            req.setAttribute("guardian_name", guardianName);
+            req.setAttribute("email", email);
+            req.setAttribute("password", password);
+            req.setAttribute("errorMessage", "すべての必須項目を入力してください。");
+            req.getRequestDispatcher("guardian_update.jsp").forward(req, res);
+            return;
+        }
 
-
-
-        // 送信用の保護者情報の作成
-        updatedGuardian.setGuardianId(guardian_id);  // `guardian_id`を設定
-        updatedGuardian.setGuardianName(guardian_name);  // `guardian_name`を設定
-        updatedGuardian.setEmail(email);  // `email`を設定
-        updatedGuardian.setPassword(password);  // `password`を設定
+        // Guardianオブジェクトを作成して値を設定
+        Guardian guardian = new Guardian();
+        guardian.setGuardianId(guardianId);
+        guardian.setGuardianName(guardianName);
+        guardian.setEmail(email);
+        guardian.setPassword(password);
 
         // 保護者情報の更新処理
-        try {
-			guardianDao.save(updatedGuardian);
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
+        boolean success = guardianDao.save(guardian);
 
-        //if (success) {
-            // 更新成功した場合
-           // req.setAttribute("guardian", updatedGuardian);  // 更新された保護者情報をリクエストにセット
-            req.getRequestDispatcher("Guardian_Update_done.jsp").forward(req, res);  // 更新完了ページにフォワード
-        //} else {
-            // 更新失敗した場合
-            //System.out.println("★更新に失敗しました");
-            //req.setAttribute("guardian_id", guardian_id);  // 入力された保護者IDを再セット
-            //req.setAttribute("guardian_name", guardian_name);  // 入力された名前を再セット
-            //req.setAttribute("email", email);  // 入力されたメールアドレスを再セット
-            //req.getRequestDispatcher("Guardian_error.jsp").forward(req, res);  // エラー表示ページにフォワード
-        //}
+        if (success) {
+            // 更新成功時に完了ページへ
+            req.getRequestDispatcher("guardian_update_done.jsp").forward(req, res);
+        } else {
+            // 更新失敗時にエラーメッセージを設定して再度編集ページへ
+            req.setAttribute("guardian_id", guardianId);
+            req.setAttribute("guardian_name", guardianName);
+            req.setAttribute("email", email);
+            req.setAttribute("password", password);
+            req.setAttribute("errorMessage", "保護者情報の更新に失敗しました。再試行してください。");
+            req.getRequestDispatcher("guardian_update.jsp").forward(req, res);
+        }
     }
 }
