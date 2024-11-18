@@ -25,17 +25,17 @@ public class TeacherSignupExecuteAction{
 				p.setPassword(Password);
 
 				TeacherDao dao =	new TeacherDao();
-				int line=dao.insert(p);
+				dao.save(p);
 
-				if (line>0) {
+				//if (line>0) {
 //					out.println("追加に成功しました。");
 					request.getRequestDispatcher("/admin/createTrue.jsp")
 					.forward(request, response);
-				}
-				else {
-					request.getRequestDispatcher("/admin/createFalse.jsp")
-					.forward(request, response);
-				}
+				//}
+				//else {
+					//request.getRequestDispatcher("/admin/createFalse.jsp")
+					//.forward(request, response);
+				//}
 			} catch (Exception e) {
 				e.printStackTrace(out);
 			}

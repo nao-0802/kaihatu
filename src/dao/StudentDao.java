@@ -35,6 +35,41 @@ public class StudentDao extends Dao {
         return list;
     }
 
+    public Student get(String student_id) throws Exception {
+        Student student = null;
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement("SELECT * FROM student WHERE student_id = ?");
+            statement.setString(1, student_id);
+            ResultSet rSet = statement.executeQuery();
+            if (rSet.next()) {
+                student = new Student();
+                student.setStudentId(rSet.getString("student_id"));
+                student.setPassword(rSet.getString("password"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+        return student;
+    }
+
+
     // 指定されたclass_idの学生リストを取得するメソッド
     public List<Student> filter(String classId) throws Exception {
         List<Student> list = new ArrayList<>();
@@ -70,6 +105,49 @@ public class StudentDao extends Dao {
 
         return list;
     }
+
+    public List<Student> search(String keyword) throws Exception {
+        List<Student> list = new ArrayList<>();
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        ResultSet rSet = null;
+
+        try {
+            String sql = "SELECT * FROM students WHERE student_name LIKE ? OR student_id LIKE ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + keyword + "%");
+            statement.setString(2, "%" + keyword + "%");
+            rSet = statement.executeQuery();
+            list = postFilter(rSet);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rSet != null) {
+                try {
+                    rSet.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return list;
+    }
+
 
     // 学生を保存または更新するメソッド
     public boolean save(Student student) throws Exception {
