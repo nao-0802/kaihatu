@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import tool.Action;
 
-public class LoginAction_guardian extends Action {
+public class LoginTeacherAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
