@@ -1,31 +1,33 @@
 package teacher;
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Student; // 生徒情報を保持するクラス
-import dao.StudentDao; // 生徒情報を取得するDAOクラス
+import bean.Student;
 
-public class StudentDirectory extends HttpServlet {
+public class StudentDirectoryAction {
 
-    // GETリクエストを処理
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 学生情報をデータベースから取得
-        StudentDao studentDao = new StudentDao();
-        List<Student> studentList = studentDao.getAllStudents(); // すべての生徒情報を取得
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // StudentServiceを使用して生徒情報を取得
+            StudentService studentService = new StudentService();
+            List<Student> studentList = studentService.getAllStudents();
 
-        // 生徒情報があればリクエストに設定
-        if (studentList != null && !studentList.isEmpty()) {
+            // リクエストに生徒情報をセット
             request.setAttribute("studentList", studentList);
-        } else {
-            request.setAttribute("errorMessage", "生徒情報が見つかりませんでした。");
-        }
 
-        // student_list.jsp というJSPにフォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("student_list.jsp");
-        dispatcher.forward(request, response);
+            // 生徒一覧画面に転送
+            RequestDispatcher dispatcher = request.getRequestDispatcher("student_list.jsp");
+            dispatcher.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // エラー画面にリダイレクト（例: error.jsp）
+            response.sendRedirect("error.jsp");
+        }
     }
 }

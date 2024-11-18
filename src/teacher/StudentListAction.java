@@ -1,33 +1,66 @@
 package teacher;
 
-import javax.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Student;
+import bean.StudentRecord;
+import util.DatabaseConnection;
 
-public class StudentListAction extends HttpServlet {
+public class StudentListAction {
 
-    // GETリクエストに対応
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // リクエストから学生情報リストを取得
-        List<Student> studentList = (List<Student>) request.getAttribute("studentList");
-        String errorMessage = (String) request.getAttribute("errorMessage");
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<StudentRecord> studentList = new ArrayList<>();
 
-        // 学生情報が存在する場合
-        if (studentList != null && !studentList.isEmpty()) {
+        try {
+            // データベース接続
+            Connection conn = DatabaseConnection.getConnection();
+
+            // 生徒情報を取得するSQL文
+            String sql = "SELECT * FROM t_student_record";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // SQLを実行して結果を取得
+            ResultSet rs = stmt.executeQuery();
+
+            // 結果をリストに格納
+            while (rs.next()) {
+                StudentRecord record = new StudentRecord();
+                record.setStudentRecordId(rs.getString("student_record_id"));
+                record.setName(rs.getString("name"));
+                record.setClassId(rs.getString("class_id"));
+                record.setGuardianId(rs.getInt("guardian_id"));
+                record.setBirthdate(rs.getDate("birthdate"));
+                record.setAllergy(rs.getString("allergy"));
+                record.setFeatures(rs.getString("features"));
+                record.setAnnualRecord(rs.getString("annual_record"));
+
+                studentList.add(record);
+            }
+
+            // リソースの解放
+            rs.close();
+            stmt.close();
+            conn.close();
+
+            // 生徒一覧をリクエスト属性に設定
             request.setAttribute("studentList", studentList);
+
+            // 生徒一覧画面にフォワード
+            request.getRequestDispatcher("student_list.jsp").forward(request, response);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+//            // エラー発生時はエラーページにリダイレクト
+//            response.sendRedirect("error.jsp");
         }
-
-//        // エラーメッセージがあれば、それもセット
-//        if (errorMessage != null && !errorMessage.isEmpty()) {
-//            request.setAttribute("errorMessage", errorMessage);
-//        }
-
-        // student_list.jspへフォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("student_list.jsp");
-        dispatcher.forward(request, response);
     }
 }

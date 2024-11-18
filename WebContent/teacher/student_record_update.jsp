@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -80,39 +80,45 @@
 </head>
 <body>
     <h1>生徒カルテ更新</h1>
-    <form action="${request.contextPath}/StudentRecordUpdateExecuteAction" method="POST">
+
+    <!-- エラーメッセージ表示 -->
+    <c:if test="${not empty errorMessage}">
+        <div class="error-message">${errorMessage}</div>
+    </c:if>
+
+    <form action="StudentRecordUpdateExecuteAction" method="POST">
         <table>
             <tr>
                 <td><label for="student_record_id">生徒カルテID:</label></td>
-                <td><input type="text" id="student_record_id" name="student_record_id" value="" required maxlength="10" placeholder="srから始まるIDを入力してください。" /></td>
+                <td><input type="text" id="student_record_id" name="student_record_id" value="${studentRecord.studentRecordId}" required maxlength="10" placeholder="srから始まるIDを入力してください。" /></td>
             </tr>
             <tr>
                 <td><label for="name">生徒氏名:</label></td>
-                <td><input type="text" id="name" name="name" value="" required maxlength="100" /></td>
+                <td><input type="text" id="name" name="name" value="${studentRecord.name}" required maxlength="100" /></td>
             </tr>
             <tr>
                 <td><label for="class_id">クラスID:</label></td>
-                <td><input type="text" id="class_id" name="class_id" value="" required maxlength="50" /></td>
+                <td><input type="text" id="class_id" name="class_id" value="${studentRecord.classId}" required maxlength="50" /></td>
             </tr>
             <tr>
                 <td><label for="guardian_id">保護者ID:</label></td>
-                <td><input type="text" id="guardian_id" name="guardian_id" value="" required maxlength="10" placeholder="gから始まるIDを入力してください。" /></td>
+                <td><input type="text" id="guardian_id" name="guardian_id" value="${studentRecord.guardianId}" required maxlength="10" placeholder="gから始まるIDを入力してください。" /></td>
             </tr>
             <tr>
                 <td><label for="birthdate">生年月日:</label></td>
-                <td><input type="date" id="birthdate" name="birthdate" value="" required /></td>
+                <td><input type="date" id="birthdate" name="birthdate" value="${studentRecord.birthdate}" required /></td>
             </tr>
             <tr>
                 <td><label for="allergy">アレルギー:</label></td>
-                <td><input type="text" id="allergy" name="allergy" value="" maxlength="100" /></td>
+                <td><input type="text" id="allergy" name="allergy" value="${studentRecord.allergy}" maxlength="100" /></td>
             </tr>
             <tr>
                 <td><label for="features">特徴:</label></td>
-                <td><input type="text" id="features" name="features" value="" maxlength="100" /></td>
+                <td><input type="text" id="features" name="features" value="${studentRecord.features}" maxlength="100" /></td>
             </tr>
             <tr>
                 <td><label for="annual_record">年次記録:</label></td>
-                <td><input type="text" id="annual_record" name="annual_record" value="" maxlength="100" /></td>
+                <td><input type="text" id="annual_record" name="annual_record" value="${studentRecord.annualRecord}" maxlength="100" /></td>
             </tr>
         </table>
         <button type="submit">更新</button>

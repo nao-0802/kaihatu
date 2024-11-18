@@ -147,28 +147,28 @@
 <body>
 
     <!-- 戻るボタン -->
-    <button id="Arrow_btn">←</button>
+    <button id="Arrow_btn" onclick="location.href='<%= request.getContextPath() %>/student_list.jsp'">←</button>
 
     <h1>カルテ詳細画面</h1>
 
     <!-- ボタンセクション（画面上部中央） -->
     <div class="button-container">
-        <button id="Chart_Read_btn">カルテ</button>
-        <button id="Annual_Record_btn">年次記録</button>
+        <button id="Chart_Read_btn" onclick="location.href='<%= request.getContextPath() %>/chart.jsp'">カルテ</button>
+        <button id="Chart_Read_btn" onclick="location.href='<%= request.getContextPath() %>/annual_record.jsp'">年次記録</button>
     </div>
 
     <!-- カルテ表示セクション（ボタンセクションの下） -->
     <div class="text-container">
         <label for="Chart_Indication">カルテ表示:</label>
-        <!-- サーブレットから渡されたchartIndicationを表示 -->
-        <input type="text" id="Chart_Indication" name="Chart_Indication" value="${studentList[0].name}" readonly />
+        <!-- サーブレットから渡されたstudentRecordを表示 -->
+        <input type="text" id="Chart_Indication" name="Chart_Indication" value="${studentRecord.name}" readonly />
     </div>
 
     <!-- 機能ボタンコンテナ（画面下部） -->
     <div class="footer-button-container">
-        <button id="Class_btn">クラス</button>
-        <button id="Bulletin_Board_btn">掲示板</button>
-        <button id="Contact_Book_btn">連絡帳</button>
+        <button id="Class_btn" onclick="location.href='<%= request.getContextPath() %>/class.jsp'">クラス</button>
+        <button id="Bulletin_Board_btn" onclick="location.href='<%= request.getContextPath() %>/bulletin_board.jsp'">掲示板</button>
+        <button id="Contact_Book_btn" onclick="location.href='<%= request.getContextPath() %>/contact_book.jsp'">連絡帳</button>
     </div>
 
 </body>

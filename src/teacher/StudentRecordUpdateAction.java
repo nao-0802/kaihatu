@@ -1,43 +1,41 @@
 package teacher;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.example.services.StudentRecordService;
 
 import bean.StudentRecord;
-import dao.StudentRecordDao;
-import tool.Action;
 
-public class StudentRecordUpdateAction extends Action {
+public class StudentRecordUpdateAction {
 
-    @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        HttpSession session = req.getSession(); // セッションを取得
-        // ログインしているユーザーの情報が必要であれば、以下のように取得
-        // User user = (User) session.getAttribute("user");
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // リクエストパラメータから生徒カルテIDを取得
+            String studentRecordId = request.getParameter("studentRecordId");
 
-        String studentRecordId; // 受信した生徒カルテID
-        StudentRecordDao studentRecordDao = new StudentRecordDao(); // StudentRecordDaoのインスタンス
-        StudentRecord studentRecord; // 生徒カルテ情報受け取り用
+            // StudentRecordServiceを使用して生徒カルテ情報を取得
+            StudentRecordService studentRecordService = new StudentRecordService();
+            StudentRecord studentRecord = studentRecordService.getStudentRecordById(studentRecordId);
 
-        // リクエストパラメータの取得
-        studentRecordId = req.getParameter("id"); // 生徒カルテIDを取得
+            if (studentRecord != null) {
+                // 生徒カルテ情報をリクエスト属性に設定
+                request.setAttribute("studentRecord", studentRecord);
 
-        // 生徒カルテ情報の取得
-        studentRecord = studentRecordDao.get(studentRecordId); // 生徒カルテ情報をデータベースから取得
-
-        // 取得した生徒カルテ情報をリクエスト属性にセット
-        req.setAttribute("student_record_id", studentRecord.getStudentRecordId());
-        req.setAttribute("name", studentRecord.getName());
-        req.setAttribute("class_id", studentRecord.getClassId());
-        req.setAttribute("guardian_id", studentRecord.getGuardianId());
-        req.setAttribute("birthdate", studentRecord.getBirthdate());
-        req.setAttribute("allergy", studentRecord.getAllergy());
-        req.setAttribute("features", studentRecord.getFeatures());
-        req.setAttribute("annual_record", studentRecord.getAnnualRecord());
-
-
-        // 更新画面へフォワード
-        req.getRequestDispatcher("student_record_update.jsp").forward(req, res);
+                // 生徒カルテ更新画面にフォワード
+                request.getRequestDispatcher("/teacher/student_record_update.jsp").forward(request, response);
+            } else {
+                // 生徒カルテが見つからなかった場合、エラーメッセージを設定して一覧画面にリダイレクト
+                request.setAttribute("errorMessage", "指定された生徒カルテが見つかりません。");
+                response.sendRedirect("student_list.jsp");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // エラー時はエラーページにリダイレクト
+            response.sendRedirect("error.jsp");
+        }
     }
 }
