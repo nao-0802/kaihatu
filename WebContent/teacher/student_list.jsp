@@ -9,8 +9,12 @@
 	</tr>
 <c:forEach var="t_teacher" items="${list}">
 	<tr>
-	<td>${t_student.student_id}</td>
-	<td>${t_student.student_name}</td>
+	<td name="student_id">${t_student.student_id}</td>
+	<td>
+		<form action="LifeRecordAction" method="post">
+			<input type="button" name="student_name" value="${t_student.student_name}">
+		</form>
+	</td>
 	<td>${t_student.flag}</td>
 	</tr>
 </c:forEach>

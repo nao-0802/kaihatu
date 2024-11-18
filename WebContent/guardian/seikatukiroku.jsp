@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<!-- %@include file="../T_header.html" % -->
+<!-- %@include file="../G_header.html" % -->
 <%@page import="bean.StudentRecord, java.util.List"%>
 list=<% List<StudentRecord> list=(List<StudentRecord>)req.getAttribute("list"); %>
 
@@ -31,14 +31,10 @@ summary {
 </script>
 
 <details>
-    <a href="tel:${hogosyatel}">${hogosyatel}</a>
     <p>arerugi-</p>
     <p>jibyou(hossa),taiou</p>
 </details>
 
-<form action="renrakutyou.jsp">
-<button>連絡帳</button>
-</form>
 
 <details name="life" id=a>
     <summary>睡眠</summary>
@@ -77,5 +73,9 @@ summary {
         <button>記録</button>
     </form>
 </details>
+
+<form action="renrakutyou.jsp">
+<button>連絡帳を書く</button>
+</form>
 
 <!--  %@include file="../footer.html" % -->
