@@ -1,41 +1,76 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<!-- %@include file="../header.html" % -->
-<!-- %@include file="../menu.html" % -->
+<!-- %@include file="../T_header.html" % -->
+<%@page import="bean.StudentRecord, java.util.List"%>
+list=<% List<StudentRecord> list=(List<StudentRecord>)req.getAttribute("list"); %>
 
-<details id=sleep> <summary>睡眠</summary>
-    <form action="sleep.action">
-        <label><input type="radio" name="sleep_amount" value="寝た">寝た</label><br>
-        <label><input type="radio" name="sleep_amount" value="起きた">起きた</label><br>
-        <button name="sleep_btn">記録</button>
+<style>
+summary {
+	display: block;
+  }
+
+
+  summary::-webkit-details-marker {
+	display: none;
+  }
+
+#b {
+	background-color: aquamarine;
+	width: 500px;
+}
+
+#c[open] {
+	background-color: aqua;
+	width: 500px;
+}
+
+</style>
+
+<script>
+    function autoCheck(textValue, radioId) {
+        document.getElementById(radioId).checked = textValue.length > 0;
+    }
+</script>
+
+<form action="renrakutyou.jsp">
+<button>連絡帳</button>
+</form>
+
+
+<details name="life" id=a>
+    <summary>睡眠</summary>
+    <form action="">
+        <div>
+            <label><input type="radio">寝た</label><br>
+            <label><input type="radio">起きた</label><br>
+            <button>記録</button>
+        </div>
     </form>
 </details>
 
-<details id=meal> <summary>食事</summary>
-    <form action="MealRecordAction">
-        <label><input type="radio" name="meal_amount" value="全量">全量</label><br>
-        <label><input type="radio" name="meal_amount" value="半量">半量</label><br>
-        <label><input type="radio" name="meal_amount" value="少量">少量</label><br>
-        <button name="meal_btn">記録</button>
+<details name="life" id=b>
+    <summary>食事</summary>
+    <form action="">
+        <div>
+            <label><input type="radio">全量</label><br>
+            <label><input type="radio">半量</label><br>
+            <label><input type="radio">少量</label><br>
+            <button>記録</button>
+        </div>
     </form>
 </details>
 
-<details id=excretion> <summary>排泄</summary>
-    <form action="excretion.action">
-        <details id=joutai>
-            <summary>
-            <span class="close">状態</span>
-            </summary>
-            <label><input type="radio" name="excretion_amount" value="ころ">ころころ</label><br>
-            <label><input type="radio" name="excretion_amount" value="mizu">水っぽい</label><br>
-            <label><input type="radio" name="excretion_amount" value="その他">その他</label><br>
-            <details id=sonota>
-            <summary>
-                <span class="open"></span>
-            </summary>
-            <input type="text" name="excretion_amount">
-            </details>
-        </details>
-        <button name="excretion_btn">記録</button>
+<details name="life" id=c>
+    <summary>排泄</summary>
+    <form action="">
+        <div>
+            <label><input type="radio">かたい</label><br>
+            <label><input type="radio">やわらかい</label><br>
+            <label>
+                <input type="radio" name="option" id="radio1">その他
+            </label>
+            <input type="text" oninput="autoCheck(this.value, 'radio1')"><br>
+        </div>
+        <button>記録</button>
     </form>
 </details>
 
