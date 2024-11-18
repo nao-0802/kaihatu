@@ -7,14 +7,14 @@ import javax.servlet.http.HttpSession;
 
 import tool.Action;
 
-public class LogoutAction_admin extends Action {
+public class LogoutGuardianAction extends Action {
 	public void execute(
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute("admin") != null) {
-			session.removeAttribute("admin");
+		if (session.getAttribute("guardian") != null) {
+			session.removeAttribute("guardian");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("logout-out.jsp");
 			dispatcher.forward(request, response);
 		} else {

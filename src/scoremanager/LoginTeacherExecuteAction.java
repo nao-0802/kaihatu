@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Guardian;
-import dao.GuardianDao;
+import bean.Teacher;
+import dao.TeacherDao;
 import tool.Action;
 
 
-public class LoginExecuteAction_guardian extends Action {
+public class LoginTeacherExecuteAction extends Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -20,28 +20,28 @@ public class LoginExecuteAction_guardian extends Action {
 		String url = "";
 		String id = "";
 		String password = "";
-		GuardianDao guardianDao = new GuardianDao();
-		Guardian guardian = null;
+		TeacherDao teacherDao = new TeacherDao();
+		Teacher teacher = null;
 
 		//リクエストパラメータ―の取得 2
-		id = req.getParameter("guardianID");// 管理者ID
+		id = req.getParameter("teacherID");// 管理者ID
 		password = req.getParameter("password");//パスワード
 
 		//DBからデータ取得 3
-		guardian = guardianDao.login(id, password);//教員データ取得
+		teacher = teacherDao.login(id, password);//教員データ取得
 
 		//ビジネスロジック 4
 		//DBへデータ保存 5
 		//レスポンス値をセット 6
 		//フォワード 7
 		//条件で手順4~7の内容が分岐
-		if (guardian != null) {// 認証成功の場合
+		if (teacher != null) {// 認証成功の場合
 			// セッション情報を取得
 			HttpSession session = req.getSession(true);
 			// 認証済みフラグを立てる
-			//guardian.setAuthenticated(true);
+			//teacher.setAuthenticated(true);
 			// セッションにログイン情報を保存
-			session.setAttribute("user", guardian);
+			session.setAttribute("user", teacher);
 
 			//リダイレクト
 			url = "main/Menu.action";
@@ -53,7 +53,7 @@ public class LoginExecuteAction_guardian extends Action {
 			errors.add("IDまたはパスワードが確認できませんでした");
 			req.setAttribute("errors", errors);
 			// 入力された教員IDをセット
-			req.setAttribute("guardianID", id);
+			req.setAttribute("teacherID", id);
 			//フォワード
 			url = "login-error.jsp";
 			req.getRequestDispatcher(url).forward(req, res);
