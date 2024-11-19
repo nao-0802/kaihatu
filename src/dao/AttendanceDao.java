@@ -11,7 +11,7 @@ import bean.Attendance;
 
 public class AttendanceDao extends Dao {
     // SQLクエリ: student_record_idに基づいてレコードを取得
-    private String baseSql = "SELECT attendance_id, student_record_id, day, status, notes FROM attendances WHERE student_record_id = ?";
+    private String baseSql = "SELECT attendance_id, student_record_id, day, status, notes FROM t_attendance WHERE student_record_id = ?";
 
     // ResultSetからAttendanceリストを生成するメソッド
     private List<Attendance> postfilter(ResultSet rSet) throws Exception {
@@ -81,7 +81,7 @@ public class AttendanceDao extends Dao {
             if (existingAttendance == null) {
                 // 新しいAttendanceの場合、挿入
                 statement = connection.prepareStatement(
-                        "INSERT INTO attendances (attendance_id, student_record_id, day, status, notes) VALUES (?, ?, ?, ?, ?)"
+                        "INSERT INTO t_attendance (attendance_id, student_record_id, day, status, notes) VALUES (?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, attendance.getAttendanceId());
                 statement.setString(2, attendance.getStudentRecordId());
@@ -91,7 +91,7 @@ public class AttendanceDao extends Dao {
             } else {
                 // 既存のAttendanceの場合、更新
                 statement = connection.prepareStatement(
-                        "UPDATE attendances SET student_record_id = ?, day = ?, status = ?, notes = ? WHERE attendance_id = ?"
+                        "UPDATE t_attendance SET student_record_id = ?, day = ?, status = ?, notes = ? WHERE attendance_id = ?"
                 );
                 statement.setString(1, attendance.getStudentRecordId());
                 statement.setDate(2, attendance.getDay());
@@ -131,7 +131,7 @@ public class AttendanceDao extends Dao {
         ResultSet rSet = null;
 
         try {
-            statement = connection.prepareStatement("SELECT * FROM attendances WHERE attendance_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_attendance WHERE attendance_id = ?");
             statement.setString(1, attendanceId);
             rSet = statement.executeQuery();
             if (rSet.next()) {
@@ -171,7 +171,7 @@ public class AttendanceDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM attendances WHERE attendance_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_attendance WHERE attendance_id = ?");
             statement.setString(1, attendanceId);
             statement.executeUpdate();
             result = true;

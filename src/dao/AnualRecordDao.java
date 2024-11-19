@@ -11,7 +11,7 @@ import bean.AnualRecord;
 
 public class AnualRecordDao extends Dao {
     // SQLクエリ: anual_record_idに基づいてレコードを取得
-    private String baseSql = "SELECT anual_record_id, class_id, text FROM anual_records WHERE class_id = ?";
+    private String baseSql = "SELECT anual_record_id, class_id, text FROM t_anual_record WHERE class_id = ?";
 
     // ResultSetからAnualRecordリストを生成するメソッド
     private List<AnualRecord> postfilter(ResultSet rSet) throws Exception {
@@ -79,7 +79,7 @@ public class AnualRecordDao extends Dao {
             if (existingRecord == null) {
                 // 新しいAnualRecordの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO anual_records (anual_record_id, class_id, text) VALUES (?, ?, ?)"
+                        "INSERT INTO t_anual_record (anual_record_id, class_id, text) VALUES (?, ?, ?)"
                 );
                 statement.setString(1, record.getAnualRecordId());
                 statement.setString(2, record.getClassId());
@@ -87,7 +87,7 @@ public class AnualRecordDao extends Dao {
             } else {
                 // 既存のAnualRecordの更新
                 statement = connection.prepareStatement(
-                        "UPDATE anual_records SET class_id = ?, text = ? WHERE anual_record_id = ?"
+                        "UPDATE t_anual_record SET class_id = ?, text = ? WHERE anual_record_id = ?"
                 );
                 statement.setString(1, record.getClassId());
                 statement.setString(2, record.getText());
@@ -162,7 +162,7 @@ public class AnualRecordDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM anual_records WHERE anual_record_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_anual_record WHERE anual_record_id = ?");
             statement.setString(1, anualRecordId);
             statement.executeUpdate();
             result = true;

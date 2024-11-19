@@ -11,7 +11,7 @@ import bean.Guardian;
 
 public class GuardianDao extends Dao {
     // SQLクエリ: guardian_idに基づいてレコードを取得
-    private String baseSql = "SELECT guardian_id, guardian_name, password, email FROM guardians WHERE guardian_id = ?";
+    private String baseSql = "SELECT guardian_id, guardian_name, password, email FROM t_guardian WHERE guardian_id = ?";
 
     // ResultSetからGuardianリストを生成するメソッド
     private List<Guardian> postfilter(ResultSet rSet) throws Exception {
@@ -34,7 +34,7 @@ public class GuardianDao extends Dao {
 
     public List<Guardian> search(String keyword) throws Exception {
         List<Guardian> list = new ArrayList<>();
-        String sql = "SELECT guardian_id, guardian_name FROM guardians WHERE guardian_name LIKE ?";
+        String sql = "SELECT guardian_id, guardian_name FROM t_guardian WHERE guardian_name LIKE ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -95,7 +95,7 @@ public class GuardianDao extends Dao {
         ResultSet rSet = null;
 
         try {
-            statement = connection.prepareStatement("SELECT guardian_id, guardian_name FROM guardians");
+            statement = connection.prepareStatement("SELECT guardian_id, guardian_name FROM t_guardian");
             rSet = statement.executeQuery();
             while (rSet.next()) {
                 Guardian guardian = new Guardian();
@@ -137,7 +137,7 @@ public class GuardianDao extends Dao {
             if (existingGuardian == null) {
                 // 新しいGuardianの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO guardians (guardian_id, guardian_name, password, email) VALUES (?, ?, ?, ?)"
+                        "INSERT INTO t_guardian (guardian_id, guardian_name, password, email) VALUES (?, ?, ?, ?)"
                 );
                 statement.setString(1, guardian.getGuardianId());
                 statement.setString(2, guardian.getGuardianName());
@@ -146,7 +146,7 @@ public class GuardianDao extends Dao {
             } else {
                 // 既存のGuardianの更新
                 statement = connection.prepareStatement(
-                        "UPDATE guardians SET guardian_name = ?, password = ?, email = ? WHERE guardian_id = ?"
+                        "UPDATE t_guardian SET guardian_name = ?, password = ?, email = ? WHERE guardian_id = ?"
                 );
                 statement.setString(1, guardian.getGuardianName());
                 statement.setString(2, guardian.getPassword());
@@ -223,7 +223,7 @@ public class GuardianDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM guardians WHERE guardian_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_guardian WHERE guardian_id = ?");
             statement.setString(1, guardianId);
             statement.executeUpdate();
             result = true;
@@ -254,7 +254,7 @@ public class GuardianDao extends Dao {
         Connection connection = getConnection();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement("SELECT * FROM guardian WHERE guardian_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_guardian WHERE guardian_id = ?");
             statement.setString(1, guardian_id);
             ResultSet rSet = statement.executeQuery();
             if (rSet.next()) {

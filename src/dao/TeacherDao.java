@@ -11,7 +11,7 @@ import bean.Teacher;
 
 public class TeacherDao extends Dao {
     // SQLクエリ: teacher_idに基づいてレコードを取得
-    private String baseSql = "SELECT teacher_id, teacher_name, password, class_id, flag FROM teachers WHERE teacher_id = ?";
+    private String baseSql = "SELECT teacher_id, teacher_name, password, class_id, flag FROM t_teacher WHERE teacher_id = ?";
 
     // ResultSetからTeacherリストを生成するメソッド
     private List<Teacher> postfilter(ResultSet rSet) throws Exception {
@@ -76,7 +76,7 @@ public class TeacherDao extends Dao {
         ResultSet rSet = null;
 
         try {
-            statement = connection.prepareStatement("SELECT teacher_id, teacher_name, password, class_id, flag FROM teachers");
+            statement = connection.prepareStatement("SELECT teacher_id, teacher_name, password, class_id, flag FROM t_teacher");
             rSet = statement.executeQuery();
             list = postfilter(rSet);
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class TeacherDao extends Dao {
             if (existingTeacher == null) {
                 // 新しいTeacherの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO teachers (teacher_id, teacher_name, password, class_id, flag) VALUES (?, ?, ?, ?, ?)"
+                        "INSERT INTO t_teacher (teacher_id, teacher_name, password, class_id, flag) VALUES (?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, teacher.getTeacherId());
                 statement.setString(2, teacher.getTeacherName());
@@ -123,7 +123,7 @@ public class TeacherDao extends Dao {
             } else {
                 // 既存のTeacherの更新
                 statement = connection.prepareStatement(
-                        "UPDATE teachers SET teacher_name = ?, password = ?, class_id = ?, flag = ? WHERE teacher_id = ?"
+                        "UPDATE t_teacher SET teacher_name = ?, password = ?, class_id = ?, flag = ? WHERE teacher_id = ?"
                 );
                 statement.setString(1, teacher.getTeacherName());
                 statement.setString(2, teacher.getPassword());
@@ -202,7 +202,7 @@ public class TeacherDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM teachers WHERE teacher_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_teacher WHERE teacher_id = ?");
             statement.setString(1, teacherId);
             statement.executeUpdate();
             result = true;
@@ -232,7 +232,7 @@ public class TeacherDao extends Dao {
         Connection connection = getConnection();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement("SELECT * FROM teacher WHERE teacher_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_teacher WHERE teacher_id = ?");
             statement.setString(1, teacher_id);
             ResultSet rSet = statement.executeQuery();
             if (rSet.next()) {
@@ -268,7 +268,7 @@ public class TeacherDao extends Dao {
 
         try {
             // SQLクエリ: 教師名または教師IDで検索
-            String sql = "SELECT teacher_id, teacher_name, password, class_id, flag FROM teachers WHERE teacher_name LIKE ? OR teacher_id LIKE ?";
+            String sql = "SELECT teacher_id, teacher_name, password, class_id, flag FROM t_teacher WHERE teacher_name LIKE ? OR teacher_id LIKE ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, "%" + keyword + "%");
             statement.setString(2, "%" + keyword + "%");

@@ -11,7 +11,7 @@ import bean.MealRecord;
 
 public class MealRecordDao extends Dao {
     // SQLクエリ: student_idに基づいてレコードを取得
-    private String baseSql = "SELECT meal_id, student_id, day, time, type, meal_amount FROM meal_records WHERE student_id = ?";
+    private String baseSql = "SELECT meal_id, student_id, day, time, type, meal_amount FROM t_meal_record WHERE student_id = ?";
 
     // ResultSetからMealRecordリストを生成するメソッド
     private List<MealRecord> postfilter(ResultSet rSet) throws Exception {
@@ -82,7 +82,7 @@ public class MealRecordDao extends Dao {
             if (existingRecord == null) {
                 // 新しいMealRecordの場合、挿入
                 statement = connection.prepareStatement(
-                        "INSERT INTO meal_records (meal_id, student_id, day, time, type, meal_amount) VALUES (?, ?, ?, ?, ?, ?)"
+                        "INSERT INTO t_meal_record (meal_id, student_id, day, time, type, meal_amount) VALUES (?, ?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, mealRecord.getMealId());
                 statement.setString(2, mealRecord.getStudentId());
@@ -93,7 +93,7 @@ public class MealRecordDao extends Dao {
             } else {
                 // 既存のMealRecordの場合、更新
                 statement = connection.prepareStatement(
-                        "UPDATE meal_records SET student_id = ?, day = ?, time = ?, type = ?, meal_amount = ? WHERE meal_id = ?"
+                        "UPDATE t_meal_record SET student_id = ?, day = ?, time = ?, type = ?, meal_amount = ? WHERE meal_id = ?"
                 );
                 statement.setString(1, mealRecord.getStudentId());
                 statement.setDate(2, mealRecord.getDay());
@@ -175,7 +175,7 @@ public class MealRecordDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM meal_records WHERE meal_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_meal_record WHERE meal_id = ?");
             statement.setString(1, mealId);
             statement.executeUpdate();
             result = true;

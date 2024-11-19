@@ -11,7 +11,7 @@ import bean.StudentRecord;
 
 public class StudentRecordDao extends Dao {
     // SQLクエリ: 学生記録の情報を取得する基本SQL
-    private String baseSql = "SELECT * FROM student_records WHERE class_id = ?";
+    private String baseSql = "SELECT * FROM t_student_record WHERE class_id = ?";
 
     // ResultSetからStudentRecordリストを生成するメソッド
     private List<StudentRecord> postFilter(ResultSet rSet) throws SQLException {
@@ -82,7 +82,7 @@ public class StudentRecordDao extends Dao {
         try {
             // 新しい学生記録の場合は挿入、既存の学生記録の場合は更新
             statement = connection.prepareStatement(
-                    "INSERT INTO student_records (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
             statement.setString(1, studentRecord.getStudentRecordId());
             statement.setString(2, studentRecord.getName());
@@ -124,7 +124,7 @@ public class StudentRecordDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM student_records WHERE student_record_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_student_record WHERE student_record_id = ?");
             statement.setString(1, studentRecordId);
             statement.executeUpdate();
             result = true;

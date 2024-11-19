@@ -11,7 +11,7 @@ import bean.BulletinBoard;
 
 public class BulletinBoardDao extends Dao {
     // SQLクエリ: teacher_idに基づいてレコードを取得
-    private String baseSql = "SELECT post_id, title, content, teacher_id FROM bulletin_boards WHERE teacher_id = ?";
+    private String baseSql = "SELECT post_id, title, content, teacher_id FROM t_bulletin_board WHERE teacher_id = ?";
 
     // ResultSetからBulletinBoardリストを生成するメソッド
     private List<BulletinBoard> postfilter(ResultSet rSet) throws Exception {
@@ -77,7 +77,7 @@ public class BulletinBoardDao extends Dao {
         try {
             // 新規BulletinBoardを作成
             statement = connection.prepareStatement(
-                    "INSERT INTO bulletin_boards (post_id, title, content, teacher_id) VALUES (?, ?, ?, ?)"
+                    "INSERT INTO t_bulletin_board (post_id, title, content, teacher_id) VALUES (?, ?, ?, ?)"
             );
             statement.setString(1, bulletinBoard.getPostId());
             statement.setString(2, bulletinBoard.getTitle());
@@ -119,7 +119,7 @@ public class BulletinBoardDao extends Dao {
             if (existingBulletinBoard == null) {
                 // 新しいBulletinBoardの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO bulletin_boards (post_id, title, content, teacher_id) VALUES (?, ?, ?, ?)"
+                        "INSERT INTO t_bulletin_board (post_id, title, content, teacher_id) VALUES (?, ?, ?, ?)"
                 );
                 statement.setString(1, bulletinBoard.getPostId());
                 statement.setString(2, bulletinBoard.getTitle());
@@ -128,7 +128,7 @@ public class BulletinBoardDao extends Dao {
             } else {
                 // 既存のBulletinBoardの更新
                 statement = connection.prepareStatement(
-                        "UPDATE bulletin_boards SET title = ?, content = ?, teacher_id = ? WHERE post_id = ?"
+                        "UPDATE t_bulletin_board SET title = ?, content = ?, teacher_id = ? WHERE post_id = ?"
                 );
                 statement.setString(1, bulletinBoard.getTitle());
                 statement.setString(2, bulletinBoard.getContent());
@@ -166,7 +166,7 @@ public class BulletinBoardDao extends Dao {
         ResultSet rSet = null;
 
         try {
-            statement = connection.prepareStatement("SELECT * FROM bulletin_boards WHERE post_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_bulletin_board WHERE post_id = ?");
             statement.setString(1, postId);
             rSet = statement.executeQuery();
             if (rSet.next()) {
@@ -205,7 +205,7 @@ public class BulletinBoardDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM bulletin_boards WHERE post_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_bulletin_board WHERE post_id = ?");
             statement.setString(1, postId);
             statement.executeUpdate();
             result = true;

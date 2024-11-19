@@ -11,7 +11,7 @@ import bean.Student;
 
 public class StudentDao extends Dao {
     // SQLクエリ: 学生の情報を取得するための基本SQL
-    private String baseSql = "SELECT * FROM students WHERE class_id = ?";
+    private String baseSql = "SELECT * FROM t_student WHERE class_id = ?";
 
     // ResultSetからStudentリストを生成するメソッド
     private List<Student> postFilter(ResultSet rSet) throws SQLException {
@@ -40,7 +40,7 @@ public class StudentDao extends Dao {
         Connection connection = getConnection();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement("SELECT * FROM student WHERE student_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_student WHERE student_id = ?");
             statement.setString(1, student_id);
             ResultSet rSet = statement.executeQuery();
             if (rSet.next()) {
@@ -113,7 +113,7 @@ public class StudentDao extends Dao {
         ResultSet rSet = null;
 
         try {
-            String sql = "SELECT * FROM students WHERE student_name LIKE ? OR student_id LIKE ?";
+            String sql = "SELECT * FROM t_student WHERE student_name LIKE ? OR student_id LIKE ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, "%" + keyword + "%");
             statement.setString(2, "%" + keyword + "%");
@@ -158,7 +158,7 @@ public class StudentDao extends Dao {
         try {
             // 新しい学生の場合は挿入、既存の学生の場合は更新
             statement = connection.prepareStatement(
-                    "INSERT INTO students (student_id, student_name, password, class_id, guardian_id, flag, student_record_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO t_student (student_id, student_name, password, class_id, guardian_id, flag, student_record_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
             );
             statement.setString(1, student.getStudentId());
             statement.setString(2, student.getStudentName());
@@ -198,7 +198,7 @@ public class StudentDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM students WHERE student_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_student WHERE student_id = ?");
             statement.setString(1, studentId);
             statement.executeUpdate();
             result = true;

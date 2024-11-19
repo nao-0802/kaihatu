@@ -15,7 +15,7 @@ public class AdminDao extends Dao {
         Connection connection = getConnection();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement("SELECT * FROM admin WHERE admin_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_admin WHERE admin_id = ?");
             statement.setString(1, admin_id);
             ResultSet rSet = statement.executeQuery();
             if (rSet.next()) {

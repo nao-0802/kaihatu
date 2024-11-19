@@ -11,7 +11,7 @@ import bean.SleepRecord;
 
 public class SleepRecordDao extends Dao {
     // SQLクエリ: student_idに基づいてレコードを取得
-    private String baseSql = "SELECT sleep_id, student_id, day, time, type FROM sleep_records WHERE student_id = ?";
+    private String baseSql = "SELECT sleep_id, student_id, day, time, type FROM t_sleep_record WHERE student_id = ?";
 
     // ResultSetからSleepRecordリストを生成するメソッド
     private List<SleepRecord> postfilter(ResultSet rSet) throws Exception {
@@ -81,7 +81,7 @@ public class SleepRecordDao extends Dao {
             if (existingRecord == null) {
                 // 新しいSleepRecordの場合、挿入
                 statement = connection.prepareStatement(
-                        "INSERT INTO sleep_records (sleep_id, student_id, day, time, type) VALUES (?, ?, ?, ?, ?)"
+                        "INSERT INTO t_sleep_record (sleep_id, student_id, day, time, type) VALUES (?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, sleepRecord.getSleepId());
                 statement.setString(2, sleepRecord.getStudentId());
@@ -91,7 +91,7 @@ public class SleepRecordDao extends Dao {
             } else {
                 // 既存のSleepRecordの場合、更新
                 statement = connection.prepareStatement(
-                        "UPDATE sleep_records SET student_id = ?, day = ?, time = ?, type = ? WHERE sleep_id = ?"
+                        "UPDATE t_sleep_record SET student_id = ?, day = ?, time = ?, type = ? WHERE sleep_id = ?"
                 );
                 statement.setString(1, sleepRecord.getStudentId());
                 statement.setDate(2, sleepRecord.getDay());
@@ -131,7 +131,7 @@ public class SleepRecordDao extends Dao {
         ResultSet rSet = null;
 
         try {
-            statement = connection.prepareStatement("SELECT * FROM sleep_records WHERE sleep_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_sleep_record WHERE sleep_id = ?");
             statement.setString(1, sleepId);
             rSet = statement.executeQuery();
             if (rSet.next()) {
@@ -171,7 +171,7 @@ public class SleepRecordDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM sleep_records WHERE sleep_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_sleep_record WHERE sleep_id = ?");
             statement.setString(1, sleepId);
             statement.executeUpdate();
             result = true;

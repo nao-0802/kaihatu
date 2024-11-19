@@ -11,7 +11,7 @@ import bean.ContactBook;
 
 public class ContactBookDao extends Dao {
     // SQLクエリ: teacher_idに基づいてレコードを取得
-    private String baseSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, check FROM contact_books WHERE teacher_id = ?";
+    private String baseSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, check FROM t_contact_book WHERE teacher_id = ?";
 
     // ResultSetからContactBookリストを生成するメソッド
     private List<ContactBook> postfilter(ResultSet rSet) throws Exception {
@@ -82,7 +82,7 @@ public class ContactBookDao extends Dao {
             if (existingContactBook == null) {
                 // 新しいContactBookの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO contact_books (contact_book_id, teacher_id, guardian_id, day, contact_details, check) VALUES (?, ?, ?, ?, ?, ?)"
+                        "INSERT INTO t_contact_book (contact_book_id, teacher_id, guardian_id, day, contact_details, check) VALUES (?, ?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, contactBook.getContactBookId());
                 statement.setString(2, contactBook.getTeacherId());
@@ -93,7 +93,7 @@ public class ContactBookDao extends Dao {
             } else {
                 // 既存のContactBookの更新
                 statement = connection.prepareStatement(
-                        "UPDATE contact_books SET teacher_id = ?, guardian_id = ?, day = ?, contact_details = ?, check = ? WHERE contact_book_id = ?"
+                        "UPDATE t_contact_book SET teacher_id = ?, guardian_id = ?, day = ?, contact_details = ?, check = ? WHERE contact_book_id = ?"
                 );
                 statement.setString(1, contactBook.getTeacherId());
                 statement.setString(2, contactBook.getGuardianId());
@@ -174,7 +174,7 @@ public class ContactBookDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM contact_books WHERE contact_book_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_contact_book WHERE contact_book_id = ?");
             statement.setString(1, contactBookId);
             statement.executeUpdate();
             result = true;

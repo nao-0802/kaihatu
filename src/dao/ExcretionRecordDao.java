@@ -11,7 +11,7 @@ import bean.ExcretionRecord;
 
 public class ExcretionRecordDao extends Dao {
     // SQLクエリ: student_idに基づいてレコードを取得
-    private String baseSql = "SELECT excretion_id, student_id, day, time, type, excretion_detail FROM excretion_records WHERE student_id = ?";
+    private String baseSql = "SELECT excretion_id, student_id, day, time, type, excretion_detail FROM t_excretion_record WHERE student_id = ?";
 
     // ResultSetからExcretionRecordリストを生成するメソッド
     private List<ExcretionRecord> postfilter(ResultSet rSet) throws Exception {
@@ -82,7 +82,7 @@ public class ExcretionRecordDao extends Dao {
             if (existingRecord == null) {
                 // 新しいExcretionRecordの場合、挿入
                 statement = connection.prepareStatement(
-                        "INSERT INTO excretion_records (excretion_id, student_id, day, time, type, excretion_detail) VALUES (?, ?, ?, ?, ?, ?)"
+                        "INSERT INTO t_excretion_record (excretion_id, student_id, day, time, type, excretion_detail) VALUES (?, ?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, excretionRecord.getExcretionId());
                 statement.setString(2, excretionRecord.getStudentId());
@@ -93,7 +93,7 @@ public class ExcretionRecordDao extends Dao {
             } else {
                 // 既存のExcretionRecordの場合、更新
                 statement = connection.prepareStatement(
-                        "UPDATE excretion_records SET student_id = ?, day = ?, time = ?, type = ?, excretion_detail = ? WHERE excretion_id = ?"
+                        "UPDATE t_excretion_record SET student_id = ?, day = ?, time = ?, type = ?, excretion_detail = ? WHERE excretion_id = ?"
                 );
                 statement.setString(1, excretionRecord.getStudentId());
                 statement.setDate(2, excretionRecord.getDay());
@@ -134,7 +134,7 @@ public class ExcretionRecordDao extends Dao {
         ResultSet rSet = null;
 
         try {
-            statement = connection.prepareStatement("SELECT * FROM excretion_records WHERE excretion_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_excretion_record WHERE excretion_id = ?");
             statement.setString(1, excretionId);
             rSet = statement.executeQuery();
             if (rSet.next()) {
@@ -175,7 +175,7 @@ public class ExcretionRecordDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM excretion_records WHERE excretion_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_excretion_record WHERE excretion_id = ?");
             statement.setString(1, excretionId);
             statement.executeUpdate();
             result = true;

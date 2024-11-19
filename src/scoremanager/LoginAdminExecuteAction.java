@@ -53,7 +53,7 @@ public class LoginAdminExecuteAction extends Action {
 			req.setAttribute("teacher", teacher);
 			req.setAttribute("guardian", guardian);
 
-			req.getRequestDispatcher("login-out.jsp")
+			req.getRequestDispatcher("/admin/login-out.jsp")
 				.forward(req, res);
 		} else {
 			// 認証失敗の場合

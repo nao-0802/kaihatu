@@ -11,7 +11,7 @@ import bean.Appointment;
 
 public class AppointmentDao extends Dao {
     // SQLクエリ: teacher_idに基づいてレコードを取得
-    private String baseSql = "SELECT appointment_id, teacher_id, guardian_id, appointment_date, appointment_time, flag FROM appointments WHERE teacher_id = ?";
+    private String baseSql = "SELECT appointment_id, teacher_id, guardian_id, appointment_date, appointment_time, flag FROM t_appointment WHERE teacher_id = ?";
 
     // ResultSetからAppointmentリストを生成するメソッド
     private List<Appointment> postfilter(ResultSet rSet) throws Exception {
@@ -82,7 +82,7 @@ public class AppointmentDao extends Dao {
             if (existingAppointment == null) {
                 // 新しいAppointmentの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO appointments (appointment_id, teacher_id, guardian_id, appointment_date, appointment_time, flag) VALUES (?, ?, ?, ?, ?, ?)"
+                        "INSERT INTO t_appointment (appointment_id, teacher_id, guardian_id, appointment_date, appointment_time, flag) VALUES (?, ?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, appointment.getAppointmentId());
                 statement.setString(2, appointment.getTeacherId());
@@ -93,7 +93,7 @@ public class AppointmentDao extends Dao {
             } else {
                 // 既存のAppointmentの更新
                 statement = connection.prepareStatement(
-                        "UPDATE appointments SET teacher_id = ?, guardian_id = ?, appointment_date = ?, appointment_time = ?, flag = ? WHERE appointment_id = ?"
+                        "UPDATE t_appointment SET teacher_id = ?, guardian_id = ?, appointment_date = ?, appointment_time = ?, flag = ? WHERE appointment_id = ?"
                 );
                 statement.setString(1, appointment.getTeacherId());
                 statement.setString(2, appointment.getGuardianId());
@@ -133,7 +133,7 @@ public class AppointmentDao extends Dao {
         ResultSet rSet = null;
 
         try {
-            statement = connection.prepareStatement("SELECT * FROM appointments WHERE appointment_id = ?");
+            statement = connection.prepareStatement("SELECT * FROM t_appointment WHERE appointment_id = ?");
             statement.setString(1, appointmentId);
             rSet = statement.executeQuery();
             if (rSet.next()) {
@@ -174,7 +174,7 @@ public class AppointmentDao extends Dao {
         boolean result = false;
 
         try {
-            statement = connection.prepareStatement("DELETE FROM appointments WHERE appointment_id = ?");
+            statement = connection.prepareStatement("DELETE FROM t_appointment WHERE appointment_id = ?");
             statement.setString(1, appointmentId);
             statement.executeUpdate();
             result = true;

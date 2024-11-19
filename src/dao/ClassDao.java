@@ -11,7 +11,7 @@ import bean.Class;
 
 public class ClassDao extends Dao {
     // SQLクエリ: class_idに基づいてレコードを取得
-    private String baseSql = "SELECT class_id, class_name FROM classes WHERE class_id = ?";
+    private String baseSql = "SELECT class_id, class_name FROM t_class WHERE class_id = ?";
 
     // ResultSetからClassリストを生成するメソッド
     private List<Class> postfilter(ResultSet rSet) throws Exception {
