@@ -10,10 +10,10 @@
     </tr>
     <c:forEach var="t_teacher" items="${teacher}">
         <tr>
-            <td>${t_teacher.teacher_id}</td>
-            <td>${t_teacher.teacher_name}</td>
-            <td><a href="TeacherUpdateExecuteAction?id=${t_teacher.teacher_id}">変更</a></td>
-            <td><a href="TeacherDeleteExecuteAction?id=${t_teacher.teacher_id}">削除</a></td>
+            <td>${t_teacher.teacherId}</td>
+            <td>${t_teacher.teacherName}</td>
+            <td><a href="TeacherUpdateExecuteAction?id=${t_teacher.teacherId}">変更</a></td>
+            <td><a href="TeacherDeleteExecuteAction?id=${t_teacher.teacherId}">削除</a></td>
         </tr>
     </c:forEach>
 </table>
@@ -26,10 +26,10 @@
     </tr>
     <c:forEach var="t_guardian" items="${guardian}">
         <tr>
-            <td>${t_guardian.guardian_id}</td>
-            <td>${t_guardian.guardian_name}</td>
-            <td><a href="GuardianUpdateExecuteAction?id=${t_guardian.guardian_id}">変更</a></td>
-            <td><a href="GuardianDeleteExecuteAction?id=${t_guardian.guardian_id}">削除</a></td>
+            <td>${t_guardian.guardianId}</td>
+            <td>${t_guardian.guardianName}</td>
+            <td><a href="GuardianUpdateExecuteAction?id=${t_guardian.guardianId}">変更</a></td>
+            <td><a href="GuardianDeleteExecuteAction?id=${t_guardian.guardianId}">削除</a></td>
         </tr>
     </c:forEach>
 </table>
