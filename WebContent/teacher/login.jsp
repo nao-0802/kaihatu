@@ -1,11 +1,126 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <!-- %@include file="../header.html" % -->
 
-<form action="Login.action" method="post">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+
+
 <h2 name="title">すてっぷのーと</h2>
-<p>ID:<input type="text" name="teacherID"></p>
-<p>パスワード:<input type="password" name="password"></p>
-<button name="login_btn">ログイン</button>
+
+<form class="a" action="Login.action" method="post">
+    <table>
+        <tr>
+            <th></th>
+            <td>
+                <input type="text" name="teacherID" placeholder="教職員ID" required>
+            </td>
+        </tr>
+
+        <tr>
+            <th></th>
+            <td>
+                <input type="password" id="password" name="password" placeholder="パスワード" required>
+                <i id="toggleIcon" class="fa-solid fa-eye fa-fw"></i>
+            </td>
+        </tr>
+
+    </table>
+    <br>
+    <button name="login_btn">ログイン</button>
 </form>
+
+
+    <script>
+        const passwordField = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+        let passwordVisible = false;
+
+        toggleIcon.addEventListener('click', function () {
+          if (passwordVisible) {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+            passwordVisible = false;
+          } else {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+            passwordVisible = true;
+          }
+        });
+      </script>
+
+<style>
+body{
+    background-color: rgb(252, 252, 252);
+    font-family: "Futura", Helvetica, sans-serif;
+}
+
+h2{
+    font-size: 30px;
+    text-align: center;
+    color: #daf3df;
+    border-bottom: 3px solid #daf3df;
+    -webkit-text-stroke:1px #919291;
+}
+
+.a button{
+    font-size: 15px;
+    color: #919291;
+    background-color: #daf3df;
+    padding: 5px;
+    border-radius: 5px;
+}
+.a button:hover{
+    color: #daf3df;
+    background-color: #919291;
+}
+
+.a{
+    text-align: center;
+    width: fit-content;
+    margin: auto;
+    padding: 10px;
+}
+
+.a th{
+    vertical-align: top;
+    padding: 10px;
+}
+
+input[type="text"]{
+    width: 200px;
+    padding: 5px;
+}
+
+input[type="password"]{
+    width: 200px;
+    padding: 5px;
+}
+
+
+#toggleIcon {
+    position: relative;
+    left: -2.2em;
+  }
+  #password {
+    box-sizing: border-box;
+    padding-right: 2.4em;
+  }
+
+.password-container {
+    position: relative;
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+
+</style>
 
 <!--  %@include file="../footer.html" % -->
