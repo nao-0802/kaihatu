@@ -6,13 +6,14 @@
 
 <a href="student_list.jsp">←</a>
 <p>保護者からの連絡</p>
+<input type="text" name="GuardianId" value="<%=list.getGuardianId() %>" readonly>
 <input type="text" name="G_Contact_Book" value="<%=list.getContactDetails() %>"readonly>
 
 <form action="ContactBookWriteExecuteAction" method="post">
 
 <p>教職員からの連絡</p>
 
-<input type="text" name="T_Contact_Book">
+<input type="text" name="ContactBookWrite">
 <input type="botton" value="送信">
 
 </form>
