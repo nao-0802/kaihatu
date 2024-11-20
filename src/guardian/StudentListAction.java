@@ -1,4 +1,4 @@
-package teacher;
+package guardian;
 
 import java.io.IOException;
 import java.sql.*;
@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.StudentRecord;
 import util.DatabaseConnection;
@@ -17,13 +18,24 @@ public class StudentListAction {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<StudentRecord> studentList = new ArrayList<>();
 
+        // 保護者IDをセッションから取得
+        HttpSession session = request.getSession();
+        Integer guardianId = (Integer) session.getAttribute("guardianId"); // 保護者IDをセッションから取得
+
+        if (guardianId == null) {
+            // 保護者IDがセッションにない場合はエラーページにリダイレクト
+            response.sendRedirect("error.jsp");
+            return;
+        }
+
         try {
             // データベース接続
             Connection conn = DatabaseConnection.getConnection();
 
-            // 生徒情報を取得するSQL文
-            String sql = "SELECT * FROM t_student_record";
+            // 保護者IDに一致する生徒情報を取得するSQL文
+            String sql = "SELECT * FROM t_student_record WHERE guardian_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, guardianId); // 保護者IDを設定
 
             // SQLを実行して結果を取得
             ResultSet rs = stmt.executeQuery();
@@ -57,7 +69,7 @@ public class StudentListAction {
         } catch (SQLException e) {
             e.printStackTrace();
             // エラーが発生した場合はエラーページにリダイレクト
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("student_reccord_guardian_error.jsp");
         }
     }
 }
