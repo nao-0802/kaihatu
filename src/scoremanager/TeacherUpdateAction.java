@@ -1,4 +1,4 @@
-package admin;
+package scoremanager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +10,9 @@ import tool.Action;
 
 public class TeacherUpdateAction extends Action {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+
+    	System.out.println("mes: TeacherUpdateAtion Run");
         HttpSession session = req.getSession();
 
         // 教師IDを取得
@@ -31,6 +34,6 @@ public class TeacherUpdateAction extends Action {
         }
 
         req.setAttribute("teacher", teacher);
-        req.getRequestDispatcher("/admin/teacher_update.jsp").forward(req, res);
+        req.getRequestDispatcher("/admin/Teacher_update.jsp").forward(req, res);
     }
 }
