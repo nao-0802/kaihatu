@@ -1,7 +1,11 @@
 package guardian;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,18 +13,23 @@ import bean.ContactBook;
 import dao.ContactBookDao;
 
 public class ContactBookWriteAction {
+	public void doGet (
+			HttpServletRequest request, HttpServletResponse response
+		) throws ServletException, IOException {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res)
-			throws Exception {
+		// 現在日時を取得
+		LocalDateTime nowDate = LocalDateTime.now();
 
-		String guardian_id = req.getParameter("guardian_id");
-		ContactBookDao dao = new ContactBookDao();
-		List<ContactBook> list=dao.serch("");
-		req.setAttribute("list", list);
+		SimpleDateFormat sdf1= new SimpleDateFormat("yyyy/MM/dd");
 
-		//JSPへフォワード 7
-		req.getRequestDispatcher("contactbook.jsp").forward(req, res);
+		// ローカル変数
+		ContactBookDao dao=new ContactBookDao();
+		List<ContactBook> list=dao.serch("sdf1");
+
+		request.setAttribute("list", list);
+
+
+		request.getRequestDispatcher("/admin/ContactBookWriteEntry.jsp")
+			.forward(request, response);
 	}
-
 }
