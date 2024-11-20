@@ -15,7 +15,7 @@ public class BulletinBoardListAction extends Action{
 		BulletinBoardDao dao = new BulletinBoardDao();
 
 		//JSPへフォワード 7
-		req.getRequestDispatcher("bulletinboard.jsp").forward(req, res);
+		req.getRequestDispatcher("BulletinBoard.jsp").forward(req, res);
 	}
 
 }
