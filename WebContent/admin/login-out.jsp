@@ -12,8 +12,8 @@
         <tr>
             <td>${t_teacher.teacherId}</td>
             <td>${t_teacher.teacherName}</td>
-            <td><a href="TeacherUpdateExecuteAction?id=${t_teacher.teacherId}">変更</a></td>
-            <td><a href="TeacherDeleteExecuteAction?id=${t_teacher.teacherId}">削除</a></td>
+            <td><a href="/admin/TeacherUpdate.Action?id=${t_teacher.teacherId}">変更</a></td>
+            <td><a href="/admin/TeacherDelete.Action?id=${t_teacher.teacherId}">削除</a></td>
         </tr>
     </c:forEach>
 </table>
@@ -28,8 +28,8 @@
         <tr>
             <td>${t_guardian.guardianId}</td>
             <td>${t_guardian.guardianName}</td>
-            <td><a href="GuardianUpdateExecuteAction?id=${t_guardian.guardianId}">変更</a></td>
-            <td><a href="GuardianDeleteExecuteAction?id=${t_guardian.guardianId}">削除</a></td>
+            <td><a href="/admin/GuardianUpdate.Action?id=${t_guardian.guardianId}">変更</a></td>
+            <td><a href="/admin/GuardianDelete.Action?id=${t_guardian.guardianId}">削除</a></td>
         </tr>
     </c:forEach>
 </table>

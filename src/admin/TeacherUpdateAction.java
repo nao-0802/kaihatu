@@ -13,7 +13,7 @@ public class TeacherUpdateAction extends Action {
         HttpSession session = req.getSession();
 
         // 教師IDを取得
-        String teacherId = req.getParameter("teacher_id");
+        String teacherId = req.getParameter("teacherId");
 
         if (teacherId == null || teacherId.isEmpty()) {
             req.setAttribute("error", "教師IDが指定されていません。");
@@ -31,6 +31,6 @@ public class TeacherUpdateAction extends Action {
         }
 
         req.setAttribute("teacher", teacher);
-        req.getRequestDispatcher("teacher_update.jsp").forward(req, res);
+        req.getRequestDispatcher("/admin/teacher_update.jsp").forward(req, res);
     }
 }
