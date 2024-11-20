@@ -1,18 +1,20 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<!-- %@include file="../header.html" % -->
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
-
-
-<h2 name="title">すてっぷのーと</h2>
+<header class="header">
+<div class="navtext-container">
+    <h2 name="title" class="navtext">すてっぷのーと</h2>
+</div>
+</header>
 
 <form class="a" action="Login.action" method="post">
     <table>
         <tr>
             <th></th>
             <td>
-                <input type="text" name="teacherID" placeholder="教職員ID" required>
+                <input type="text" name="teacherID" placeholder="教職員ID(10桁)" required>
             </td>
         </tr>
 
@@ -52,22 +54,22 @@
 
 <style>
 body{
-    background-color: rgb(252, 252, 252);
-    font-family: "Futura", Helvetica, sans-serif;
+    background-color: #C5E99B;
+    margin: 0;
 }
 
-h2{
-    font-size: 30px;
-    text-align: center;
-    color: #daf3df;
-    border-bottom: 3px solid #daf3df;
-    -webkit-text-stroke:1px #919291;
-}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background: #757575;
+  }
 
 .a button{
     font-size: 15px;
     color: #919291;
-    background-color: #daf3df;
+    /* background-color: #daf3df; */
     padding: 5px;
     border-radius: 5px;
 }
@@ -81,6 +83,7 @@ h2{
     width: fit-content;
     margin: auto;
     padding: 10px;
+    margin-top: 30px;
 }
 
 .a th{
@@ -97,7 +100,6 @@ input[type="password"]{
     width: 200px;
     padding: 5px;
 }
-
 
 #toggleIcon {
     position: relative;
@@ -120,6 +122,21 @@ input[type="password"]{
     cursor: pointer;
   }
 
+  .navtext-container {
+    width: 100%;
+    height: 52px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navtext {
+    letter-spacing: 4px;
+    font-size: 25px;
+    text-align: center;
+    color: #E9E9E9;
+}
 
 </style>
 
