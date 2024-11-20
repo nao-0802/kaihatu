@@ -62,9 +62,9 @@ public class LoginAdminExecuteAction extends Action {
 			errors.add("IDまたはパスワードが確認できませんでした");
 			req.setAttribute("errors", errors);
 			// 入力された教員IDをセット
-			req.setAttribute("adminID", id);
+			req.setAttribute("adminId", id);
 			//フォワード
-			url = "login-error.jsp";
+			url = "admin/login-error.jsp";
 			req.getRequestDispatcher(url).forward(req, res);
 		}
 
