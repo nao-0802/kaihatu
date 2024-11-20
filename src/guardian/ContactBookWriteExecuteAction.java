@@ -24,7 +24,7 @@ public class ContactBookWriteExecuteAction extends Action {
             Date nowDate = Date.from(nowDateTime.atZone(ZoneId.systemDefault()).toInstant());
 
             // パラメータ取得
-            String guardianId = request.getParameter("GuardianId");
+            String TeacherId = request.getParameter("TeacherId");
             String contactBookWrite = request.getParameter("ContactBookWrite");
 
             // Daoのインスタンス作成
@@ -32,7 +32,7 @@ public class ContactBookWriteExecuteAction extends Action {
 
             // ContactBookオブジェクトの作成
             ContactBook p = new ContactBook();
-            p.setGuardinaId(guardianId);
+            p.setTeacherId(TeacherId);
             p.setContactDetails(contactBookWrite);
             p.setDay(nowDate);
 
