@@ -10,7 +10,7 @@
       <li class="top"><a href="#">生活記録</a></li>
       <li><a href="#">連絡帳</a></li>
       <li><a href="#">全体掲示板</a></li>
-      <li><a href="#">欠席連絡</a></li>
+      <li><a href="#">カルテ</a></li>
       <li><a href="#">ログアウト</a></li>
     </ul>
 
