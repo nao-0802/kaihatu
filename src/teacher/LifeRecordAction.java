@@ -1,10 +1,12 @@
 package teacher;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.StudentRecord;
-import dao.StudentRecordDao;
+import bean.Student;
+import dao.StudentDao;
 import tool.Action;
 
 public class LifeRecordAction extends Action{
@@ -13,12 +15,14 @@ public class LifeRecordAction extends Action{
 	public void execute(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 
-		String student_id = req.getParameter("student_id");
-		StudentRecordDao dao = new StudentRecordDao();
-		List<StudentRecord> list = dao.search(student_id);
-		req.setAttribute("list", list);
+		@SuppressWarnings("unused")
+		String studentId = req.getParameter("studnet_id");
 
-		//JSPへフォワード 7
-		req.getRequestDispatcher("seikatukiroku.jsp").forward(req, res);
+		StudentDao studentdao=new StudentDao();
+
+		List<Student> list=studentdao.search(studentId);
+
+		req.setAttribute("list", list);
+		req.getRequestDispatcher("/lifeRecord.jsp").forward(req, res);
 	}
 }
