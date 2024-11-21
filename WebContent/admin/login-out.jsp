@@ -30,8 +30,8 @@
         <tr>
             <td>${t_guardian.guardianId}</td>
             <td>${t_guardian.guardianName}</td>
-            <td><a href="GuardianUpdate.Action?id=${t_guardian.guardianId}">変更</a></td>
-            <td><a href="GuardianDelete.Action?id=${t_guardian.guardianId}">削除</a></td>
+            <td><a href="GuardianUpdate.action?id=${t_guardian.guardianId}">変更</a></td>
+            <td><a href="GuardianDelete.action?id=${t_guardian.guardianId}">削除</a></td>
         </tr>
     </c:forEach>
 </table>

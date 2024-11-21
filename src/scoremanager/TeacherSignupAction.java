@@ -1,10 +1,9 @@
 package scoremanager;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,79 +11,82 @@ import javax.servlet.http.HttpSession;
 import bean.Admin;
 import bean.Class;
 import dao.ClassDao;
+import tool.Action;
 
-public class TeacherSignupAction extends HttpServlet {
+public class TeacherSignupAction extends Action {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse res)
+            throws Exception {
         HttpSession session = req.getSession();
         Admin admin = (Admin) session.getAttribute("user");
 
         // 初期値設定
-        req.setAttribute("teacher_id", "教職員IDを入力してください");
-        req.setAttribute("teacher_name", "氏名を入力してください");
+        req.setAttribute("teacherId", "教職員IDを入力してください");
+        req.setAttribute("teacherName", "氏名を入力してください");
         req.setAttribute("password", "パスワードを入力してください");
-        req.setAttribute("class_id", null);
-        req.setAttribute("flag", true);
+        req.setAttribute("classId", null);
 
+        String teacherId = "";
+        String teacherName = "";
+        String password = "";
+        String classId = "";
+
+        List<Class> classList = null;
+        ClassDao classDao = new ClassDao();
+        Map<String, String> errors = new HashMap<>();
+
+        // パラメータ取得
+        teacherId = req.getParameter("teacher_id");
+        teacherName = req.getParameter("teacher_name");
+        password = req.getParameter("password");
+        classId = req.getParameter("class_id");
+
+        int chk = 0;
         try {
-            // ClassDaoを使用して全クラス情報を取得
-            ClassDao classDao = new ClassDao();
-            List<Class> classList = classDao.getAllClasses();
-            req.setAttribute("class_list", classList); // JSPでクラス選択を表示するために設定
+            // クラス一覧を取得
+            classList = classDao.getAllClasses();
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("error", "クラス情報の取得中にエラーが発生しました。");
+            errors.put("classList", "クラス情報の取得中にエラーが発生しました。");
+            req.setAttribute("errors", errors);
         }
 
-        req.getRequestDispatcher("/admin/teacher_create.jsp").forward(req, res);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        Admin admin = (Admin) session.getAttribute("user");
-
-        // 入力されたデータを取得
-        String teacherId = req.getParameter("teacher_id");
-        String teacherName = req.getParameter("teacher_name");
-        String password = req.getParameter("password");
-        String classId = req.getParameter("class_id");
-
-        // バリデーション処理
-        boolean isValid = true;
+        // 入力チェック
         if (teacherId == null || teacherId.isEmpty()) {
-            req.setAttribute("error_teacher_id", "教職員IDを入力してください");
-            isValid = false;
-        }
-        if (teacherName == null || teacherName.isEmpty()) {
-            req.setAttribute("error_teacher_name", "氏名を入力してください");
-            isValid = false;
-        }
-        if (password == null || password.isEmpty()) {
-            req.setAttribute("error_password", "パスワードを入力してください");
-            isValid = false;
-        }
-        if (classId == null || classId.isEmpty()) {
-            req.setAttribute("error_class_id", "クラスを選択してください");
-            isValid = false;
-        }
+            if (chk > 0) {
+                errors.put("teacherId", "教職員IDを入力してください");
+                req.setAttribute("errors1", errors);
+            } else {
+                chk += 1;
+            }
+        } else if (teacherName == null || teacherName.isEmpty()) {
+            errors.put("teacherName", "氏名を入力してください");
+            req.setAttribute("errors2", errors);
+        } else if (password == null || password.isEmpty()) {
+            errors.put("password", "パスワードを入力してください");
+            req.setAttribute("errors3", errors);
+        } else if (classId == null || classId.equals("0")) {
+            errors.put("classId", "クラスを選択してください");
+            req.setAttribute("errors4", errors);
+        } else {
+            Map<String, String> data = new HashMap<>();
+            data.put("teacherId", teacherId);
+            data.put("teacherName", teacherName);
+            data.put("password", password);
+            data.put("classId", classId);
 
-        if (!isValid) {
-            doGet(req, res); // エラーがある場合は再表示
+            // 次のアクションへフォワード
+            req.getRequestDispatcher("TeacherSignupExecute.action").forward(req, res);
             return;
         }
 
-        // 登録処理（仮実装）
-        try {
-            // 登録処理を実装する（TeacherDaoなどでDBに保存する処理を追加）
-            req.setAttribute("success", "教職員が正常に登録されました！");
-        } catch (Exception e) {
-            e.printStackTrace();
-            req.setAttribute("error", "登録中にエラーが発生しました。");
-        }
+        // 入力データの設定
+        req.setAttribute("teacher_id", teacherId);
+        req.setAttribute("teacher_name", teacherName);
+        req.setAttribute("password", password);
+        req.setAttribute("class_id", classId);
 
-        doGet(req, res); // 登録完了後もフォームを再表示
+        req.setAttribute("class_list", classList);
+        req.getRequestDispatcher("/admin/teacher_create.jsp").forward(req, res);
     }
 }

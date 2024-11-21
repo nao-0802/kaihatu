@@ -81,7 +81,7 @@ public class TeacherSignupExecuteAction extends Action {
         // データベースに保存
         try {
             teacherDao.save(teacher);
-            req.getRequestDispatcher("teacher_create_done.jsp").forward(req, res);
+            req.getRequestDispatcher("/admin/teacher_create_done.jsp").forward(req, res);
         } catch (Exception e) {
             e.printStackTrace();
             errors.put("database", "登録中にエラーが発生しました。再試行してください。");

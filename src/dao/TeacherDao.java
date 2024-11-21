@@ -3,313 +3,127 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import bean.Teacher;
 
 public class TeacherDao extends Dao {
-    // SQLクエリ: teacher_idに基づいてレコードを取得
-    private String baseSql = "SELECT teacher_id, teacher_name, password, class_id, flag FROM t_teacher WHERE teacher_id = ?";
 
-    // ResultSetからTeacherリストを生成するメソッド
-    private List<Teacher> postfilter(ResultSet rSet) throws Exception {
-        List<Teacher> list = new ArrayList<>();
-        try {
-            while (rSet.next()) {
-                Teacher teacher = new Teacher();
-                teacher.setTeacherId(rSet.getString("teacher_id"));
-                teacher.setTeacherName(rSet.getString("teacher_name"));
-                teacher.setPassword(rSet.getString("password"));
-                teacher.setClassId(rSet.getString("class_id"));
-                teacher.setFlag(rSet.getInt("flag"));
-                list.add(teacher);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            list = null;
-        }
-        return list;
-    }
+    // SQLクエリ
+    private static final String SEARCH_TEACHERS_SQL =
+        "SELECT teacher_id, teacher_name, password, class_id, flag " +
+        "FROM t_teacher " +
+        "WHERE teacher_name LIKE ? OR teacher_id LIKE ?";
 
-    // 指定されたteacher_idのTeacherを取得するメソッド
-    public List<Teacher> filter(String teacherId) throws Exception {
-        List<Teacher> list = new ArrayList<>();
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        ResultSet rSet = null;
+    private static final String SAVE_TEACHER_SQL =
+        "INSERT INTO t_teacher (teacher_id, teacher_name, password, class_id, flag) " +
+        "VALUES (?, ?, ?, ?, ?) " +
+        "ON DUPLICATE KEY UPDATE " +
+        "teacher_name = VALUES(teacher_name), " +
+        "password = VALUES(password), " +
+        "class_id = VALUES(class_id), " +
+        "flag = VALUES(flag)";
 
-        try {
-            statement = connection.prepareStatement(baseSql);
-            statement.setString(1, teacherId);
-            rSet = statement.executeQuery();
-            list = postfilter(rSet);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            // PreparedStatementを閉じる
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            // Connectionを閉じる
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-        }
+    private static final String DELETE_TEACHER_SQL =
+        "DELETE FROM t_teacher WHERE teacher_id = ?";
 
-        return list;
-    }
+    private static final String SELECT_TEACHER_SQL =
+        "SELECT teacher_id, teacher_name, password, class_id, flag " +
+        "FROM t_teacher WHERE teacher_id = ?";
 
+    private static final String SELECT_ALL_TEACHERS_SQL =
+        "SELECT teacher_id, teacher_name, password, class_id, flag " +
+        "FROM t_teacher";
+
+    // すべての教師を取得
     public List<Teacher> getAllTeachers() throws Exception {
         List<Teacher> list = new ArrayList<>();
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        ResultSet rSet = null;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TEACHERS_SQL);
+             ResultSet resultSet = statement.executeQuery()) {
 
-        try {
-            statement = connection.prepareStatement("SELECT teacher_id, teacher_name, password, class_id, flag FROM t_teacher");
-            rSet = statement.executeQuery();
-            list = postfilter(rSet);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
+            while (resultSet.next()) {
+                Teacher teacher = new Teacher();
+                teacher.setTeacherId(resultSet.getString("teacher_id"));
+                teacher.setTeacherName(resultSet.getString("teacher_name"));
+                teacher.setPassword(resultSet.getString("password"));
+                teacher.setClassId(resultSet.getString("class_id"));
+                teacher.setFlag(resultSet.getInt("flag"));
+                list.add(teacher);
             }
         }
-
         return list;
     }
 
-    // Teacherを保存または更新するメソッド
-    public boolean save(Teacher teacher) throws Exception {
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        int count = 0;
-
-        try {
-            // 既存のTeacherを検索
-            Teacher existingTeacher = getTeacher(teacher.getTeacherId());
-            if (existingTeacher == null) {
-                // 新しいTeacherの場合
-                statement = connection.prepareStatement(
-                        "INSERT INTO t_teacher (teacher_id, teacher_name, password, class_id, flag) VALUES (?, ?, ?, ?, ?)"
-                );
-                statement.setString(1, teacher.getTeacherId());
-                statement.setString(2, teacher.getTeacherName());
-                statement.setString(3, teacher.getPassword());
-                statement.setString(4, teacher.getClassId());
-                statement.setInt(5, teacher.getFlag());
-            } else {
-                // 既存のTeacherの更新
-                statement = connection.prepareStatement(
-                        "UPDATE t_teacher SET teacher_name = ?, password = ?, class_id = ?, flag = ? WHERE teacher_id = ?"
-                );
-                statement.setString(1, teacher.getTeacherName());
-                statement.setString(2, teacher.getPassword());
-                statement.setString(3, teacher.getClassId());
-                statement.setInt(4, teacher.getFlag());
-                statement.setString(5, teacher.getTeacherId());
-            }
-            count = statement.executeUpdate();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-        }
-
-        return count > 0;
-    }
-
-    // teacher_idでTeacherを取得するメソッド
-    private Teacher getTeacher(String teacherId) throws Exception {
+    // 特定の教師を取得
+    public Teacher getTeacher(String teacherId) throws Exception {
         Teacher teacher = null;
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        ResultSet rSet = null;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_TEACHER_SQL)) {
 
-        try {
-            statement = connection.prepareStatement(baseSql);
             statement.setString(1, teacherId);
-            rSet = statement.executeQuery();
-            if (rSet.next()) {
-                teacher = new Teacher();
-                teacher.setTeacherId(rSet.getString("teacher_id"));
-                teacher.setTeacherName(rSet.getString("teacher_name"));
-                teacher.setPassword(rSet.getString("password"));
-                teacher.setClassId(rSet.getString("class_id"));
-                teacher.setFlag(rSet.getInt("flag"));
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-        }
-
-        return teacher;
-    }
-
-    // Teacherを削除するメソッド
-    public boolean delete(String teacherId) throws Exception {
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        boolean result = false;
-
-        try {
-            statement = connection.prepareStatement("DELETE FROM t_teacher WHERE teacher_id = ?");
-            statement.setString(1, teacherId);
-            statement.executeUpdate();
-            result = true;
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-        }
-
-        return result;
-    }
-    public Teacher get(String teacher_id) throws Exception {
-        Teacher teacher = null;
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement("SELECT * FROM t_teacher WHERE teacher_id = ?");
-            statement.setString(1, teacher_id);
-            ResultSet rSet = statement.executeQuery();
-            if (rSet.next()) {
-                teacher = new Teacher();
-                teacher.setTeacherId(rSet.getString("teacher_id"));
-                teacher.setPassword(rSet.getString("password"));
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    teacher = new Teacher();
+                    teacher.setTeacherId(resultSet.getString("teacher_id"));
+                    teacher.setTeacherName(resultSet.getString("teacher_name"));
+                    teacher.setPassword(resultSet.getString("password"));
+                    teacher.setClassId(resultSet.getString("class_id"));
+                    teacher.setFlag(resultSet.getInt("flag"));
                 }
             }
         }
         return teacher;
     }
+
+    // 教師を検索
     public List<Teacher> search(String keyword) throws Exception {
         List<Teacher> list = new ArrayList<>();
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        ResultSet rSet = null;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SEARCH_TEACHERS_SQL)) {
 
-        try {
-            // SQLクエリ: 教師名または教師IDで検索
-            String sql = "SELECT teacher_id, teacher_name, password, class_id, flag FROM t_teacher WHERE teacher_name LIKE ? OR teacher_id LIKE ?";
-            statement = connection.prepareStatement(sql);
             statement.setString(1, "%" + keyword + "%");
             statement.setString(2, "%" + keyword + "%");
-            rSet = statement.executeQuery();
-            list = postfilter(rSet);  // 結果をリストに変換
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            // リソースを閉じる処理
-            if (rSet != null) {
-                try {
-                    rSet.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Teacher teacher = new Teacher();
+                    teacher.setTeacherId(resultSet.getString("teacher_id"));
+                    teacher.setTeacherName(resultSet.getString("teacher_name"));
+                    teacher.setPassword(resultSet.getString("password"));
+                    teacher.setClassId(resultSet.getString("class_id"));
+                    teacher.setFlag(resultSet.getInt("flag"));
+                    list.add(teacher);
                 }
             }
         }
-
         return list;
     }
-    public Teacher login(String teacher_id, String password) throws Exception {
-		// 管理者クラスのインスタンスを取得
-		Teacher teacher = get(teacher_id);
-		// 管理者がnullまたはパスワードが一致しない場合
-		if (teacher == null || !teacher.getPassword().equals(password)) {
-			return null;
-		}
-		return teacher;
-	}
+
+    // 教師を保存または更新
+    public boolean save(Teacher teacher) throws Exception {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SAVE_TEACHER_SQL)) {
+
+            statement.setString(1, teacher.getTeacherId());
+            statement.setString(2, teacher.getTeacherName());
+            statement.setString(3, teacher.getPassword());
+            statement.setString(4, teacher.getClassId());
+            statement.setInt(5, teacher.getFlag());
+
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        }
+    }
+
+    // 教師を削除
+    public boolean delete(String teacherId) throws Exception {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_TEACHER_SQL)) {
+
+            statement.setString(1, teacherId);
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        }
+    }
 }

@@ -17,4 +17,9 @@ public class Admin implements java.io.Serializable{
 	public void setPassword(String password){
 		this.password=password;
 	}
+	public boolean isAuthenticated() {
+        // 認証状態を判定するロジックを実装
+        return true; // 例
+    }
+
 }
