@@ -11,6 +11,6 @@ public class LoginAdminAction extends Action {
 			throws Exception {
 
 		//JSPへフォワード 7
-		req.getRequestDispatcher("login.jsp").forward(req, res);
+		req.getRequestDispatcher("login_admin.jsp").forward(req, res);
 	}
 }

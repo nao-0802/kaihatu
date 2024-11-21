@@ -10,36 +10,18 @@ import java.util.List;
 import bean.Class;
 
 public class ClassDao extends Dao {
-    // SQLクエリ: class_idに基づいてレコードを取得
-    private String baseSql = "SELECT class_id, class_name FROM t_class WHERE class_id = ?";
+    // SQLクエリ: 全クラスを取得
+    private String getAllSql = "SELECT class_id, class_name FROM t_class";
 
-    // ResultSetからClassリストを生成するメソッド
-    private List<Class> postfilter(ResultSet rSet) throws Exception {
-        List<Class> list = new ArrayList<>();
-        try {
-            while (rSet.next()) {
-                Class classObj = new Class();
-                classObj.setClassId(rSet.getString("class_id"));
-                classObj.setClassName(rSet.getString("class_name"));
-                list.add(classObj);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            list = null;
-        }
-        return list;
-    }
-
-    // 指定されたclass_idのClassを取得するメソッド
-    public List<Class> filter(String classId) throws Exception {
+    // 全クラスを取得するメソッド
+    public List<Class> getAllClasses() throws Exception {
         List<Class> list = new ArrayList<>();
         Connection connection = getConnection();
         PreparedStatement statement = null;
         ResultSet rSet = null;
 
         try {
-            statement = connection.prepareStatement(baseSql);
-            statement.setString(1, classId);
+            statement = connection.prepareStatement(getAllSql);
             rSet = statement.executeQuery();
             list = postfilter(rSet);
         } catch (Exception e) {
@@ -63,6 +45,18 @@ public class ClassDao extends Dao {
             }
         }
 
+        return list;
+    }
+
+    // ResultSetからClassリストを生成する共通処理
+    private List<Class> postfilter(ResultSet rSet) throws Exception {
+        List<Class> list = new ArrayList<>();
+        while (rSet.next()) {
+            Class classObj = new Class();
+            classObj.setClassId(rSet.getString("class_id"));
+            classObj.setClassName(rSet.getString("class_name"));
+            list.add(classObj);
+        }
         return list;
     }
 }
