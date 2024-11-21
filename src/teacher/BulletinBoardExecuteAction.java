@@ -8,7 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet(urlPatterns={"/teacher/BulletinBoard")
+@WebServlet(urlPatterns={"/teacher/BulletinBoard")}
 public class BulletinBoardExecuteAction {
 	public void doPost(
 			HttpServletRequest request,HttpServletResponse response
@@ -27,4 +27,3 @@ public class BulletinBoardExecuteAction {
 				}
 				}
 	}
-
