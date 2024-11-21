@@ -1,4 +1,4 @@
-package admin;
+package scoremanager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +32,7 @@ public class TeacherUpdateExecuteAction extends Action {
 
         TeacherDao tDao = new TeacherDao();
         if (tDao.save(teacher)) {
-            req.getRequestDispatcher("teacher_update_done.jsp").forward(req, res);
+            req.getRequestDispatcher("/admin/Teacher_update_done.jsp").forward(req, res);
         } else {
             req.setAttribute("error", "教師情報の更新に失敗しました。");
             req.getRequestDispatcher("error.jsp").forward(req, res);

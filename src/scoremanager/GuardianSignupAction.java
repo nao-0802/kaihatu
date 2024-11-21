@@ -1,4 +1,4 @@
-package admin;
+package scoremanager;
 
 import java.io.IOException;
 

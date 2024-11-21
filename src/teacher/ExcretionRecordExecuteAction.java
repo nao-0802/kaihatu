@@ -1,14 +1,14 @@
 package teacher;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import bean.ExcretionRecord;
-import dao.ExcretionRecordDao;
+import bean.SleepRecord;
+import dao.SleepRecordDao;
 import tool.Action;
 
 public class ExcretionRecordExecuteAction extends Action {
@@ -17,44 +17,39 @@ public class ExcretionRecordExecuteAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		//ローカル変数の宣言 1
 		String url = "";
-		String excretion_id = ""; //排泄記録
 		String student_id = ""; //生徒ID
-		ExcretionRecordDao excretionrecordDao = new ExcretionRecordDao();
-		ExcretionRecord excretionrecord = null;
+		Integer excretion_type = 0; //睡眠種別
+		SleepRecordDao dao = new SleepRecordDao();
+		SleepRecord sleeprecord = null;
 
 		//リクエストパラメータ―の取得 2
-		excretion_id = req.getParameter("excretion_id");// 排泄記録ID
 		student_id = req.getParameter("student_id");//生徒ID
+		excretion_type = Integer.parseInt(req.getParameter("excretion_type"));
+		// 現在の日付と時間を取得
+        LocalDate currentDate = LocalDate.now(); // 現在の日付
+        LocalTime currentTime = LocalTime.now(); // 現在の時刻
 
-		//DBからデータ取得 3
-		excretionrecord = ExcretionRecordDao.login(excretion_id, student_id);//データ取得
+		SleepRecord p=new SleepRecord();
+		p.setStudentId(student_id);
+		p.setDay(currentDate);
+		p.setTime(currentTime);
+		p.setType(excretion_type);
+
+		// データ保存処理
+        boolean isSaved = dao.save(p); // saveメソッドが成功した場合trueを返すと仮定
 
 
-		//条件で手順4~7の内容が分岐
-		if (excretionrecord != null) {// 認証成功の場合
-			// セッション情報を取得
-			HttpSession session = req.getSession(true);
-			// 認証済みフラグを立てる
-			//mealrecord.setAuthenticated(true);
-			// セッションにログイン情報を保存
-			session.setAttribute("user", excretionrecord);
-
-			//リダイレクト
-			url = "";
-			res.sendRedirect(url);
-		} else {
-			// 認証失敗の場合
-			// エラーメッセージをセット
-			List<String> errors = new ArrayList<>();
-			errors.add("IDまたはパスワードが確認できませんでした");
-			req.setAttribute("errors", errors);
-			// 入力されたIDをセット
-			req.setAttribute("excretion_id", excretion_id);
-			//フォワード
-			url = "seikatukiroku-error.jsp";
-			req.getRequestDispatcher(url).forward(req, res);
-		}
-
+        // 未定
+        if (isSaved) {
+            // 保存成功時の処理 - 別のJavaファイルにフォワード
+        	RequestDispatcher dispatcher = req.getRequestDispatcher("LefeRecordAction");
+        	req.setAttribute("student_id", student_id);
+        	dispatcher.forward(req, res);
+        } else {
+            // 保存失敗時の処理 - 別のJavaファイルにリダイレクト
+        	// 未定
+            res.sendRedirect("");
+        }
 	}
 
 }
