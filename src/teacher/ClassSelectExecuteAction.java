@@ -1,11 +1,13 @@
 package teacher;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ClassDao;
+import bean.Student;
+import dao.StudentDao;
 
 public class ClassSelectExecuteAction {
 	public void doGet(
@@ -13,10 +15,11 @@ public class ClassSelectExecuteAction {
 		) throws Exception {
 		PrintWriter out=response.getWriter();
 		try {
+
 			String classid=request.getParameter("class_id");
 
-			ClassDao dao=new ClassDao();
-			List<Class> list=dao.search(classid);
+			StudentDao dao=new StudentDao();
+			List<Student> list=dao.filter(classid);
 
 			request.setAttribute("list", list);
 

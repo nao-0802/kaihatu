@@ -8,7 +8,7 @@
 <form action="ClassSelectExecuteAction" method="post">
 
 	<p>クラスの名前</p>
-	<select name="Class_name">
+	<select name="class_id">
 	<option>---------</option>
 		<c:forEach var="p" items="${list}">
 			<option value="${p.classId}">${p.className}</option>
