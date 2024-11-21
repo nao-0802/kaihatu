@@ -19,7 +19,7 @@ public class LifeRecordAction extends Action{
 		//セッションオブジェクトの生成
 		HttpSession session = req.getSession();
 		//セッションからのデータの取得
-		String student_id = (String)session.getAttribute("user");
+		String student_id = (String)session.getAttribute("guardian_id");
 
 		StudentRecordDao dao = new StudentRecordDao();
 		List<StudentRecord> list = dao.search(student_id);

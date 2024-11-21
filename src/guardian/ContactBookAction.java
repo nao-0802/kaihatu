@@ -28,4 +28,8 @@ public class ContactBookAction extends Action {
             e.printStackTrace();
         }
     }
+
+	public static void main(String[] args) {
+		ContactBookAction
+	}
 }

@@ -73,6 +73,43 @@ public class StudentRecordDao extends Dao {
         return list;
     }
 
+    // student_idで学生記録リストを取得するメソッド
+    public List<StudentRecord> search(String studentId) throws Exception {
+        List<StudentRecord> list = new ArrayList<>();
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        ResultSet rSet = null;
+
+        String searchSql = "SELECT * FROM t_student_record WHERE guardian_id = ?"; // student_idの条件を追加
+
+        try {
+            statement = connection.prepareStatement(searchSql);
+            statement.setString(1, studentId); // 引数のstudentIdをセット
+            rSet = statement.executeQuery();
+            list = postFilter(rSet); // 結果をlistに格納
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            // リソースを適切にクローズ
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return list;
+    }
+
     // 学生記録を保存または更新するメソッド
     public boolean save(StudentRecord studentRecord) throws Exception {
         Connection connection = getConnection();

@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <!-- %@include file="../G_header.html" % -->
 <%@page import="bean.StudentRecord, java.util.List"%>
-list=<% List<StudentRecord> list=(List<StudentRecord>)req.getAttribute("list"); %>
+
 
 <style>
 summary {
@@ -38,7 +38,7 @@ summary {
 
 <details name="life" id=a>
     <summary>睡眠</summary>
-    <form action="">
+    <form action="../guardian/SleepRecord.action">
         <div>
             <label><input type="radio" name="sleep">寝た</label><br>
             <label><input type="radio" name="sleep">起きた</label><br>
@@ -49,7 +49,7 @@ summary {
 
 <details name="life" id=b>
     <summary>食事</summary>
-    <form action="">
+    <form action="../guardian/MealRecordExecute.action">
         <div>
             <label><input type="radio" name="meal">全量</label><br>
             <label><input type="radio" name="meal">半量</label><br>
@@ -61,7 +61,7 @@ summary {
 
 <details name="life" id=c>
     <summary>排泄</summary>
-    <form action="">
+    <form action="../guardian/ExcretionRecordExecute.action">
         <div>
             <label><input type="radio" name="excretion">かたい</label><br>
             <label><input type="radio" name="excretion">やわらかい</label><br>
@@ -74,7 +74,7 @@ summary {
     </form>
 </details>
 
-<form action="">
+<form action="../guardian/ContactBook.action">
 <button>連絡帳を書く</button>
 </form>
 <!-- <input type="button" onclick="location.href='#'" value="連絡帳を書く"> -->

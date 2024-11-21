@@ -11,55 +11,32 @@ import bean.Guardian;
 import dao.GuardianDao;
 import tool.Action;
 
-
 public class LoginGuardianExecuteAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		//ローカル変数の宣言 1
-		String url = "";
-		String id = "";
-		String password = "";
-		GuardianDao guardianDao = new GuardianDao();
-		Guardian guardian = null;
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // ローカル変数の宣言
+        String id = req.getParameter("guardian_id"); // 管理者ID
+        String password = req.getParameter("password"); // パスワード
 
-		//リクエストパラメータ―の取得 2
-		id = req.getParameter("guardianID");// 管理者ID
-		password = req.getParameter("password");//パスワード
+        GuardianDao guardianDao = new GuardianDao();
+        Guardian guardian = guardianDao.login(id, password); // DBからデータ取得
 
-		//DBからデータ取得 3
-		guardian = guardianDao.login(id, password);//教員データ取得
+        if (guardian != null) { // 認証成功の場合
+            HttpSession session = req.getSession(true);
+            session.setAttribute("user", guardian); // セッションに保存
+            req.getRequestDispatcher("/guardian/seikatukiroku.jsp")
+            .forward(req, res);
+        } else { // 認証失敗の場合
+            List<String> errors = new ArrayList<>();
+            errors.add("IDまたはパスワードが確認できませんでした");
+            req.setAttribute("errors", errors);
+            req.setAttribute("guardianID", id);
 
-		//ビジネスロジック 4
-		//DBへデータ保存 5
-		//レスポンス値をセット 6
-		//フォワード 7
-		//条件で手順4~7の内容が分岐
-		if (guardian != null) {// 認証成功の場合
-			// セッション情報を取得
-			HttpSession session = req.getSession(true);
-			// 認証済みフラグを立てる
-			//guardian.setAuthenticated(true);
-			// セッションにログイン情報を保存
-			session.setAttribute("user", guardian);
+            // エラーログ
+            System.out.println("/guardian/login-error.jsp");
 
-			//リダイレクト
-			url = "main/Menu.action";
-			res.sendRedirect(url);
-		} else {
-			// 認証失敗の場合
-			// エラーメッセージをセット
-			List<String> errors = new ArrayList<>();
-			errors.add("IDまたはパスワードが確認できませんでした");
-			req.setAttribute("errors", errors);
-			// 入力された教員IDをセット
-			req.setAttribute("guardianID", id);
-			//フォワード
-			url = "login-error.jsp";
-			req.getRequestDispatcher(url).forward(req, res);
-		}
-
-//		req.getRequestDispatcher(url).forward(req, res);
-	}
-
+            req.getRequestDispatcher("/guardian/login-error.jsp").forward(req, res);
+        }
+    }
 }

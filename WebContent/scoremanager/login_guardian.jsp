@@ -1,17 +1,11 @@
-<%-- indexリダイレクトページ --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
-<script>
-//ログインページにリダイレクト
-location.href="/kaihatu/scoremanager/LoginGuardian.action";
-</script>
-</head>
-<body>
+<%@page contentType="text/html; charset=UTF-8" %>
+<!-- %@include file="../header.html" % -->
 
-</body>
-</html>
+<form action="LoginGuardianExecute.action" method="post">
+<h2 name="title">保護者ログイン</h2>
+<p>保護者ID:<input type="text" name="guardian_id"></p>
+<p>パスワード:<input type="password" name="password"></p>
+<button name="login_btn">ログイン</button>
+</form>
+
+<!--  %@include file="../footer.html" % -->
