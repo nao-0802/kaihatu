@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Class;
 import bean.Teacher;
+import dao.ClassDao;
 import dao.TeacherDao;
 import tool.Action;
 
@@ -43,9 +45,13 @@ public class LoginTeacherExecuteAction extends Action {
 			// セッションにログイン情報を保存
 			session.setAttribute("user", teacher);
 
-			//リダイレクト
-			url = "main/Menu.action";
-			res.sendRedirect(url);
+			ClassDao dao=new ClassDao();
+			List<Class> list=dao.getAllClasses();
+
+			req.setAttribute("list", list);
+
+			url = "/teacher/class-selection.jsp";
+			req.getRequestDispatcher(url).forward(req, res);
 		} else {
 			// 認証失敗の場合
 			// エラーメッセージをセット
@@ -55,7 +61,7 @@ public class LoginTeacherExecuteAction extends Action {
 			// 入力された教員IDをセット
 			req.setAttribute("teacherID", id);
 			//フォワード
-			url = "login-error.jsp";
+			url = "index_teacher.jsp";
 			req.getRequestDispatcher(url).forward(req, res);
 		}
 

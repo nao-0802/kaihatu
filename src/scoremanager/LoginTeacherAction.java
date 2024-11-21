@@ -11,6 +11,6 @@ public class LoginTeacherAction extends Action {
 			throws Exception {
 
 		//JSPへフォワード 7
-		req.getRequestDispatcher("login-out.jsp").forward(req, res);
+		req.getRequestDispatcher("/scoremanager/login_teacher.jsp").forward(req, res);
 	}
 }
