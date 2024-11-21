@@ -11,6 +11,6 @@ public class LoginGuardianAction extends Action {
 			throws Exception {
 
 		//JSPへフォワード 7
-		req.getRequestDispatcher("login-out.jsp").forward(req, res);
+		req.getRequestDispatcher("login_guardian.jsp").forward(req, res);
 	}
 }
