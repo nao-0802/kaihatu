@@ -16,14 +16,10 @@ public class TeacherDao extends Dao {
         "FROM t_teacher " +
         "WHERE teacher_name LIKE ? OR teacher_id LIKE ?";
 
+    // 修正されたSQLクエリ（MERGE文）
     private static final String SAVE_TEACHER_SQL =
-        "INSERT INTO t_teacher (teacher_id, teacher_name, password, class_id, flag) " +
-        "VALUES (?, ?, ?, ?, ?) " +
-        "ON DUPLICATE KEY UPDATE " +
-        "teacher_name = VALUES(teacher_name), " +
-        "password = VALUES(password), " +
-        "class_id = VALUES(class_id), " +
-        "flag = VALUES(flag)";
+        "MERGE INTO t_teacher KEY(teacher_id) " +
+        "VALUES (?, ?, ?, ?, ?)";
 
     private static final String DELETE_TEACHER_SQL =
         "DELETE FROM t_teacher WHERE teacher_id = ?";
@@ -128,12 +124,12 @@ public class TeacherDao extends Dao {
     }
 
     public Teacher login(String teacher_id, String password) throws Exception {
-		// 管理者クラスのインスタンスを取得
-		Teacher teacher = get(teacher_id);
-		// 管理者がnullまたはパスワードが一致しない場合
-		if (teacher == null || !teacher.getPassword().equals(password)) {
-			return null;
-		}
-		return teacher;
-	}
+        // 管理者クラスのインスタンスを取得
+        Teacher teacher = get(teacher_id);
+        // 管理者がnullまたはパスワードが一致しない場合
+        if (teacher == null || !teacher.getPassword().equals(password)) {
+            return null;
+        }
+        return teacher;
+    }
 }
