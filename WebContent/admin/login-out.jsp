@@ -13,7 +13,7 @@
         <tr>
             <td>${t_teacher.teacherId}</td>
             <td>${t_teacher.teacherName}</td>
-            <td><a href="TeacherUpdate.action?id=${t_teacher.teacherId}">変更</a></td>
+            <td><a href="TeacherUpdate.action?teacherId=${t_teacher.teacherId}">変更</a></td>
             <td><a href="TeacherDelete.action?id=${t_teacher.teacherId}">削除</a></td>
         </tr>
     </c:forEach>

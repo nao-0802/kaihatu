@@ -1,4 +1,6 @@
+<%-- 教職員情報更新 JSP --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -35,7 +37,7 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], select {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
@@ -54,11 +56,6 @@
         .btn:hover {
             background-color: #218838;
         }
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-bottom: 15px;
-        }
         .btn-back {
             width: 100%;
             padding: 10px;
@@ -74,49 +71,65 @@
         .btn-back:hover {
             background-color: #0056b3;
         }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="update-container">
         <h2>教職員情報更新</h2>
+        <%-- エラーメッセージ表示 --%>
         <c:if test="${not empty errorMessage}">
             <div class="error-message">${errorMessage}</div>
         </c:if>
 
-        <form action="teacherUpdate" method="POST" onsubmit="return validateForm()">
+        <form action="TeacherUpdateExecute.action" onsubmit="return validateForm()">
             <div class="form-group">
-                <label for="teacher_name">名前:</label>
-                <input type="text" id="teacher_name" name="teacher_name" class="form-control" value="${teacher.teacher_name}" required>
+                <label for="teacher-id">教職員ID</label>
+                <input id="teacher-id" type="text" name="teacherId" value="${gid}" readonly />
             </div>
             <div class="form-group">
-                <label for="class_id">クラスID:</label>
-                <input type="text" id="class_id" name="class_id" class="form-control" value="${teacher.class_id}" required>
+                <label for="teacher-name">氏名</label>
+                <input id="teacher-name" type="text" name="teacherName" value="${name}" maxlength="30" required />
             </div>
             <div class="form-group">
-                <label for="password">パスワード:</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <label for="teacher-password">パスワード</label>
+                <input id="teacher-password" type="password" name="password" value="${pass}" maxlength="30" required />
             </div>
-            <button type="submit" class="btn">更新</button>
+            <div class="form-group">
+               <label for="teacher-class">クラス名</label>
+                <select class="form-control" name="className" required>
+                    <option value="">-- クラス名を選択 --</option>
+                    <c:forEach var="className" items="${classNames}">
+                        <option value="${className}" <c:if test="${className == teacher.className}">selected</c:if>>${className}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="teacher-flag">有効/無効</label>
+                <select id="teacher-flag" name="flag" required>
+                    <option value="1" ${flag == 1 ? 'selected' : ''}>無効</option>
+                    <option value="0" ${flag == 0 ? 'selected' : ''}>有効</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">変更</button>
+            <a href="./AccountList.action" class="btn-back">戻る</a>
         </form>
-
-        <!-- 戻るボタン -->
-        <a href="Account_Info_List.jsp" class="btn-back">戻る</a>
     </div>
 
     <script>
         function validateForm() {
-            const teacherName = document.getElementById('teacher_name').value;
-            const classId = document.getElementById('class_id').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('error-message');
-            errorMessage.style.display = 'none';
+            const teacherName = document.getElementById('teacher-name').value;
+            const password = document.getElementById('teacher-password').value;
+            const classId = document.getElementById('teacher-class').value;
 
-            if (!teacherName || !classId || !password) {
-                errorMessage.textContent = 'すべてのフィールドを入力してください。';
-                errorMessage.style.display = 'block';
+            if (!teacherName || !password || classId === "0") {
+                alert('すべてのフィールドを正しく入力してください。');
                 return false;
             }
-
             return true;
         }
     </script>
