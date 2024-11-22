@@ -26,6 +26,10 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
                 studentRecord.setAllergy(rSet.getString("allergy"));
                 studentRecord.setFeatures(rSet.getString("features"));
+                studentRecord.setMealId(rSet.getString("meal_id"));
+                studentRecord.setSleepId(rSet.getString("sleep_id"));
+                studentRecord.setExcretionId(rSet.getString("excretion_id"));
+                studentRecord.setStudent_id(rSet.getString("student_id"));
                 studentRecord.setAttendanceId(rSet.getString("attendance_id"));
                 studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
                 list.add(studentRecord);
@@ -115,7 +119,7 @@ public class StudentRecordDao extends Dao {
 
         try {
             statement = connection.prepareStatement(
-                "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, meal_id ,sleep_id,excretion_id, student_id, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
             statement.setString(1, studentRecord.getStudentRecordId());
             statement.setString(2, studentRecord.getName());
@@ -124,6 +128,10 @@ public class StudentRecordDao extends Dao {
             statement.setDate(5, studentRecord.getBirthdate());
             statement.setString(6, studentRecord.getAllergy());
             statement.setString(7, studentRecord.getFeatures());
+            statement.setString(7, studentRecord.getMealId());
+            statement.setString(7, studentRecord.getSleepId());
+            statement.setString(7, studentRecord.getExcretionId());
+            statement.setString(7, studentRecord.getStudentId());
             statement.setString(8, studentRecord.getAttendanceId());
             statement.setString(9, studentRecord.getAnualRecordId());
 
@@ -198,7 +206,7 @@ public class StudentRecordDao extends Dao {
             rSet = statement.executeQuery();
 
             if (rSet.next()) {
-                studentRecord = new StudentRecord();
+            	StudentRecord studentRecord = new StudentRecord();
                 studentRecord.setStudentRecordId(rSet.getString("student_record_id"));
                 studentRecord.setName(rSet.getString("name"));
                 studentRecord.setClassId(rSet.getString("class_id"));
@@ -206,6 +214,10 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
                 studentRecord.setAllergy(rSet.getString("allergy"));
                 studentRecord.setFeatures(rSet.getString("features"));
+                studentRecord.setMealId(rSet.getString("meal_id"));
+                studentRecord.setSleepId(rSet.getString("sleep_id"));
+                studentRecord.setExcretionId(rSet.getString("excretion_id"));
+                studentRecord.setStudent_id(rSet.getString("student_id"));
                 studentRecord.setAttendanceId(rSet.getString("attendance_id"));
                 studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
             }
