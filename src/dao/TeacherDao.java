@@ -57,7 +57,7 @@ public class TeacherDao extends Dao {
     }
 
     // 特定の教師を取得
-    public Teacher getTeacher(String teacherId) throws Exception {
+    public Teacher get(String teacherId) throws Exception {
         Teacher teacher = null;
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_TEACHER_SQL)) {
@@ -126,4 +126,14 @@ public class TeacherDao extends Dao {
             return affectedRows > 0;
         }
     }
+
+    public Teacher login(String teacher_id, String password) throws Exception {
+		// 管理者クラスのインスタンスを取得
+		Teacher teacher = get(teacher_id);
+		// 管理者がnullまたはパスワードが一致しない場合
+		if (teacher == null || !teacher.getPassword().equals(password)) {
+			return null;
+		}
+		return teacher;
+	}
 }
