@@ -11,6 +11,10 @@ public class StudentRecord implements java.io.Serializable{
 	private Date birthdate;
 	private String allergy;
 	private String features;
+	private String meal_id;
+	private String sleep_id;
+	private String excretion_id;
+	private String student_id;
 	private String attendance_id;
 	private String anual_record_id;
 
@@ -34,6 +38,18 @@ public class StudentRecord implements java.io.Serializable{
 	}
 	public String getFeatures(){
 		return features;
+	}
+	public String getMealId(){
+		return meal_id;
+	}
+	public String sleepId(){
+		return sleep_id;
+	}
+	public String excretionId(){
+		return excretion_id;
+	}
+	public String studentId(){
+		return student_id
 	}
 	public String getAttendanceId(){
 		return attendance_id;
@@ -61,6 +77,18 @@ public class StudentRecord implements java.io.Serializable{
 	}
 	public void setFeatures(String features){
 		this.features=features;
+	}
+	public void setMealId(String meal_id){
+		this.meal_id=meal_id;
+	}
+	public void setSleepId(String sleep_id){
+		this.sleep_id=sleep_id;
+	}
+	public void setExcretionId(String excretion_id){
+		this.excretion_id=excretion_id;
+	}
+	public void setStudentId(String student_id){
+		this.student_id=student_id;
 	}
 	public void setAttendanceId(String attendance_id){
 		this.attendance_id=attendance_id;

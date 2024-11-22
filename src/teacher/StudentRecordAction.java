@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -56,61 +54,20 @@ public class StudentRecordAction {
                 studentRecord.setStudentRecordId(rs.getString("student_record_id"));
                 studentRecord.setName(rs.getString("name"));
                 studentRecord.setClassId(rs.getString("class_id"));
-                studentRecord.setGuardianId(rs.getString("guardian_id"));
+                studentRecord.setGuardianId(rs.getInt("guardian_id"));
                 studentRecord.setBirthdate(rs.getDate("birthdate"));
                 studentRecord.setAllergy(rs.getString("allergy"));
                 studentRecord.setFeatures(rs.getString("features"));
-                studentRecord.setAnualRecordId(rs.getString("annual_record"));
+                studentRecord.setAnnualRecord(rs.getString("annual_record"));
             }
 
             // リソースの解放
             rs.close();
             stmt.close();
-            }
-
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-            /**
-             * クラスIDに一致するすべての生徒レコードを取得する
-             * @param classId クラスID
-             * @return クラスIDに一致する生徒レコードのリスト
-             */
-            public List<StudentRecord> getStudentRecordsByClassId(String classId) {
-                List<StudentRecord> studentRecords = new ArrayList<>();
-
-                // データベース接続
-                try (Connection conn = DatabaseConnection.getConnection()) {
-                    // クラスIDに一致する生徒情報を取得するSQL文
-                    String sql = "SELECT * FROM t_student_record WHERE class_id = ?";
-                    PreparedStatement stmt = conn.prepareStatement(sql);
-                    stmt.setString(1, classId);
-
-                    // SQLを実行して結果を取得
-                    ResultSet rs = stmt.executeQuery();
-
-                    // 結果をリストに追加
-                    while (rs.next()) {
-                        StudentRecord studentRecord = new StudentRecord();
-                        studentRecord.setStudentRecordId(rs.getString("student_record_id"));
-                        studentRecord.setName(rs.getString("name"));
-                        studentRecord.setClassId(rs.getString("class_id"));
-                        studentRecord.setGuardianId(rs.getInt("guardian_id"));
-                        studentRecord.setBirthdate(rs.getDate("birthdate"));
-                        studentRecord.setAllergy(rs.getString("allergy"));
-                        studentRecord.setFeatures(rs.getString("features"));
-                        studentRecord.setAnnualRecord(rs.getString("annual_record"));
-                        studentRecords.add(studentRecord);
-                    }
-
-                    // リソースの解放
-                    rs.close();
-                    stmt.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-                return studentRecords;
-            }
-
+        return studentRecord;
     }
-
+}

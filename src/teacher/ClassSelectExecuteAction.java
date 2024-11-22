@@ -6,20 +6,21 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Student;
-import dao.StudentDao;
+import bean.StudentRecord;
+import dao.StudentRecordDao;
+import tool.Action;
 
-public class ClassSelectExecuteAction {
-	public void doGet(
-			HttpServletRequest request, HttpServletResponse response
-		) throws Exception {
+public class ClassSelectExecuteAction extends Action {
+	public void execute(
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		PrintWriter out=response.getWriter();
 		try {
 
 			String classid=request.getParameter("class_id");
 
-			StudentDao dao=new StudentDao();
-			List<Student> list=dao.filter(classid);
+			StudentRecordDao dao=new StudentRecordDao();
+			List<StudentRecord> list=dao.filter(classid);
 
 			request.setAttribute("list", list);
 
@@ -30,4 +31,5 @@ public class ClassSelectExecuteAction {
 			e.printStackTrace(out);
 		}
 	}
+
 }

@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<form action="ClassSelectExecuteAction" method="post">
+<form action="/kaihatu/teacher/ClassSelectExecute.action" method="post">
 
 	<p>クラスの名前</p>
 	<select name="class_id">

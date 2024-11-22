@@ -1,22 +1,24 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@page import="bean.StudentRecord, java.util.List" %>
+
 <table>
 	<tr>
 	<td>ID</td>
 	<td>名前</td>
 	<td>在学フラグ</td>
 	</tr>
-<c:forEach var="t_student" items="${list}">
+<c:forEach var="p" items="${list}">
 	<tr>
-	<td>${t_student.studentId}</td>
+	<td>${p.studentId}</td>
 	<td>
 		<form action="LifeRecordAction" method="post">
-			<input type="hidden" name="student_id" value="${ t_student.studentId}">
-			<input type="button" name="student_name" value="${t_student.studentName}">
+			<input type="hidden" name="student_id" value="${p.Id}">
+			<input type="button" name="student_name" value="${p.studentName}">
 		</form>
 	</td>
-	<td>${t_student.flag}</td>
+	<td>${p.flag}</td>
 	</tr>
 </c:forEach>
 </table>
