@@ -14,7 +14,7 @@ public class StudentRecord implements java.io.Serializable{
 	private String meal_id;
 	private String sleep_id;
 	private String excretion_id;
-	private String student_id;
+	private String studentId;
 	private String attendance_id;
 	private String anual_record_id;
 
@@ -48,9 +48,9 @@ public class StudentRecord implements java.io.Serializable{
 	public String getExcretionId(){
 		return excretion_id;
 	}
-	public String getStudentId(){
-		return student_id;
-	}
+	public String getStudentId() {
+        return studentId;
+    }
 	public String getAttendanceId(){
 		return attendance_id;
 	}
@@ -87,9 +87,9 @@ public class StudentRecord implements java.io.Serializable{
 	public void setExcretionId(String excretion_id){
 		this.excretion_id=excretion_id;
 	}
-	public void setStudentId(String student_id){
-		this.student_id=student_id;
-	}
+	public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
 	public void setAttendanceId(String attendance_id){
 		this.attendance_id=attendance_id;
 	}

@@ -21,7 +21,7 @@ public class StudentRecordDao extends Dao {
                 StudentRecord studentRecord = new StudentRecord();
                 studentRecord.setStudentRecordId(rSet.getString("student_record_id"));
                 studentRecord.setName(rSet.getString("name"));
-                studentRecord.setClassId(rSet.getString("class_id"));
+                studentRecord.setClassId(rSet.getString("classId"));
                 studentRecord.setGuardianId(rSet.getString("guardian_id"));
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
                 studentRecord.setAllergy(rSet.getString("allergy"));
@@ -29,7 +29,7 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setMealId(rSet.getString("meal_id"));
                 studentRecord.setSleepId(rSet.getString("sleep_id"));
                 studentRecord.setExcretionId(rSet.getString("excretion_id"));
-                studentRecord.setStudent_id(rSet.getString("student_id"));
+                studentRecord.setStudent_id(rSet.getString("studentId"));
                 studentRecord.setAttendanceId(rSet.getString("attendance_id"));
                 studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
                 list.add(studentRecord);
@@ -209,7 +209,7 @@ public class StudentRecordDao extends Dao {
                 studentRecord = new StudentRecord();  // ここで新しくオブジェクトを作成する
                 studentRecord.setStudentRecordId(rSet.getString("student_record_id"));
                 studentRecord.setName(rSet.getString("name"));
-                studentRecord.setClassId(rSet.getString("class_id"));
+                studentRecord.setClassId(rSet.getString("classId"));
                 studentRecord.setGuardianId(rSet.getString("guardian_id"));
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
                 studentRecord.setAllergy(rSet.getString("allergy"));
@@ -217,7 +217,7 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setMealId(rSet.getString("meal_id"));
                 studentRecord.setSleepId(rSet.getString("sleep_id"));
                 studentRecord.setExcretionId(rSet.getString("excretion_id"));
-                studentRecord.setStudentId(rSet.getString("student_id"));
+                studentRecord.setStudentId(rSet.getString("studentId"));
                 studentRecord.setAttendanceId(rSet.getString("attendance_id"));
                 studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
             }

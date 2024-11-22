@@ -20,9 +20,14 @@ public class ClassSelectExecuteAction extends Action {
 			String classid=request.getParameter("class_id");
 
 			StudentRecordDao dao=new StudentRecordDao();
-			List<StudentRecord> list=dao.filter(classid);
+//			List<StudentRecord> list=dao.filter(classid);
 
+//			request.setAttribute("list", list);
+
+			List<StudentRecord> list = dao.filter(classid);
+			System.out.println("Student List Size: " + list.size());
 			request.setAttribute("list", list);
+
 
 			request.getRequestDispatcher("student_list.jsp")
 				.forward(request, response);
