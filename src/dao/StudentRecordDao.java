@@ -52,7 +52,6 @@ public class StudentRecordDao extends Dao {
         } catch (Exception e) {
             throw e;
         } finally {
-            // PreparedStatementを閉じる
             if (statement != null) {
                 try {
                     statement.close();
@@ -60,7 +59,6 @@ public class StudentRecordDao extends Dao {
                     throw sqle;
                 }
             }
-            // Connectionを閉じる
             if (connection != null) {
                 try {
                     connection.close();
@@ -84,13 +82,12 @@ public class StudentRecordDao extends Dao {
 
         try {
             statement = connection.prepareStatement(searchSql);
-            statement.setString(1, studentId); // 引数のstudentIdをセット
+            statement.setString(1, studentId);
             rSet = statement.executeQuery();
-            list = postFilter(rSet); // 結果をlistに格納
+            list = postFilter(rSet);
         } catch (Exception e) {
             throw e;
         } finally {
-            // リソースを適切にクローズ
             if (statement != null) {
                 try {
                     statement.close();
@@ -117,9 +114,8 @@ public class StudentRecordDao extends Dao {
         int count = 0;
 
         try {
-            // 新しい学生記録の場合は挿入、既存の学生記録の場合は更新
             statement = connection.prepareStatement(
-                    "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
             statement.setString(1, studentRecord.getStudentRecordId());
             statement.setString(2, studentRecord.getName());
@@ -185,5 +181,60 @@ public class StudentRecordDao extends Dao {
         }
 
         return result;
+    }
+
+    // 指定された student_record_id で学生記録を取得するメソッド
+    public StudentRecord getRecordByStudentRecordId(String studentRecordId) throws Exception {
+        StudentRecord studentRecord = null;
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        ResultSet rSet = null;
+
+        String query = "SELECT * FROM t_student_record WHERE student_record_id = ?";
+
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, studentRecordId);
+            rSet = statement.executeQuery();
+
+            if (rSet.next()) {
+                studentRecord = new StudentRecord();
+                studentRecord.setStudentRecordId(rSet.getString("student_record_id"));
+                studentRecord.setName(rSet.getString("name"));
+                studentRecord.setClassId(rSet.getString("class_id"));
+                studentRecord.setGuardianId(rSet.getString("guardian_id"));
+                studentRecord.setBirthdate(rSet.getDate("birthdate"));
+                studentRecord.setAllergy(rSet.getString("allergy"));
+                studentRecord.setFeatures(rSet.getString("features"));
+                studentRecord.setAttendanceId(rSet.getString("attendance_id"));
+                studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rSet != null) {
+                try {
+                    rSet.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return studentRecord;
     }
 }

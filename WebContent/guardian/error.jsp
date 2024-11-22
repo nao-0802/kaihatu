@@ -39,7 +39,8 @@
     </div>
 
     <p>
-        <a href="/scoremanager/index_guardian.jsp" class="back-link">ホームページに戻る</a>
+        <a href="LifeRecord.action" class="back-link">ホームページに戻る</a>
+
     </p>
 
 </body>

@@ -16,13 +16,37 @@ public class SleepRecordExecuteAction  extends Action {
 
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         // ローカル変数の宣言
-        String student_id = ""; // 生徒ID
-        Integer sleep_type = 0; // 睡眠種別
+        String student_id = null; // 生徒ID
+        Integer sleep_type = null; // 睡眠種別
         SleepRecordDao dao = new SleepRecordDao();
 
-        // リクエストパラメータの取得
+        // リクエストパラメータの取得とnullチェック
         student_id = req.getParameter("student_id");  // 生徒ID
-        sleep_type = Integer.parseInt(req.getParameter("sleep_type"));
+        String sleepTypeParam = req.getParameter("sleep_type");
+
+        if (student_id == null || student_id.isEmpty()) {
+            req.setAttribute("errorMessage", "生徒IDが指定されていません。");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
+            dispatcher.forward(req, res);
+            return;
+        }
+
+        if (sleepTypeParam != null && !sleepTypeParam.isEmpty()) {
+            try {
+                sleep_type = Integer.parseInt(sleepTypeParam);  // 睡眠種別を取得
+            } catch (NumberFormatException e) {
+                // 数値変換に失敗した場合
+                req.setAttribute("errorMessage", "無効な睡眠種別が指定されました。");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
+                dispatcher.forward(req, res);
+                return;
+            }
+        } else {
+            req.setAttribute("errorMessage", "睡眠種別が指定されていません。");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
+            dispatcher.forward(req, res);
+            return;
+        }
 
         // 現在の日付と時間を取得
         LocalDate currentDate = LocalDate.now();  // 現在の日付

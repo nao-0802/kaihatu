@@ -57,7 +57,7 @@
 <body>
     <div class="container">
         <h1>生徒カルテ新規登録</h1>
-        <form action="StudentRecordCreateExecuteAction" method="post">
+        <form action="StudentRecord.action" method="post">
             <!-- 生徒氏名 -->
             <label for="name">生徒氏名 <span class="message">（必須）</span></label>
             <input type="text" id="name" name="name" placeholder="生徒氏名を入力してください" required>
@@ -71,6 +71,7 @@
             <textarea id="allergy" name="allergy" rows="3" placeholder="アレルギー情報を入力してください"></textarea>
 
             <!-- 登録ボタン -->
+
             <button type="submit">登録</button>
         </form>
     </div>

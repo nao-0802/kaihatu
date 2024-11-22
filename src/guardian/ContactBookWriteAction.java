@@ -24,12 +24,12 @@ public class ContactBookWriteAction {
 
 		// ローカル変数
 		ContactBookDao dao=new ContactBookDao();
-		List<ContactBook> list=dao.serch("sdf1");
+		List<ContactBook> list=dao.findByGuardianIdAndDate("sdf1");
 
 		request.setAttribute("list", list);
 
 
-		request.getRequestDispatcher("/admin/ContactBookWriteEntry.jsp")
+		request.getRequestDispatcher("/guardian/contactbookwrite.jsp")
 			.forward(request, response);
 	}
 }

@@ -10,8 +10,11 @@ import java.util.List;
 import bean.ContactBook;
 
 public class ContactBookDao extends Dao {
-    // SQLクエリ: teacher_idに基づいてレコードを取得
+    // 既存のSQLクエリ
     private String baseSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, check FROM t_contact_book WHERE teacher_id = ?";
+
+    // 新しいSQLクエリ: guardian_id と date に基づいてレコードを取得
+    private String findByGuardianIdAndDateSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, check FROM t_contact_book WHERE guardian_id = ? AND day = ?";
 
     // ResultSetからContactBookリストを生成するメソッド
     private List<ContactBook> postfilter(ResultSet rSet) throws Exception {
@@ -49,7 +52,7 @@ public class ContactBookDao extends Dao {
         } catch (Exception e) {
             throw e;
         } finally {
-            // PreparedStatementを閉じる
+            // 例外処理とリソースの解放
             if (statement != null) {
                 try {
                     statement.close();
@@ -57,7 +60,42 @@ public class ContactBookDao extends Dao {
                     throw sqle;
                 }
             }
-            // Connectionを閉じる
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return list;
+    }
+
+    // guardian_id と date に基づいて ContactBook を検索するメソッド
+    public List<ContactBook> findByGuardianIdAndDate(String guardianId, String selectedDate) throws Exception {
+        List<ContactBook> list = new ArrayList<>();
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        ResultSet rSet = null;
+
+        try {
+            statement = connection.prepareStatement(findByGuardianIdAndDateSql);
+            statement.setString(1, guardianId);
+            statement.setString(2, selectedDate);
+            rSet = statement.executeQuery();
+            list = postfilter(rSet); // ResultSetからContactBookリストを作成
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            // 例外処理とリソースの解放
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
             if (connection != null) {
                 try {
                     connection.close();
@@ -200,3 +238,6 @@ public class ContactBookDao extends Dao {
         return result;
     }
 }
+
+
+

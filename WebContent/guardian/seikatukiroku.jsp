@@ -31,14 +31,13 @@ summary {
 </script>
 
 <details>
-    <p>arerugi-</p>
-    <p>jibyou(hossa),taiou</p>
+
 </details>
 
 
 <details name="life" id=a>
     <summary>睡眠</summary>
-    <form action="../guardian/SleepRecord.action">
+    <form action="../guardian/SleepRecordExecute.action">
         <div>
             <label><input type="radio" name="sleep">寝た</label><br>
             <label><input type="radio" name="sleep">起きた</label><br>
