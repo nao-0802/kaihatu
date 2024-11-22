@@ -49,7 +49,7 @@ public class StudentRecord implements java.io.Serializable{
 		return excretion_id;
 	}
 	public String getStudentId(){
-		return student_id
+		return student_id;
 	}
 	public String getAttendanceId(){
 		return attendance_id;

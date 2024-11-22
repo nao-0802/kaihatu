@@ -119,7 +119,7 @@ public class StudentRecordDao extends Dao {
 
         try {
             statement = connection.prepareStatement(
-                "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, meal_id ,sleep_id,excretion_id, student_id, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, meal_id ,sleep_id, excretion_id, student_id, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
             statement.setString(1, studentRecord.getStudentRecordId());
             statement.setString(2, studentRecord.getName());
@@ -128,12 +128,12 @@ public class StudentRecordDao extends Dao {
             statement.setDate(5, studentRecord.getBirthdate());
             statement.setString(6, studentRecord.getAllergy());
             statement.setString(7, studentRecord.getFeatures());
-            statement.setString(7, studentRecord.getMealId());
-            statement.setString(7, studentRecord.getSleepId());
-            statement.setString(7, studentRecord.getExcretionId());
-            statement.setString(7, studentRecord.getStudentId());
-            statement.setString(8, studentRecord.getAttendanceId());
-            statement.setString(9, studentRecord.getAnualRecordId());
+            statement.setString(8, studentRecord.getMealId()); // 修正: インデックス 8
+            statement.setString(9, studentRecord.getSleepId()); // 修正: インデックス 9
+            statement.setString(10, studentRecord.getExcretionId()); // 修正: インデックス 10
+            statement.setString(11, studentRecord.getStudentId()); // 修正: インデックス 11
+            statement.setString(12, studentRecord.getAttendanceId()); // 修正: インデックス 12
+            statement.setString(13, studentRecord.getAnualRecordId()); // 修正: インデックス 13
 
             count = statement.executeUpdate();
         } catch (Exception e) {
@@ -206,7 +206,7 @@ public class StudentRecordDao extends Dao {
             rSet = statement.executeQuery();
 
             if (rSet.next()) {
-            	StudentRecord studentRecord = new StudentRecord();
+                studentRecord = new StudentRecord();  // ここで新しくオブジェクトを作成する
                 studentRecord.setStudentRecordId(rSet.getString("student_record_id"));
                 studentRecord.setName(rSet.getString("name"));
                 studentRecord.setClassId(rSet.getString("class_id"));
@@ -217,7 +217,7 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setMealId(rSet.getString("meal_id"));
                 studentRecord.setSleepId(rSet.getString("sleep_id"));
                 studentRecord.setExcretionId(rSet.getString("excretion_id"));
-                studentRecord.setStudent_id(rSet.getString("student_id"));
+                studentRecord.setStudentId(rSet.getString("student_id"));
                 studentRecord.setAttendanceId(rSet.getString("attendance_id"));
                 studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
             }
