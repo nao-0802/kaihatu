@@ -42,13 +42,13 @@ public class StudentRecord implements java.io.Serializable{
 	public String getMealId(){
 		return meal_id;
 	}
-	public String sleepId(){
+	public String getSleepId(){
 		return sleep_id;
 	}
-	public String excretionId(){
+	public String getExcretionId(){
 		return excretion_id;
 	}
-	public String studentId(){
+	public String getStudentId(){
 		return student_id
 	}
 	public String getAttendanceId(){
