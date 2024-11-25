@@ -18,13 +18,11 @@ public class GuardianSignupExecuteAction {
 			try{
 				String Guardian_id=request.getParameter("guardian_id");
 				String Name=request.getParameter("name");
-				String Email=request.getParameter("email");
 				String Password=request.getParameter("password");
 
 				Guardian p = new Guardian();
 				p.setGuardianId(Guardian_id);
 				p.setGuardianName(Name);
-				p.setEmail(Email);
 				p.setPassword(Password);
 
 				GuardianDao dao =	new GuardianDao();

@@ -1,6 +1,6 @@
 package guardian;
 
-import java.sql.Date;  // SQLのDateをインポート
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.SleepRecord;
+import bean.StudentRecord;  // StudentRecordをインポート
+import dao.GuardianDao;  // GuardianDaoをインポート
 import dao.SleepRecordDao;
 import tool.Action;
 
@@ -16,25 +18,37 @@ public class SleepRecordExecuteAction  extends Action {
 
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         // ローカル変数の宣言
-        String student_id = null; // 生徒ID
+        String student_id = null;  // 生徒ID
         Integer sleep_type = null; // 睡眠種別
         SleepRecordDao dao = new SleepRecordDao();
 
         // リクエストパラメータの取得とnullチェック
-        // -> student_id = req.getParameter("student_id");  // 生徒ID
-        // 保護者IDから生徒IDを抽出するSQLの処理(DAO/BEAN)
+        String guardianId = req.getParameter("guardian_id"); // 保護者IDをリクエストから取得
 
-
-
-
-        String sleepTypeParam = req.getParameter("sleep_type");
-
-        if (student_id == null || student_id.isEmpty()) {
-            req.setAttribute("errorMessage", "生徒IDが指定されていません。");
+        if (guardianId == null || guardianId.isEmpty()) {
+            req.setAttribute("errorMessage", "保護者IDが指定されていません。");
             RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
             dispatcher.forward(req, res);
             return;
         }
+
+        // 保護者IDから生徒IDを取得
+        GuardianDao guardianDao = new GuardianDao();  // ここでGuardianDaoをインスタンス化
+        student_id = guardianDao.getStudentIdByGuardianId(guardianId);  // 生徒IDを取得
+
+        if (student_id == null || student_id.isEmpty()) {
+            req.setAttribute("errorMessage", "指定された保護者IDに対応する生徒IDが見つかりません。");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
+            dispatcher.forward(req, res);
+            return;
+        }
+
+        // 取得した生徒IDをStudentRecordに設定
+        StudentRecord studentRecord = new StudentRecord();
+        studentRecord.setStudent_id(student_id);  // 生徒IDを設定
+
+        // 睡眠種別の取得
+        String sleepTypeParam = req.getParameter("sleep_type");
 
         if (sleepTypeParam != null && !sleepTypeParam.isEmpty()) {
             try {
