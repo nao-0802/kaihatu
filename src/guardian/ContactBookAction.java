@@ -16,20 +16,33 @@ public class ContactBookAction extends Action {
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            // リクエストからパラメータを取得
             String guardianId = request.getParameter("GuardianId");
             String selectedDate = request.getParameter("selectedDate");
 
+            // パラメータが不足している場合はエラーページに転送
+            if (guardianId == null || selectedDate == null) {
+                request.setAttribute("error", "必要なパラメータが不足しています");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+                return;
+            }
+
+            // DAOを使ってデータを取得
             ContactBookDao dao = new ContactBookDao();
             List<ContactBook> list = dao.findByGuardianIdAndDate(guardianId, selectedDate);
 
+            // 取得したデータをリクエスト属性に設定
             request.setAttribute("list", list);
-            request.getRequestDispatcher("/student_list.jsp").forward(request, response);
+
+            // JSPに転送
+            request.getRequestDispatcher("/guardian/contactbookwrite.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
+            request.setAttribute("error", "データ取得中にエラーが発生しました");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 
-	public static void main(String[] args) {
-		ContactBookAction
-	}
+    // mainメソッドはサーブレットでは必要ないため削除
+    // サーブレットはWebサーバーにデプロイされてから動作しますので、mainメソッドは使いません
 }

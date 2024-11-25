@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.ContactBook;
 import dao.ContactBookDao;
+import tool.Action;
 
-public class ContactBookWriteAction {
-	public void doGet (
-			HttpServletRequest request, HttpServletResponse response
-		) throws ServletException, IOException {
+public class ContactBookWriteAction extends Action {
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response)
+		 throws ServletException, IOException {
 
 		// 現在日時を取得
 		LocalDateTime nowDate = LocalDateTime.now();

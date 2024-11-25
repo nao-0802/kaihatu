@@ -21,7 +21,12 @@ public class SleepRecordExecuteAction  extends Action {
         SleepRecordDao dao = new SleepRecordDao();
 
         // リクエストパラメータの取得とnullチェック
-        student_id = req.getParameter("student_id");  // 生徒ID
+        // -> student_id = req.getParameter("student_id");  // 生徒ID
+        // 保護者IDから生徒IDを抽出するSQLの処理(DAO/BEAN)
+
+
+
+
         String sleepTypeParam = req.getParameter("sleep_type");
 
         if (student_id == null || student_id.isEmpty()) {

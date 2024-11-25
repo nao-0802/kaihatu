@@ -9,7 +9,7 @@ public class ContactBook implements java.io.Serializable{
 	private String guardian_id	;
 	private Date day;
 	private String contact_details;
-	private boolean check;
+	private boolean contact_check;
 
 	public String getContactBookId(){
 		return contact_book_id;
@@ -26,8 +26,8 @@ public class ContactBook implements java.io.Serializable{
 	public String getContactDetails(){
 		return contact_details;
 	}
-	public boolean getCheck(){
-		return check;
+	public boolean getContactCheck(){
+		return contact_check;
 	}
 	public void setContactBookId(String contact_book_id){
 		this.contact_book_id=contact_book_id;
@@ -35,7 +35,7 @@ public class ContactBook implements java.io.Serializable{
 	public void setTeacherId(String teacher_id){
 		this.teacher_id=teacher_id;
 	}
-	public void setGuardinaId(String guardian_id){
+	public void setGuardianId(String guardian_id){
 		this.guardian_id=guardian_id;
 	}
 	public void setDay(Date day){
@@ -44,7 +44,9 @@ public class ContactBook implements java.io.Serializable{
 	public void setContactDetails(String contact_details){
 		this.contact_details=contact_details;
 	}
-	public void setCheck(boolean check){
-		this.check=check;
+	public void setContactCheck(boolean contact_check){
+		this.contact_check=contact_check;
 	}
+
+
 }
