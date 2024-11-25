@@ -35,7 +35,7 @@ public class LoginAdminExecuteAction extends Action {
 
 		//DBからデータ取得 3
 		admin = adminDao.login(id, password);//管理者データ取得
-		List<Teacher>teacher = teacherDao.getAllTeachers();//教職員データ取得
+		List<Teacher>teacher = teacherDao.getAllActiveTeachers();//教職員データ取得
 		List<Guardian>guardian = guardianDao.getAllGuardians();//保護者データ取得
 
 		//ビジネスロジック 4

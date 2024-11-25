@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Admin;
 import bean.Teacher;
+import dao.ClassDao;
 import dao.TeacherDao;
 import tool.Action;
 
@@ -16,6 +17,8 @@ public class TeacherUpdateExecuteAction extends Action {
 
        Admin admin = (Admin) session.getAttribute("user");
        TeacherDao tDao = new TeacherDao();
+       ClassDao cDao = new ClassDao(); // ClassDaoのインスタンスを作成
+
 
        // フォームから送信されたデータを取得
        String teacherId = req.getParameter("teacherId");  // 教職員ID
@@ -31,13 +34,23 @@ public class TeacherUpdateExecuteAction extends Action {
             flag = 1;  // 無効
         }
 
+     // クラス名からClass_idを取得
+        String classId = cDao.findClassIdByClassName(className);
+        if (classId == null) {
+            // 該当クラスが見つからない場合のエラーハンドリング
+            req.setAttribute("errorMessage", "指定されたクラス名に対応するクラスが見つかりません。");
+            req.getRequestDispatcher("/admin/Teacher_update.jsp").forward(req, res);
+            return;
+        }
+
         // Teacherオブジェクトにデータをセット
         Teacher updatedTeacher = new Teacher();
         updatedTeacher.setTeacherId(teacherId);
         updatedTeacher.setTeacherName(teacherName);
         updatedTeacher.setPassword(password);
-        updatedTeacher.setClassId(className);
+        updatedTeacher.setClassId(classId); // クラスIDをセット
         updatedTeacher.setFlag(flag);
+
 
         // 教職員情報の更新
         boolean success = tDao.save(updatedTeacher);  // 更新メソッドを呼び出す
