@@ -55,9 +55,8 @@ public class StudentDao extends Dao {
         return list;
     }
 
-    public List<Student> get(String student_id) throws Exception {
-    	List<Student> list = new ArrayList<>();
-        Student student = null;
+    public Student get(String student_id) throws Exception {
+    	Student student = null;
         Connection connection = getConnection();
         PreparedStatement statement = null;
         try {
@@ -70,7 +69,6 @@ public class StudentDao extends Dao {
                 student.setStudentName(rSet.getString("student_name"));
                 student.setClassId(rSet.getString("class_id"));
                 student.setFlag(rSet.getInt("flag"));
-                list.add(student);
             }
         } catch (Exception e) {
             throw e;
@@ -90,7 +88,7 @@ public class StudentDao extends Dao {
                 }
             }
         }
-        return list;
+        return student;
     }
 
 
