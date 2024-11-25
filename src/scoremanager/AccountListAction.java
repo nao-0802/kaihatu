@@ -20,7 +20,7 @@ public class AccountListAction extends Action {
 
 
         // 教職員データ、保護者データ、管理者データを取得
-        List<Teacher> teacher = tDao.getAllTeachers();
+        List<Teacher> teacher = tDao.getAllActiveTeachers();
         List<Guardian> guardian = gDao.getAllGuardians();
 
 

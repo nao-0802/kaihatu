@@ -48,6 +48,26 @@ public class ClassDao extends Dao {
         return list;
     }
 
+    public String findClassIdByClassName(String className) {
+        String classId = null;
+
+        try (Connection conn = getConnection()) {
+            String sql = "SELECT class_id FROM t_class WHERE class_name = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, className);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                classId = rs.getString("class_id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return classId; // 見つからない場合はnullを返す
+    }
+
+
     // ResultSetからClassリストを生成する共通処理
     private List<Class> postfilter(ResultSet rSet) throws Exception {
         List<Class> list = new ArrayList<>();

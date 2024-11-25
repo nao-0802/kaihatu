@@ -32,11 +32,37 @@ public class TeacherDao extends Dao {
         "SELECT teacher_id, teacher_name, password, class_id, flag " +
         "FROM t_teacher";
 
+    private static final String SELECT_ALL_ACTIVE_TEACHERS_SQL =
+    	    "SELECT teacher_id, teacher_name, password, class_id, flag " +
+    	    "FROM t_teacher " +
+    	    "WHERE flag = 0"; // 在籍フラグが0の教職員のみを取得
+
+
     // すべての教師を取得
     public List<Teacher> getAllTeachers() throws Exception {
         List<Teacher> list = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TEACHERS_SQL);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Teacher teacher = new Teacher();
+                teacher.setTeacherId(resultSet.getString("teacher_id"));
+                teacher.setTeacherName(resultSet.getString("teacher_name"));
+                teacher.setPassword(resultSet.getString("password"));
+                teacher.setClassId(resultSet.getString("class_id"));
+                teacher.setFlag(resultSet.getInt("flag"));
+                list.add(teacher);
+            }
+        }
+        return list;
+    }
+
+ // 有効な教師のみ取得するメソッド
+    public List<Teacher> getAllActiveTeachers() throws Exception {
+        List<Teacher> list = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_ACTIVE_TEACHERS_SQL);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
