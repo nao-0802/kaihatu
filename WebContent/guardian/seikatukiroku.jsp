@@ -73,7 +73,7 @@ summary {
     </form>
 </details>
 
-<form action="../guardian/ContactBook.action">
+<form action="../guardian/ContactBookWrite.action">
 <button>連絡帳を書く</button>
 </form>
 <!-- <input type="button" onclick="location.href='#'" value="連絡帳を書く"> -->

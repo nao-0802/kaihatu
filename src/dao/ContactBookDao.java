@@ -11,10 +11,10 @@ import bean.ContactBook;
 
 public class ContactBookDao extends Dao {
     // 既存のSQLクエリ
-    private String baseSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, check FROM t_contact_book WHERE teacher_id = ?";
+    private String baseSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, contact_check FROM t_contact_book WHERE teacher_id = ?";
 
     // 新しいSQLクエリ: guardian_id と date に基づいてレコードを取得
-    private String findByGuardianIdAndDateSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, check FROM t_contact_book WHERE guardian_id = ? AND day = ?";
+    private String findByGuardianIdAndDateSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, contact_check FROM t_contact_book WHERE guardian_id = ? AND day = ?";
 
     // ResultSetからContactBookリストを生成するメソッド
     private List<ContactBook> postfilter(ResultSet rSet) throws Exception {
@@ -24,10 +24,10 @@ public class ContactBookDao extends Dao {
                 ContactBook contactBook = new ContactBook();
                 contactBook.setContactBookId(rSet.getString("contact_book_id"));
                 contactBook.setTeacherId(rSet.getString("teacher_id"));
-                contactBook.setGuardinaId(rSet.getString("guardian_id"));
+                contactBook.setGuardianId(rSet.getString("guardian_id"));
                 contactBook.setDay(rSet.getDate("day"));
                 contactBook.setContactDetails(rSet.getString("contact_details"));
-                contactBook.setCheck(rSet.getBoolean("check"));
+                contactBook.setContactCheck(rSet.getBoolean("contact_check"));
                 list.add(contactBook);
             }
         } catch (Exception e) {
@@ -120,24 +120,24 @@ public class ContactBookDao extends Dao {
             if (existingContactBook == null) {
                 // 新しいContactBookの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO t_contact_book (contact_book_id, teacher_id, guardian_id, day, contact_details, check) VALUES (?, ?, ?, ?, ?, ?)"
+                        "INSERT INTO t_contact_book (contact_book_id, teacher_id, guardian_id, day, contact_details, contact_check) VALUES (?, ?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, contactBook.getContactBookId());
                 statement.setString(2, contactBook.getTeacherId());
                 statement.setString(3, contactBook.getGuardianId());
                 statement.setDate(4, contactBook.getDay());
                 statement.setString(5, contactBook.getContactDetails());
-                statement.setBoolean(6, contactBook.getCheck());
+                statement.setBoolean(6, contactBook.getContactCheck());
             } else {
                 // 既存のContactBookの更新
                 statement = connection.prepareStatement(
-                        "UPDATE t_contact_book SET teacher_id = ?, guardian_id = ?, day = ?, contact_details = ?, check = ? WHERE contact_book_id = ?"
+                        "UPDATE t_contact_book SET teacher_id = ?, guardian_id = ?, day = ?, contact_details = ?, contact_check = ? WHERE contact_book_id = ?"
                 );
                 statement.setString(1, contactBook.getTeacherId());
                 statement.setString(2, contactBook.getGuardianId());
                 statement.setDate(3, contactBook.getDay());
                 statement.setString(4, contactBook.getContactDetails());
-                statement.setBoolean(5, contactBook.getCheck());
+                statement.setBoolean(5, contactBook.getContactCheck());
                 statement.setString(6, contactBook.getContactBookId());
             }
             count = statement.executeUpdate();
@@ -178,10 +178,10 @@ public class ContactBookDao extends Dao {
                 contactBook = new ContactBook();
                 contactBook.setContactBookId(rSet.getString("contact_book_id"));
                 contactBook.setTeacherId(rSet.getString("teacher_id"));
-                contactBook.setGuardinaId(rSet.getString("guardian_id"));
+                contactBook.setGuardianId(rSet.getString("guardian_id"));
                 contactBook.setDay(rSet.getDate("day"));
                 contactBook.setContactDetails(rSet.getString("contact_details"));
-                contactBook.setCheck(rSet.getBoolean("check"));
+                contactBook.setContactCheck(rSet.getBoolean("contact_check"));
             }
         } catch (Exception e) {
             throw e;
@@ -237,7 +237,47 @@ public class ContactBookDao extends Dao {
 
         return result;
     }
+
+
+public List<ContactBook> findByGuardianId(String guardianId) throws Exception {
+    List<ContactBook> list = new ArrayList<>();
+    Connection connection = getConnection();
+    PreparedStatement statement = null;
+    ResultSet rSet = null;
+
+    try {
+        String sql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, contact_check FROM t_contact_book WHERE guardian_id = ?";
+        statement = connection.prepareStatement(sql);
+        statement.setString(1, guardianId);
+        rSet = statement.executeQuery();
+
+        // ResultSetを基にリストを作成
+        while (rSet.next()) {
+            ContactBook contactBook = new ContactBook();
+            contactBook.setContactBookId(rSet.getString("contact_book_id"));
+            contactBook.setTeacherId(rSet.getString("teacher_id"));
+            contactBook.setGuardianId(rSet.getString("guardian_id"));
+            contactBook.setDay(rSet.getDate("day"));
+            contactBook.setContactDetails(rSet.getString("contact_details"));
+            contactBook.setContactCheck(rSet.getBoolean("contact_check"));
+            list.add(contactBook);
+        }
+    } catch (Exception e) {
+        throw e;
+    } finally {
+        // リソースの解放
+        if (statement != null) {
+            statement.close();
+        }
+        if (connection != null) {
+            connection.close();
+        }
+    }
+
+    return list;
 }
+}
+
 
 
 
