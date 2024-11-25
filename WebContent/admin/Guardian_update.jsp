@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -86,7 +87,7 @@
                 ${errorMessage}
             </div>
         </c:if>
-        <form action="/guardian/update" method="POST" onsubmit="return validateForm()">
+        <form action="GuardianUpdateExecute.action" method="POST" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="guardian_id">保護者ID:</label>
                 <input type="text" id="guardian_id" name="guardian_id" class="form-control" required pattern="^g.*$" title="保護者IDは「g」で始まる必要があります" value="${param.guardian_id}">
@@ -96,18 +97,21 @@
                 <input type="text" id="guardian_name" name="guardian_name" class="form-control" required maxlength="50" value="${param.guardian_name}">
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" required maxlength="100" value="${param.email}">
-            </div>
-            <div class="form-group">
                 <label for="password">パスワード:</label>
                 <input type="password" id="password" name="password" class="form-control" required maxlength="255" value="${param.password}">
             </div>
-            <button type="submit" class="btn">更新</button>
-        </form>
-        <!-- 戻るボタンを追加 -->
-        <form action="Guardian_update.jsp">
-            <button type="submit" class="btn-back">戻る</button>
+            <div class="form-group">
+               <label for="student-name">お子様氏名</label>
+                <select class="form-control" name="studentName" required>
+                    <option value="">-- 生徒氏名を選択 --</option>
+                    <c:forEach var="studentName" items="${studentNames}">
+                        <option value="${studentName}" <c:if test="${studentName == guardian.studentName}">selected</c:if>>${studentName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">変更</button>
+            <a href="./AccountList.action" class="btn-back">戻る</a>
         </form>
     </div>
 
@@ -115,9 +119,7 @@
         function validateForm() {
             const guardianId = document.getElementById('guardian_id').value; // 保護者IDの取得
             const guardianName = document.getElementById('guardian_name').value;
-            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('error-message');
             errorMessage.style.display = 'none';
 
             // 未入力の場合の処理
