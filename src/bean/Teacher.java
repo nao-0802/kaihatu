@@ -7,6 +7,8 @@ public class Teacher implements java.io.Serializable{
 	private String password;
 	private String class_id;
 	private int flag;
+	private String className; // クラス名
+
 
 	public String getTeacherId(){
 		return teacher_id;
@@ -38,4 +40,10 @@ public class Teacher implements java.io.Serializable{
 	public void setFlag(int flag){
 		this.flag=flag;
 	}
+	 public String getClassName() {
+	        return className;
+	}
+	public void setClassName(String className) {
+        this.className = className;
+    }
 }

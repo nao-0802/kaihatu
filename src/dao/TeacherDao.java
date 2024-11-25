@@ -10,6 +10,8 @@ import bean.Teacher;
 
 public class TeacherDao extends Dao {
 
+	private ClassDao classDao = new ClassDao();
+
     // SQLクエリ
     private static final String SEARCH_TEACHERS_SQL =
         "SELECT teacher_id, teacher_name, password, class_id, flag " +
@@ -72,6 +74,12 @@ public class TeacherDao extends Dao {
                 teacher.setPassword(resultSet.getString("password"));
                 teacher.setClassId(resultSet.getString("class_id"));
                 teacher.setFlag(resultSet.getInt("flag"));
+
+             // classIdに対応するクラス名を取得
+                String className = classDao.getClassNameById(teacher.getClassId());
+                teacher.setClassName(className);
+
+
                 list.add(teacher);
             }
         }

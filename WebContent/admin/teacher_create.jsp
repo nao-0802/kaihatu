@@ -27,7 +27,7 @@
                     <div>
                         <label class="form-label" for="teacher-class-select">クラス</label>
                         <select class="form-select" id="teacher-class-select" name="class_id" required>
-                            <option value="">--------</option>
+                            <option value="">--クラスを選択--</option>
                             <c:forEach var="classItem" items="${class_list}">
                                 <option value="${classItem.classId}" <c:if test="${classItem.classId == class_id}">selected</c:if>>${classItem.className}</option>
                             </c:forEach>

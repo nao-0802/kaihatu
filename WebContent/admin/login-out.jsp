@@ -8,13 +8,14 @@
     <tr>
         <td>ID</td>
         <td>名前</td>
+        <td>クラス</td>
     </tr>
     <c:forEach var="t_teacher" items="${teacher}">
         <tr>
             <td>${t_teacher.teacherId}</td>
             <td>${t_teacher.teacherName}</td>
-            <td><a href="TeacherUpdate.action?teacherId=${t_teacher.teacherId}">変更</a></td>
-            <td><a href="TeacherDelete.action?id=${t_teacher.teacherId}">削除</a></td>
+            <td>${t_teacher.className}</td>
+            <td><a href="TeacherUpdate.action?teacherId=${t_teacher.teacherId}">詳細・変更</a></td>
         </tr>
     </c:forEach>
 </table>
@@ -30,8 +31,7 @@
         <tr>
             <td>${t_guardian.guardianId}</td>
             <td>${t_guardian.guardianName}</td>
-            <td><a href="GuardianUpdate.action?id=${t_guardian.guardianId}">変更</a></td>
-            <td><a href="GuardianDelete.action?id=${t_guardian.guardianId}">削除</a></td>
+            <td><a href="GuardianUpdate.action?guardianId=${t_guardian.guardianId}">詳細・変更</a></td>
         </tr>
     </c:forEach>
 </table>

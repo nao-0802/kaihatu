@@ -13,6 +13,11 @@ public class ClassDao extends Dao {
     // SQLクエリ: 全クラスを取得
     private String getAllSql = "SELECT class_id, class_name FROM t_class";
 
+ // クラスIDに対応するクラス名を取得するSQLクエリ
+    private static final String SELECT_CLASS_NAME_SQL =
+        "SELECT class_name FROM t_class WHERE class_id = ?";
+
+
     // 全クラスを取得するメソッド
     public List<Class> getAllClasses() throws Exception {
         List<Class> list = new ArrayList<>();
@@ -67,6 +72,21 @@ public class ClassDao extends Dao {
         return classId; // 見つからない場合はnullを返す
     }
 
+
+    public String getClassNameById(String classId) throws Exception {
+        String className = null;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_CLASS_NAME_SQL)) {
+
+            statement.setString(1, classId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    className = resultSet.getString("class_name");
+                }
+            }
+        }
+        return className;
+    }
 
     // ResultSetからClassリストを生成する共通処理
     private List<Class> postfilter(ResultSet rSet) throws Exception {
