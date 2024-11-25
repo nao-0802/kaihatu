@@ -29,7 +29,7 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setMealId(rSet.getString("meal_id"));
                 studentRecord.setSleepId(rSet.getString("sleep_id"));
                 studentRecord.setExcretionId(rSet.getString("excretion_id"));
-                studentRecord.setStudent_id(rSet.getString("studentId"));
+                studentRecord.setStudent_id(rSet.getString("student_id"));
                 studentRecord.setAttendanceId(rSet.getString("attendance_id"));
                 studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
                 list.add(studentRecord);
@@ -131,7 +131,7 @@ public class StudentRecordDao extends Dao {
             statement.setString(8, studentRecord.getMealId()); // 修正: インデックス 8
             statement.setString(9, studentRecord.getSleepId()); // 修正: インデックス 9
             statement.setString(10, studentRecord.getExcretionId()); // 修正: インデックス 10
-            statement.setString(11, studentRecord.getStudentId()); // 修正: インデックス 11
+            statement.setString(11, studentRecord.getStudent_id()); // 修正: インデックス 11
             statement.setString(12, studentRecord.getAttendanceId()); // 修正: インデックス 12
             statement.setString(13, studentRecord.getAnualRecordId()); // 修正: インデックス 13
 
@@ -217,7 +217,7 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setMealId(rSet.getString("meal_id"));
                 studentRecord.setSleepId(rSet.getString("sleep_id"));
                 studentRecord.setExcretionId(rSet.getString("excretion_id"));
-                studentRecord.setStudentId(rSet.getString("studentId"));
+                studentRecord.setStudent_id(rSet.getString("student_id"));
                 studentRecord.setAttendanceId(rSet.getString("attendance_id"));
                 studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
             }
