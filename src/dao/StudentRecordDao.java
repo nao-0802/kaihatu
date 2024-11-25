@@ -20,8 +20,7 @@ public class StudentRecordDao extends Dao {
             while (rSet.next()) {
                 StudentRecord studentRecord = new StudentRecord();
                 studentRecord.setStudentRecordId(rSet.getString("student_record_id"));
-                studentRecord.setName(rSet.getString("name"));
-                studentRecord.setClassId(rSet.getString("classId"));
+                studentRecord.setClassId(rSet.getString("class_Id"));
                 studentRecord.setGuardianId(rSet.getString("guardian_id"));
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
                 studentRecord.setAllergy(rSet.getString("allergy"));
@@ -249,4 +248,6 @@ public class StudentRecordDao extends Dao {
 
         return studentRecord;
     }
+
+
 }

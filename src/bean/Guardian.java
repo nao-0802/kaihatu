@@ -16,9 +16,7 @@ public class Guardian implements java.io.Serializable{
 	public String getPassword(){
 		return password;
 	}
-	public String getEmail(){
-		return email;
-	}
+
 	public void setGuardianId(String guardian_id){
 		this.guardian_id=guardian_id;
 	}
@@ -28,8 +26,8 @@ public class Guardian implements java.io.Serializable{
 	public void setPassword(String password){
 		this.password=password;
 	}
-	public void setEmail(String email){
-		this.email=email;
-	}
+
+
+
 
 }
