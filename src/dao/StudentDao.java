@@ -13,6 +13,10 @@ public class StudentDao extends Dao {
     // SQLクエリ: 学生の情報を取得するための基本SQL
     private String baseSql = "SELECT * FROM t_student WHERE class_id = ?";
 
+    private static final String SELECT_ALL_STUDENTS_SQL =
+            "SELECT student_id, student_name, class_id, flag " +
+            "FROM t_student";
+
     // ResultSetからStudentリストを生成するメソッド
     private List<Student> postFilter(ResultSet rSet) throws SQLException {
         List<Student> list = new ArrayList<>();
@@ -21,16 +25,32 @@ public class StudentDao extends Dao {
                 Student student = new Student();
                 student.setStudentId(rSet.getString("student_id"));
                 student.setStudentName(rSet.getString("student_name"));
-                student.setPassword(rSet.getString("password"));
                 student.setClassId(rSet.getString("class_id"));
-                student.setGuardianId(rSet.getString("guardian_id"));
                 student.setFlag(rSet.getInt("flag"));
-                student.setStudentRecordId(rSet.getString("student_record_id"));
                 list.add(student);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             list = null;
+        }
+        return list;
+    }
+
+ // すべての生徒を取得
+    public List<Student> getAllStudents() throws Exception {
+        List<Student> list = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_STUDENTS_SQL);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Student student = new Student();
+                student.setStudentId(resultSet.getString("student_id"));
+                student.setStudentName(resultSet.getString("student_name"));
+                student.setClassId(resultSet.getString("class_id"));
+                student.setFlag(resultSet.getInt("flag"));
+                list.add(student);
+            }
         }
         return list;
     }
@@ -46,7 +66,6 @@ public class StudentDao extends Dao {
             if (rSet.next()) {
                 student = new Student();
                 student.setStudentId(rSet.getString("student_id"));
-                student.setPassword(rSet.getString("password"));
             }
         } catch (Exception e) {
             throw e;
@@ -158,15 +177,12 @@ public class StudentDao extends Dao {
         try {
             // 新しい学生の場合は挿入、既存の学生の場合は更新
             statement = connection.prepareStatement(
-                    "INSERT INTO t_student (student_id, student_name, password, class_id, guardian_id, flag, student_record_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO t_student (student_id, student_name, class_id, flag) VALUES (?, ?, ?, ?)"
             );
             statement.setString(1, student.getStudentId());
             statement.setString(2, student.getStudentName());
-            statement.setString(3, student.getPassword());
-            statement.setString(4, student.getClassId());
-            statement.setString(5, student.getGuardianId());
-            statement.setInt(6, student.getFlag());
-            statement.setString(7, student.getStudentRecordId());
+            statement.setString(3, student.getClassId());
+            statement.setInt(4, student.getFlag());
 
             count = statement.executeUpdate();
         } catch (Exception e) {
