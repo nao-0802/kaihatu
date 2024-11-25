@@ -25,7 +25,6 @@ public class ClassSelectExecuteAction extends Action {
 //			request.setAttribute("list", list);
 
 			List<StudentRecord> list = dao.filter(classid);
-			System.out.println("Student List Size: " + list.size());
 			request.setAttribute("list", list);
 
 

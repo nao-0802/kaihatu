@@ -13,8 +13,9 @@
             <td>
                 <form action="LifeRecordAction" method="post">
                     <!-- name フィールドを表示 -->
-                    <input type="button" name="student_name" value="${p.name}">
+                    <button name="student_name">${p.name}</button>
                     <p>${p.birthdate}</p>
+                    <p>${p.student_id}</p>
                 </form>
             </td>
         </tr>
