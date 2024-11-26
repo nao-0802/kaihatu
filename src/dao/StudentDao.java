@@ -55,6 +55,25 @@ public class StudentDao extends Dao {
         return list;
     }
 
+    public String findStudentIdByStudentName(String studentName) {
+        String studentId = null;
+
+        try (Connection conn = getConnection()) {
+            String sql = "SELECT student_id FROM t_student WHERE student_name = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, studentName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                studentId = rs.getString("student_id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return studentId; // 見つからない場合はnullを返す
+    }
+
     public Student get(String student_id) throws Exception {
     	Student student = null;
         Connection connection = getConnection();
