@@ -35,16 +35,18 @@ summary {
 </details>
 
 
-<details name="life" id=a>
+<details name="life" id="a">
     <summary>睡眠</summary>
     <form action="../guardian/SleepRecordExecute.action">
         <div>
-            <label><input type="radio" name="sleep">寝た</label><br>
-            <label><input type="radio" name="sleep">起きた</label><br>
+            <label><input type="radio" name="sleep" value="1">寝た</label><br>
+            <label><input type="radio" name="sleep" value="0">起きた</label><br>
             <button>記録</button>
+            <input type="hidden" name="guardian_id" value="${guardianID}">
         </div>
     </form>
 </details>
+
 
 <details name="life" id=b>
     <summary>食事</summary>
@@ -54,6 +56,7 @@ summary {
             <label><input type="radio" name="meal">半量</label><br>
             <label><input type="radio" name="meal">少量</label><br>
             <button>記録</button>
+            <input type="hidden" name="guardian_id" value="${guardianID}">
         </div>
     </form>
 </details>
@@ -68,14 +71,20 @@ summary {
                 <input type="radio" name="option" id="radio1">その他
             </label>
             <input type="text" oninput="autoCheck(this.value, 'radio1')"><br>
+            <input type="hidden" name="guardian_id" value="${guardianID}">
         </div>
         <button>記録</button>
     </form>
 </details>
 
+
+
 <form action="../guardian/ContactBookWrite.action">
 <button>連絡帳を書く</button>
 </form>
+
+
+
 <!-- <input type="button" onclick="location.href='#'" value="連絡帳を書く"> -->
 
 <!--  %@include file="../footer.html" % -->

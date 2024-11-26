@@ -8,7 +8,7 @@ public class SleepRecord implements java.io.Serializable{
 	private String student_id;
 	private Date day;
 	private Date time;
-	private int type;
+	private int sleep;
 
 	public String getSleepId(){
 		return sleep_id;
@@ -22,8 +22,9 @@ public class SleepRecord implements java.io.Serializable{
 	public Date getTime(){
 		return time;
 	}
-	public int getType(){
-		return type;
+
+	public int getSleep(){
+		return sleep;
 	}
 	public void setSleepId(String sleep_id){
 		this.sleep_id=sleep_id;
@@ -37,7 +38,7 @@ public class SleepRecord implements java.io.Serializable{
 	public void setTime(Date time){
 		this.time=time;
 	}
-	public void setType(int type){
-		this.type=type;
+	public void setSleep(int sleep){
+		this.sleep=sleep;
 	}
 }

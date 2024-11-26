@@ -11,7 +11,7 @@ import bean.SleepRecord;
 
 public class SleepRecordDao extends Dao {
     // SQLクエリ: student_idに基づいてレコードを取得
-    private String baseSql = "SELECT sleep_id, student_id, day, time, type FROM t_sleep_record WHERE student_id = ?";
+    private String baseSql = "SELECT  student_id,day, time, sleep FROM t_sleep_record WHERE student_id = ?";
 
     // ResultSetからSleepRecordリストを生成するメソッド
     private List<SleepRecord> postfilter(ResultSet rSet) throws Exception {
@@ -19,11 +19,11 @@ public class SleepRecordDao extends Dao {
         try {
             while (rSet.next()) {
                 SleepRecord sleepRecord = new SleepRecord();
-                sleepRecord.setSleepId(rSet.getString("sleep_id"));
-                sleepRecord.setStudentId(rSet.getString("student_id"));
+//                sleepRecord.setSleepId(rSet.getString("sleep_id"));
+              sleepRecord.setStudentId(rSet.getString("student_id"));
                 sleepRecord.setDay(rSet.getDate("day"));
                 sleepRecord.setTime(rSet.getDate("time"));
-                sleepRecord.setType(rSet.getInt("type"));
+                sleepRecord.setSleep(rSet.getInt("sleep"));
                 list.add(sleepRecord);
             }
         } catch (Exception e) {
@@ -39,6 +39,7 @@ public class SleepRecordDao extends Dao {
         Connection connection = getConnection();
         PreparedStatement statement = null;
         ResultSet rSet = null;
+
 
         try {
             statement = connection.prepareStatement(baseSql);
@@ -81,23 +82,23 @@ public class SleepRecordDao extends Dao {
             if (existingRecord == null) {
                 // 新しいSleepRecordの場合、挿入
                 statement = connection.prepareStatement(
-                        "INSERT INTO t_sleep_record (sleep_id, student_id, day, time, type) VALUES (?, ?, ?, ?, ?)"
+                        "INSERT INTO t_sleep_record ( student_id,day, time, sleep) VALUES (?,?, ?, ?)"
                 );
-                statement.setString(1, sleepRecord.getSleepId());
-                statement.setString(2, sleepRecord.getStudentId());
-                statement.setDate(3, sleepRecord.getDay());
-                statement.setDate(4, sleepRecord.getTime());
-                statement.setInt(5, sleepRecord.getType());
+//                statement.setString(1, sleepRecord.getSleepId());
+                statement.setString(1, sleepRecord.getStudentId());
+                statement.setDate(2, sleepRecord.getDay());
+                statement.setDate(3, sleepRecord.getTime());
+                statement.setInt(4, sleepRecord.getSleep());
             } else {
                 // 既存のSleepRecordの場合、更新
                 statement = connection.prepareStatement(
-                        "UPDATE t_sleep_record SET student_id = ?, day = ?, time = ?, type = ? WHERE sleep_id = ?"
+                        "UPDATE t_sleep_record SET  = ?, day = ?, time = ?, sleep = ? WHERE sleep_id = ?"
                 );
                 statement.setString(1, sleepRecord.getStudentId());
                 statement.setDate(2, sleepRecord.getDay());
                 statement.setDate(3, sleepRecord.getTime());
-                statement.setInt(4, sleepRecord.getType());
-                statement.setString(5, sleepRecord.getSleepId());
+                statement.setInt(4, sleepRecord.getSleep());
+//                statement.setString(5, sleepRecord.getSleepId());
             }
 
             count = statement.executeUpdate();
@@ -136,12 +137,13 @@ public class SleepRecordDao extends Dao {
             rSet = statement.executeQuery();
             if (rSet.next()) {
                 sleepRecord = new SleepRecord();
-                sleepRecord.setSleepId(rSet.getString("sleep_id"));
-                sleepRecord.setStudentId(rSet.getString("student_id"));
+//                sleepRecord.setSleepId(rSet.getString("sleep_id"));
+              sleepRecord.setStudentId(rSet.getString("student_id"));
                 sleepRecord.setDay(rSet.getDate("day"));
                 sleepRecord.setTime(rSet.getDate("time"));
-                sleepRecord.setType(rSet.getInt("type"));
-            }
+                sleepRecord.setSleep(rSet.getInt("sleep"));
+
+   }
         } catch (Exception e) {
             throw e;
         } finally {
