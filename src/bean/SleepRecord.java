@@ -1,13 +1,14 @@
 package bean;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class SleepRecord implements java.io.Serializable{
 
 	private String sleep_id;
 	private String student_id;
 	private Date day;
-	private Date time;
+	private Time time;
 	private int sleep;
 
 	public String getSleepId(){
@@ -19,7 +20,7 @@ public class SleepRecord implements java.io.Serializable{
 	public Date getDay(){
 		return day;
 	}
-	public Date getTime(){
+	public Time getTime(){
 		return time;
 	}
 
@@ -41,7 +42,7 @@ public class SleepRecord implements java.io.Serializable{
 	public void setSleep(int sleep){
 		this.sleep=sleep;
 	}
-	public void setTime(Date time) {
+	public void setTime(Time time) {
 	    this.time = time;
 	}
 

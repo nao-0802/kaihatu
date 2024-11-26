@@ -22,7 +22,7 @@ public class SleepRecordDao extends Dao {
 //                sleepRecord.setSleepId(rSet.getString("sleep_id"));
               sleepRecord.setStudentId(rSet.getString("student_id"));
                 sleepRecord.setDay(rSet.getDate("day"));
-                sleepRecord.setTime(rSet.getDate("time"));
+                sleepRecord.setTime(rSet.getTime("time"));
                 sleepRecord.setSleep(rSet.getInt("sleep"));
                 list.add(sleepRecord);
             }
@@ -87,7 +87,7 @@ public class SleepRecordDao extends Dao {
 //                statement.setString(1, sleepRecord.getSleepId());
                 statement.setString(1, sleepRecord.getStudentId());
                 statement.setDate(2, sleepRecord.getDay());
-                statement.setDate(3, sleepRecord.getTime());
+                statement.setTime(3, sleepRecord.getTime());
                 statement.setInt(4, sleepRecord.getSleep());
             } else {
                 // 既存のSleepRecordの場合、更新
@@ -96,7 +96,7 @@ public class SleepRecordDao extends Dao {
                 );
                 statement.setString(1, sleepRecord.getStudentId());
                 statement.setDate(2, sleepRecord.getDay());
-                statement.setDate(3, sleepRecord.getTime());
+                statement.setTime(3, sleepRecord.getTime());
                 statement.setInt(4, sleepRecord.getSleep());
 //                statement.setString(5, sleepRecord.getSleepId());
             }
@@ -140,7 +140,7 @@ public class SleepRecordDao extends Dao {
 //                sleepRecord.setSleepId(rSet.getString("sleep_id"));
               sleepRecord.setStudentId(rSet.getString("student_id"));
                 sleepRecord.setDay(rSet.getDate("day"));
-                sleepRecord.setTime(rSet.getDate("time"));
+                sleepRecord.setTime(rSet.getTime("time"));
                 sleepRecord.setSleep(rSet.getInt("sleep"));
 
    }

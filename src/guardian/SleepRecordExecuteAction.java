@@ -69,6 +69,8 @@ public class SleepRecordExecuteAction extends Action {
             return;
         }
 
+
+
         // 現在の日付と時刻を取得
         LocalDate currentDate = LocalDate.now();  // 現在の日付
         LocalTime currentTime = LocalTime.now();  // 現在の時刻（時間、分、秒）
@@ -85,7 +87,7 @@ public class SleepRecordExecuteAction extends Action {
         // student_idの登録
         p.setStudentId(studentRecord.getStudent_id());
         p.setDay(sqlDate);  // 日付をセット
-        p.setTime(sqlDate); // 時刻をセット
+        p.setTime(sqlTime); // 正しい時間を設定
         p.setSleep(sleep);   // 睡眠種別をセット
 
         // データ保存処理
