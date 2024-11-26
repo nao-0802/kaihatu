@@ -60,7 +60,7 @@
         <p>変更内容をご確認ください。</p>
         <div class="btn-container">
             <!-- 戻るボタンを中央に配置 -->
-            <a href="Guardian_update.jsp" class="btn">戻る</a>
+            <a href="./AccountList.action" class="btn">戻る</a>
         </div>
     </div>
 </body>

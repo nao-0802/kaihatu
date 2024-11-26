@@ -89,25 +89,20 @@
         </c:if>
         <form action="GuardianUpdateExecute.action" method="POST" onsubmit="return validateForm()">
             <div class="form-group">
-                <label for="guardian_id">保護者ID:</label>
-                <input type="text" id="guardian_id" name="guardian_id" class="form-control" required pattern="^g.*$" title="保護者IDは「g」で始まる必要があります" value="${param.guardian_id}">
+                <label for="guardian-id">保護者ID:</label>
+                <input type="text" id="guardian-id" name="guardianId" readonly value="${gid}">
             </div>
             <div class="form-group">
-                <label for="guardian_name">保護者氏名:</label>
-                <input type="text" id="guardian_name" name="guardian_name" class="form-control" required maxlength="50" value="${param.guardian_name}">
+                <label for="guardian-name">保護者氏名:</label>
+                <input type="text" id="guardian-name" name="guardianName" required maxlength="50" value="${name}">
             </div>
             <div class="form-group">
                 <label for="password">パスワード:</label>
-                <input type="password" id="password" name="password" class="form-control" required maxlength="255" value="${param.password}">
+                <input type="password" id="password" name="password" required maxlength="255" value="${pass}">
             </div>
             <div class="form-group">
                <label for="student-name">お子様氏名</label>
-                <select class="form-control" name="studentName" required>
-                    <option value="">-- 生徒氏名を選択 --</option>
-                    <c:forEach var="studentName" items="${studentNames}">
-                        <option value="${studentName}" <c:if test="${studentName == guardian.studentName}">selected</c:if>>${studentName}</option>
-                    </c:forEach>
-                </select>
+                <input type="text" id="student-name" name="studentName" readonly value="${studentName}">
             </div>
 
             <button type="submit" class="btn">変更</button>
