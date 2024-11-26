@@ -13,7 +13,7 @@ public class GuardianDao extends Dao {
 	private Connection connection;
 
     // SQLクエリ: guardian_idに基づいてレコードを取得
-    private String baseSql = "SELECT guardian_id, guardian_name, password, email FROM t_guardian WHERE guardian_id = ?";
+    private String baseSql = "SELECT guardian_id, guardian_name, password, student_id FROM t_guardian WHERE guardian_id = ?";
 
     // ResultSetからGuardianリストを生成するメソッド
     private List<Guardian> postfilter(ResultSet rSet) throws Exception {
@@ -24,6 +24,7 @@ public class GuardianDao extends Dao {
                 guardian.setGuardianId(rSet.getString("guardian_id"));
                 guardian.setGuardianName(rSet.getString("guardian_name"));
                 guardian.setPassword(rSet.getString("password"));
+                guardian.setStudentId(rSet.getString("student_id"));
                 list.add(guardian);
             }
         } catch (Exception e) {
@@ -138,21 +139,23 @@ public class GuardianDao extends Dao {
             if (existingGuardian == null) {
                 // 新しいGuardianの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO t_guardian (guardian_id, guardian_name, password, email) VALUES (?, ?, ?, ?)"
+                        "INSERT INTO t_guardian (guardian_id, guardian_name, password, student_id) VALUES (?, ?, ?, ?)"
                 );
                 statement.setString(1, guardian.getGuardianId());
                 statement.setString(2, guardian.getGuardianName());
                 statement.setString(3, guardian.getPassword());
-
+                statement.setString(4, guardian.getStudentId());  // 生徒IDを設定
             } else {
                 // 既存のGuardianの更新
                 statement = connection.prepareStatement(
-                        "UPDATE t_guardian SET guardian_name = ?, password = ?, email = ? WHERE guardian_id = ?"
+                        "UPDATE t_guardian SET guardian_name = ?, password = ?, student_id = ? WHERE guardian_id = ?"
                 );
                 statement.setString(1, guardian.getGuardianName());
                 statement.setString(2, guardian.getPassword());
-                statement.setString(3, guardian.getGuardianId());
+                statement.setString(3, guardian.getStudentId());  // 生徒IDを設定
+                statement.setString(4, guardian.getGuardianId());
             }
+
             count = statement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -192,6 +195,7 @@ public class GuardianDao extends Dao {
                 guardian.setGuardianId(rSet.getString("guardian_id"));
                 guardian.setGuardianName(rSet.getString("guardian_name"));
                 guardian.setPassword(rSet.getString("password"));
+                guardian.setStudentId(rSet.getString("student_id"));
 
             }
         } catch (Exception e) {
@@ -253,33 +257,26 @@ public class GuardianDao extends Dao {
         Guardian guardian = null;
         Connection connection = getConnection();
         PreparedStatement statement = null;
+
         try {
-            statement = connection.prepareStatement("SELECT * FROM t_guardian WHERE guardian_id = ?");
+            // 保護者情報を取得
+        	statement = connection.prepareStatement("SELECT * FROM t_guardian WHERE guardian_id = ?");
             statement.setString(1, guardian_id);
-            ResultSet rSet = statement.executeQuery();
-            if (rSet.next()) {
-                guardian = new Guardian();
-                guardian.setGuardianId(rSet.getString("guardian_id"));
-                guardian.setPassword(rSet.getString("password"));
+            try (ResultSet rSet = statement.executeQuery()) {
+                if (rSet.next()) {
+                    guardian = new Guardian();
+                    guardian.setGuardianId(rSet.getString("guardian_id"));
+                    guardian.setPassword(rSet.getString("password"));
+                    guardian.setStudentId(rSet.getString("student_id")); // student_id を設定
+                }
             }
         } catch (Exception e) {
             throw e;
         } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
         }
+
         return guardian;
     }
 
@@ -292,36 +289,21 @@ public class GuardianDao extends Dao {
 		}
 		return guardian;
 
- }
+    }
 
-
-
-
-//    private DataSource dataSource;
-//
-//    // コンストラクタで DataSource を受け取る
-//    public GuardianDao(DataSource dataSource) {
-//        this.dataSource = dataSource;
-//    }
-
-    // 保護者IDを基に生徒IDを取得するメソッド
-    public String getStudentIdByGuardianId(String guardianId) throws SQLException, Exception {
+    public String getStudentIdByGuardianId(String guardianId) throws SQLException {
         String studentId = null;
 
         // SQLクエリを作成
-        String sql = "SELECT student_id FROM t_student_record WHERE guardian_id = ?";
+        String sql = "SELECT student_id FROM student_records WHERE guardian_id = ?";
 
-        // データソースから接続を取得
-//        try (Connection connection = dataSource.getConnection();
-        try (Connection connection = getConnection();
-        	PreparedStatement pstmt = connection.prepareStatement(sql)) {
-
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, guardianId);  // 保護者IDを設定
 
             // クエリを実行し、結果を取得
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    studentId = rs.getString("student_id");
+                    studentId = rs.getString("student_id");  // 生徒IDを取得
                 }
             }
         }
@@ -329,8 +311,3 @@ public class GuardianDao extends Dao {
         return studentId;
     }
 }
-
-
-
-
-

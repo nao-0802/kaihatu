@@ -1,22 +1,40 @@
-package admin;
+package scoremanager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import bean.Admin;
 import bean.Guardian;
+import dao.ClassDao;
 import dao.GuardianDao;
+import dao.StudentDao;
 import tool.Action;
 
 public class GuardianUpdateExecuteAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        GuardianDao guardianDao = new GuardianDao();
+    	HttpSession session = req.getSession();
 
-        // リクエストパラメータを取得
-        String guardianId = req.getParameter("guardian_id");
-        String guardianName = req.getParameter("guardian_name");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
+        Admin admin = (Admin) session.getAttribute("user");
+        GuardianDao gDao = new GuardianDao();
+        ClassDao cDao = new ClassDao(); // ClassDaoのインスタンスを作成
+        StudentDao sDao = new StudentDao();
+     // フォームから送信されたデータを取得
+        String guardianId = req.getParameter("guardianId");  // 保護者ID
+         String guardianName = req.getParameter("guardianName");  // 氏名
+         String password = req.getParameter("password");  // パスワード
+         String studentName = req.getParameter("studentName");  // 生徒氏名名
+        
+         
+      // 生徒氏名からStudnet_idを取得
+         String studentId = sDao.findClassIdByClassName(studentName);
+         if (classId == null) {
+             // 該当クラスが見つからない場合のエラーハンドリング
+             req.setAttribute("errorMessage", "指定されたクラス名に対応するクラスが見つかりません。");
+             req.getRequestDispatcher("/admin/Teacher_update.jsp").forward(req, res);
+             return;
+         }
 
         // 入力チェック（クラス番号や必須項目の確認）
         if (guardianId == null || guardianId.isEmpty() ||
