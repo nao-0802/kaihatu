@@ -289,21 +289,30 @@ public class GuardianDao extends Dao {
 		}
 		return guardian;
 
+
     }
 
-    public String getStudentIdByGuardianId(String guardianId) throws SQLException {
+
+
+
+    // 保護者IDを基に生徒IDを取得するメソッド
+    public String getStudentIdByGuardianId(String guardianId) throws SQLException, Exception {
         String studentId = null;
 
         // SQLクエリを作成
-        String sql = "SELECT student_id FROM student_records WHERE guardian_id = ?";
+        String sql = "SELECT student_id FROM t_student_record WHERE guardian_id = ?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        // データソースから接続を取得
+//        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getConnection();
+        	PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
             pstmt.setString(1, guardianId);  // 保護者IDを設定
 
             // クエリを実行し、結果を取得
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    studentId = rs.getString("student_id");  // 生徒IDを取得
+                    studentId = rs.getString("student_id");
                 }
             }
         }
@@ -311,3 +320,33 @@ public class GuardianDao extends Dao {
         return studentId;
     }
 }
+
+
+
+
+
+
+//
+//    public String getStudentIdByGuardianId(String guardianId) throws SQLException {
+//        String studentId = null;
+//
+//        // SQLクエリを作成
+//        String sql = "SELECT student_id FROM student_records WHERE guardian_id = ?";
+//
+//        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+//            pstmt.setString(1, guardianId);  // 保護者IDを設定
+//
+//            // クエリを実行し、結果を取得
+//            try (ResultSet rs = pstmt.executeQuery()) {
+//                if (rs.next()) {
+//                    studentId = rs.getString("student_id");  // 生徒IDを取得
+//                }
+//            }
+//        }
+//
+//        return studentId;
+//    }
+//}
+//
+//
+//

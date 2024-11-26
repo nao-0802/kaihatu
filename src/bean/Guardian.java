@@ -42,6 +42,7 @@ public class Guardian implements java.io.Serializable{
 	public void setStudentName(String student_name){
 		this.student_name=student_name;
 	}
+	
 
 
 

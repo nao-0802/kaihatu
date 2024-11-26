@@ -35,10 +35,14 @@ public class SleepRecord implements java.io.Serializable{
 	public void setDay(Date day){
 		this.day=day;
 	}
-	public void setTime(Date time){
-		this.time=time;
-	}
+//	public void setTime(Date time){
+//		this.time=time;
+//	}
 	public void setSleep(int sleep){
 		this.sleep=sleep;
 	}
+	public void setTime(Date time) {
+	    this.time = time;
+	}
+
 }
