@@ -65,10 +65,10 @@ summary {
     <summary>排泄</summary>
     <form action="../guardian/ExcretionRecordExecute.action">
         <div>
-            <label><input type="radio" name="excretion">かたい</label><br>
-            <label><input type="radio" name="excretion">やわらかい</label><br>
+            <label><input type="radio" name="type"  value="0">かたい</label><br>
+            <label><input type="radio" name="type"  value="1">やわらかい</label><br>
             <label>
-                <input type="radio" name="option" id="radio1">その他
+                <input type="radio" name="excretion_detail" >その他
             </label>
             <input type="text" oninput="autoCheck(this.value, 'radio1')"><br>
             <input type="hidden" name="guardian_id" value="${guardianID}">

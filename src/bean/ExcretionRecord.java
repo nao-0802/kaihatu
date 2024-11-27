@@ -1,13 +1,14 @@
 package bean;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class ExcretionRecord implements java.io.Serializable{
 
 	private String excretion_id;
 	private String student_id;
 	private Date day;
-	private Date time;
+	private Time time;
 	private int type;
 	private String excretion_detail;
 
@@ -20,7 +21,7 @@ public class ExcretionRecord implements java.io.Serializable{
 	public Date getDay(){
 		return day;
 	}
-	public Date getTime(){
+	public Time getTime(){
 		return time;
 	}
 	public int getType(){
@@ -38,7 +39,7 @@ public class ExcretionRecord implements java.io.Serializable{
 	public void setDay(Date day){
 		this.day=day;
 	}
-	public void setTime(Date time){
+	public void setTime(Time time){
 		this.time=time;
 	}
 	public void setType(int type){
