@@ -1,7 +1,5 @@
 package teacher;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,13 +14,14 @@ public class LifeRecordAction extends Action{
 			throws Exception {
 
 		@SuppressWarnings("unused")
-		String studentId = req.getParameter("studnet_id");
+		String studentId = req.getParameter("student_id");
 
 		StudentDao studentdao=new StudentDao();
 
-		List<Student> list=studentdao.search(studentId);
+		Student list=studentdao.get(studentId);
 
 		req.setAttribute("list", list);
-		req.getRequestDispatcher("/lifeRecord.jsp").forward(req, res);
+		req.getRequestDispatcher("LifeRecord.jsp")
+		.forward(req, res);
 	}
 }

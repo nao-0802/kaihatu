@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@page import="bean.Student, java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,13 +11,14 @@
 <body>
     <div class="container">
         <!-- 戻るボタン -->
-        <div class="box blue"><a href="student_list.jsp">←</a></div>
+        <div class="box blue">
+        <form action="ClassSelectExecute.action" method="post">
+        <button name="class_id" value="${list.classId}">←</button>
+        </form></div>
 
         <!-- 学生情報 -->
         <p>名前:
-            <c:forEach var="student" items="${list}">
-                ${student.studentName} (${student.studentId})
-            </c:forEach>
+                ${list.studentName} (${list.studentId})
         </p>
 
         <!-- 詳細 -->
