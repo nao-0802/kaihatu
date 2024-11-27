@@ -52,9 +52,9 @@ summary {
     <summary>食事</summary>
     <form action="../guardian/MealRecordExecute.action">
         <div>
-            <label><input type="radio" name="meal">全量</label><br>
-            <label><input type="radio" name="meal">半量</label><br>
-            <label><input type="radio" name="meal">少量</label><br>
+            <label><input type="radio" name="meal_amount" value="0">全量</label><br>
+            <label><input type="radio" name="meal_amount" value="1">半量</label><br>
+            <label><input type="radio" name="meal_amount" value="2">少量</label><br>
             <button>記録</button>
             <input type="hidden" name="guardian_id" value="${guardianID}">
         </div>
