@@ -17,6 +17,9 @@ public class GuardianSignupAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res)
             throws Exception {
+    	//デバッグメッセージ
+    	System.out.println("mes: GuardianSignupAction Run");
+
         HttpSession session = req.getSession();
         // Admin情報をセッションから取得
         Admin admin = (Admin) session.getAttribute("user");
