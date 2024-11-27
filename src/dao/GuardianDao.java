@@ -319,6 +319,25 @@ public class GuardianDao extends Dao {
 
         return studentId;
     }
+
+    public List<Guardian> getGuardianIdByStudentId(String student_id) throws Exception {
+        List<Guardian> list = new ArrayList<>();
+        String sql = "SELECT guardian_id, guardian_name FROM t_guardian WHERE student_id = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, student_id);
+            try (ResultSet rSet = statement.executeQuery()) {
+                while (rSet.next()) {
+                    Guardian guardian = new Guardian();
+                    guardian.setGuardianId(rSet.getString("guardian_id"));
+                    guardian.setGuardianName(rSet.getString("guardian_name"));
+                    list.add(guardian);
+                }
+            }
+        }
+        return list;
+    }
 }
 
 

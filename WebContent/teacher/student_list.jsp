@@ -17,12 +17,12 @@
         	</form>
         </c:forEach>
 
-    <c:forEach var="p" items="${list}">
-        <tr>
-            <td>
-                    <p>${p.birthdate}</p>
-                    <p>${p.student_id}</p>
-            </td>
-        </tr>
-    </c:forEach>
+	    <c:forEach var="p" items="${list}">
+	        <tr>
+	            <td>
+	                    <p>${p.birthdate}</p>
+	                    <p>${p.student_id}</p>
+	            </td>
+	        </tr>
+	    </c:forEach>
 </table>
