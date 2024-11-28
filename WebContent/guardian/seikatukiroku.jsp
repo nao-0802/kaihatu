@@ -61,6 +61,23 @@ summary {
     </form>
 </details>
 
+
+<details name="life" id="medicine">
+    <summary>服薬</summary>
+    <form action="../guardian/MedicineRecordExecute.action">
+        <div>
+            <label><input type="radio" name="medicine" value="0" required>服薬済み</label><br>
+
+
+
+            <button type="submit">記録</button>
+            <input type="hidden" name="guardian_id" value="${guardianID}">
+        </div>
+    </form>
+</details>
+
+
+
 <details name="life" id="c">
     <summary>排泄</summary>
     <form action="../guardian/ExcretionRecordExecute.action" method="post">
