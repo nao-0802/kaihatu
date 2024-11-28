@@ -1,35 +1,34 @@
 package teacher;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.ContactBook;
-import dao.ContactBookDao;
+import bean.Guardian;
+import dao.GuardianDao;
+import tool.Action;
 
-public class ContactBookWriteAction {
-	public void doGet (
-			HttpServletRequest request, HttpServletResponse response
-		) throws ServletException, IOException {
+public class ContactBookWriteAction extends Action {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        String studentId = req.getParameter("studentId");
 
-		// 現在日時を取得
-		LocalDateTime nowDate = LocalDateTime.now();
+        // GuardianDao を使用して studentId から guardianId を取得
+        GuardianDao guardianDao = new GuardianDao();
+        String guardianId = guardianDao.getGuardianIdbyStudentId(studentId);
 
-		SimpleDateFormat sdf1= new SimpleDateFormat("yyyy/MM/dd");
+        if (guardianId != null) {
+            // guardianId を使用して Guardian 情報を取得
+            Guardian guardian = guardianDao.get(guardianId);
 
-		// ローカル変数
-		ContactBookDao dao=new ContactBookDao();
-		List<ContactBook> list=dao.serch("sdf1");
+            // リクエストスコープに必要な情報を設定
+            req.setAttribute("studentId", studentId);
+            req.setAttribute("guardianId", guardianId);
+            req.setAttribute("guardianName", guardian.getGuardianName());
+        } else {
+            // エラー処理: 保護者情報が見つからない場合
+            req.setAttribute("errorMessage", "対応する保護者が見つかりませんでした。");
+        }
 
-		request.setAttribute("list", list);
-
-
-		request.getRequestDispatcher("/admin/ContactBookWriteEntry.jsp")
-			.forward(request, response);
-	}
+        req.getRequestDispatcher("/teacher/contactbook_create.jsp").forward(req, res);
+    }
 }

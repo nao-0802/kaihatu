@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,6 +163,83 @@ public class ContactBookDao extends Dao {
 
         return count > 0;
     }
+
+ // 連絡帳を保存または更新するメソッド
+    public boolean saveNotebook(ContactBook notebook) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int count = 0;
+
+        try {
+            // データベース接続
+            connection = getConnection();
+
+            // 既存の連絡帳を検索
+            boolean exists = notebookExists(notebook.getContactBookId(), connection);
+
+            if (!exists) {
+                // 新規作成の場合
+                statement = connection.prepareStatement(
+                        "INSERT INTO communication_notebooks "
+                                + "(contact_book_id, teacher_id, guardian_id, date, contact_details, contact_check) "
+                                + "VALUES (?, ?, ?, ?, ?, ?)"
+                );
+                statement.setString(1, notebook.getContactBookId());
+                statement.setString(2, notebook.getTeacherId());
+                statement.setString(3, notebook.getGuardianId());
+                statement.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // 現在時刻
+                statement.setString(5, notebook.getContactDetails());
+                statement.setBoolean(6, false); // 既読フラグは初期値として未読
+            } else {
+                // 更新の場合
+                statement = connection.prepareStatement(
+                        "UPDATE communication_notebooks SET "
+                                + "teacher_id = ?, guardian_id = ?, date = ?, contact_details = ?, contact_check = ? "
+                                + "WHERE contact_book_id = ?"
+                );
+                statement.setString(1, notebook.getTeacherId());
+                statement.setString(2, notebook.getGuardianId());
+                statement.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // 現在時刻
+                statement.setString(4, notebook.getContactDetails());
+                statement.setBoolean(5, notebook.getContactCheck());
+                statement.setString(6, notebook.getContactBookId());
+            }
+            count = statement.executeUpdate();
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            // リソースを解放
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return count > 0;
+    }
+
+    // 指定された連絡帳IDが存在するか確認するメソッド
+    private boolean notebookExists(String contactBookId, Connection connection) throws SQLException {
+        String sql = "SELECT 1 FROM communication_notebooks WHERE contact_book_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, contactBookId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
 
     // contact_book_idでContactBookを取得するメソッド
     private ContactBook getContactBook(String contactBookId) throws Exception {
