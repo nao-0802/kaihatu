@@ -60,13 +60,13 @@ public class MealRecordExecuteAction extends Action {
                 meal_amount = Integer.parseInt(mealamountParam);  // 睡眠種別を取得
             } catch (NumberFormatException e) {
                 // 数値変換に失敗した場合
-                req.setAttribute("errorMessage", "無効な睡眠種別が指定されました。");
+                req.setAttribute("errorMessage", "無効な食事種別が指定されました。");
                 RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
                 dispatcher.forward(req, res);
                 return;
             }
         } else {
-            req.setAttribute("errorMessage", "睡眠種別が指定されていません。");
+            req.setAttribute("errorMessage", "食事種別が指定されていません。");
             RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
             dispatcher.forward(req, res);
             return;
