@@ -14,7 +14,7 @@
         <div class="error">${error}</div>
     </c:if>
 
-    <form action="ContactBookWriteExecuteAction" method="post">
+    <form action="ContactBookWriteExecute.action" method="post">
         <!-- 保護者IDと名前の表示 -->
         <input type="hidden" name="guardianId" value="${guardianId}">
 

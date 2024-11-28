@@ -23,7 +23,7 @@ public class ContactBookAction extends Action {
             List<ContactBook> list = dao.findByGuardianIdAndDate(guardianId, selectedDate);
 
             request.setAttribute("list", list);
-            request.getRequestDispatcher("/student_list.jsp").forward(request, response);
+            request.getRequestDispatcher("contactbook_create.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

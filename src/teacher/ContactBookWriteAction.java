@@ -10,11 +10,13 @@ import tool.Action;
 public class ContactBookWriteAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        String studentId = req.getParameter("studentId");
+        String studentId = req.getParameter("student_id");
+        System.out.print(studentId);
 
         // GuardianDao を使用して studentId から guardianId を取得
         GuardianDao guardianDao = new GuardianDao();
         String guardianId = guardianDao.getGuardianIdbyStudentId(studentId);
+        System.out.print(guardianId);
 
         if (guardianId != null) {
             // guardianId を使用して Guardian 情報を取得

@@ -5,7 +5,9 @@
 <%@page import="bean.StudentRecord, java.util.List" %>
 <%@page import="bean.Student, java.util.List" %>
 
+
 <table>
+
         <p>名前</p>
         <c:forEach var="s" items="${slist}">
         	<form action="LifeRecord.action" method="post">
@@ -14,6 +16,9 @@
         	</form>
         	<form action="StudentRecord.action">
         		<button name="student_id" value="${s.studentId}">カルテ</button>
+        	</form>
+        	<form action="ContactBookWrite.action">
+        		<button name="student_id" value="${s.studentId}">連絡帳</button>
         	</form>
         </c:forEach>
 
