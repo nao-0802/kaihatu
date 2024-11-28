@@ -1,4 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@page import="bean.StudentRecord, java.util.List" %>
+<%@page import="bean.Student, java.util.List" %>
+<%@page import="bean.Guardian, java.util.List" %>
+<%@page import="bean.Class, java.util.List" %>
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -147,8 +155,9 @@
 <body>
 
     <!-- 戻るボタン -->
-    <button id="Arrow_btn" onclick="location.href='<%= request.getContextPath() %>/student_list.jsp'">←</button>
-
+    <form action="ClassSelectExecute.action">
+    	<button id="Arrow_btn" name="class_id" value="${slist.classId}">←</button>
+	</form>
     <h1>カルテ詳細画面</h1>
 
     <!-- ボタンセクション（画面上部中央） -->
@@ -158,11 +167,27 @@
     </div>
 
     <!-- カルテ表示セクション（ボタンセクションの下） -->
-    <div class="text-container">
+    <!-- <div class="text-container"> -->
         <label for="Chart_Indication">カルテ表示:</label>
         <!-- サーブレットから渡されたstudentRecordを表示 -->
-        <input type="text" id="Chart_Indication" name="Chart_Indication" value="${studentRecord.name}" readonly />
-    </div>
+        <p>生徒氏名</p>
+        <p>${slist.studentName}</p>
+        <c:forEach var="guardian" items="${glist}">
+        <p>保護者氏名</p>
+        	<p>${guardian.guardianName}</p>
+    	</c:forEach>
+    	<form action="StudentRecordUpdateExecute.action">
+	    <c:forEach var="list" items="${list}">
+	    	<p>誕生日<p>
+	        <p>${list.birthdate}</p>
+	        <p>アレルギー</p>
+	        <input type="hidden" name="studentrecordid" value="${list.studentReecordId}">
+	        <input type="text" name="allergy"value="${list.allergy}">
+	        <p>特徴</p>
+	        <input type="text" name="features" value="${list.features}" >
+	    </c:forEach>
+	    </form>
+    <!-- </div>  -->
 
     <!-- 機能ボタンコンテナ（画面下部） -->
     <div class="footer-button-container">

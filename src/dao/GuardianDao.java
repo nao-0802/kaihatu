@@ -320,6 +320,31 @@ public class GuardianDao extends Dao {
         return studentId;
     }
 
+ // 生徒IDを基に保護者IDを取得するメソッド
+    public String getGuardianIdbyStudentId(String studentId) throws SQLException, Exception {
+        String guardianId = null;
+
+        // SQLクエリを作成
+        String sql = "SELECT guardian_id FROM t_student_record WHERE student_id = ?";
+
+        // データソースから接続を取得
+//        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getConnection();
+        	PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, studentId);  // 保護者IDを設定
+
+            // クエリを実行し、結果を取得
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    guardianId = rs.getString("guardian_id");
+                }
+            }
+        }
+
+        return guardianId;
+    }
+
     public List<Guardian> getGuardianIdByStudentId(String student_id) throws Exception {
         List<Guardian> list = new ArrayList<>();
         String sql = "SELECT guardian_id, guardian_name FROM t_guardian WHERE student_id = ?";
