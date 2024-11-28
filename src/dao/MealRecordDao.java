@@ -11,7 +11,7 @@ import bean.MealRecord;
 
 public class MealRecordDao extends Dao {
     // SQLクエリ: student_idに基づいてレコードを取得
-    private String baseSql = "SELECT meal_id, student_id, day, time, type, meal_amount FROM t_meal_record WHERE student_id = ?";
+    private String baseSql = "SELECT meal_id, student_id, day, time, meal_amount FROM t_meal_record WHERE student_id = ?";
 
     // ResultSetからMealRecordリストを生成するメソッド
     private List<MealRecord> postfilter(ResultSet rSet) throws Exception {
@@ -22,9 +22,9 @@ public class MealRecordDao extends Dao {
                 mealRecord.setMealId(rSet.getString("meal_id"));
                 mealRecord.setStudentId(rSet.getString("student_id"));
                 mealRecord.setDay(rSet.getDate("day"));
-                mealRecord.setTime(rSet.getDate("time"));
-                mealRecord.setType(rSet.getInt("type"));
-                mealRecord.setMealAmount(rSet.getInt("meal_amount"));
+                mealRecord.setTime(rSet.getTime("time"));
+//                mealRecord.setType(rSet.getInt("type"));
+                mealRecord.setMeal_Amount(rSet.getInt("meal_amount"));
                 list.add(mealRecord);
             }
         } catch (Exception e) {
@@ -82,23 +82,23 @@ public class MealRecordDao extends Dao {
             if (existingRecord == null) {
                 // 新しいMealRecordの場合、挿入
                 statement = connection.prepareStatement(
-                        "INSERT INTO t_meal_record (meal_id, student_id, day, time, type, meal_amount) VALUES (?, ?, ?, ?, ?, ?)"
+                        "INSERT INTO t_meal_record (meal_id, student_id, day, time,  meal_amount) VALUES ( ?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, mealRecord.getMealId());
                 statement.setString(2, mealRecord.getStudentId());
                 statement.setDate(3, mealRecord.getDay());
-                statement.setDate(4, mealRecord.getTime());
-                statement.setInt(5, mealRecord.getType());
-                statement.setInt(6, mealRecord.getMealAmount());
+                statement.setTime(4, mealRecord.getTime());
+//                statement.setInt(5, mealRecord.getType());
+                statement.setInt(5, mealRecord.getMealAmount());
             } else {
                 // 既存のMealRecordの場合、更新
                 statement = connection.prepareStatement(
-                        "UPDATE t_meal_record SET student_id = ?, day = ?, time = ?, type = ?, meal_amount = ? WHERE meal_id = ?"
+                        "UPDATE t_meal_record SET student_id = ?, day = ?, time = ?,  meal_amount = ? WHERE meal_id = ?"
                 );
                 statement.setString(1, mealRecord.getStudentId());
                 statement.setDate(2, mealRecord.getDay());
-                statement.setDate(3, mealRecord.getTime());
-                statement.setInt(4, mealRecord.getType());
+                statement.setTime(3, mealRecord.getTime());
+//                statement.setInt(4, mealRecord.getType());
                 statement.setInt(5, mealRecord.getMealAmount());
                 statement.setString(6, mealRecord.getMealId());
             }
@@ -142,9 +142,9 @@ public class MealRecordDao extends Dao {
                 mealRecord.setMealId(rSet.getString("meal_id"));
                 mealRecord.setStudentId(rSet.getString("student_id"));
                 mealRecord.setDay(rSet.getDate("day"));
-                mealRecord.setTime(rSet.getDate("time"));
-                mealRecord.setType(rSet.getInt("type"));
-                mealRecord.setMealAmount(rSet.getInt("meal_amount"));
+                mealRecord.setTime(rSet.getTime("time"));
+//                mealRecord.setType(rSet.getInt("type"));
+                mealRecord.setMeal_Amount(rSet.getInt("meal_amount"));
             }
         } catch (Exception e) {
             throw e;

@@ -1,14 +1,15 @@
 package bean;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class MealRecord implements java.io.Serializable{
 
 	private String meal_id;
 	private String student_id;
 	private Date day;
-	private Date time;
-	private int type;
+	private Time time;
+//	private int type;
 	private int meal_amount;
 
 	public String getMealId(){
@@ -20,12 +21,12 @@ public class MealRecord implements java.io.Serializable{
 	public Date getDay(){
 		return day;
 	}
-	public Date getTime(){
+	public Time getTime(){
 		return time;
 	}
-	public int getType(){
-		return type;
-	}
+//	public int getType(){
+//		return type;
+//	}
 	public int getMealAmount(){
 		return meal_amount;
 	}
@@ -38,13 +39,13 @@ public class MealRecord implements java.io.Serializable{
 	public void setDay(Date day){
 		this.day=day;
 	}
-	public void setTime(Date time){
+	public void setTime(Time time){
 		this.time=time;
 	}
-	public void setType(int type){
-		this.type=type;
-	}
-	public void setMealAmount(int meal_amount){
+//	public void setType(int type){
+//		this.type=type;
+//	}
+	public void setMeal_Amount(int meal_amount){
 		this.meal_amount=meal_amount;
 	}
 }

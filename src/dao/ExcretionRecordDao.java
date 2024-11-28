@@ -22,7 +22,7 @@ public class ExcretionRecordDao extends Dao {
                 excretionRecord.setExcretionId(rSet.getString("excretion_id"));
                 excretionRecord.setStudentId(rSet.getString("student_id"));
                 excretionRecord.setDay(rSet.getDate("day"));
-                excretionRecord.setTime(rSet.getDate("time"));
+                excretionRecord.setTime(rSet.getTime("time"));
                 excretionRecord.setType(rSet.getInt("type"));
                 excretionRecord.setExcretionDetail(rSet.getString("excretion_detail"));
                 list.add(excretionRecord);
@@ -87,7 +87,7 @@ public class ExcretionRecordDao extends Dao {
                 statement.setString(1, excretionRecord.getExcretionId());
                 statement.setString(2, excretionRecord.getStudentId());
                 statement.setDate(3, excretionRecord.getDay());
-                statement.setDate(4, excretionRecord.getTime());
+                statement.setTime(4, excretionRecord.getTime());
                 statement.setInt(5, excretionRecord.getType());
                 statement.setString(6, excretionRecord.getExcretionDetail());
             } else {
@@ -97,7 +97,7 @@ public class ExcretionRecordDao extends Dao {
                 );
                 statement.setString(1, excretionRecord.getStudentId());
                 statement.setDate(2, excretionRecord.getDay());
-                statement.setDate(3, excretionRecord.getTime());
+                statement.setTime(3, excretionRecord.getTime());
                 statement.setInt(4, excretionRecord.getType());
                 statement.setString(5, excretionRecord.getExcretionDetail());
                 statement.setString(6, excretionRecord.getExcretionId());
@@ -142,7 +142,7 @@ public class ExcretionRecordDao extends Dao {
                 excretionRecord.setExcretionId(rSet.getString("excretion_id"));
                 excretionRecord.setStudentId(rSet.getString("student_id"));
                 excretionRecord.setDay(rSet.getDate("day"));
-                excretionRecord.setTime(rSet.getDate("time"));
+                excretionRecord.setTime(rSet.getTime("time"));
                 excretionRecord.setType(rSet.getInt("type"));
                 excretionRecord.setExcretionDetail(rSet.getString("excretion_detail"));
             }
