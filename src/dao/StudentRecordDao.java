@@ -81,7 +81,7 @@ public class StudentRecordDao extends Dao {
         PreparedStatement statement = null;
         ResultSet rSet = null;
 
-        String searchSql = "SELECT * FROM t_student_record WHERE guardian_id = ?"; // student_idの条件を追加
+        String searchSql = "SELECT * FROM t_student_record WHERE student_id = ?"; // student_idの条件を追加
 
         try {
             statement = connection.prepareStatement(searchSql);
