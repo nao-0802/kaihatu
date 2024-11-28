@@ -25,6 +25,7 @@ public class LoginGuardianExecuteAction extends Action {
         if (guardian != null) { // 認証成功の場合
             HttpSession session = req.getSession(true);
             session.setAttribute("user", guardian); // セッションに保存
+            session.setAttribute("guardian_id", id); // 追加: guardian_idもセッションに保存
             req.setAttribute("guardianID", id);
 
             // 保護者IDを基に生徒IDを取得

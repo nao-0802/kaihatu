@@ -61,18 +61,39 @@ summary {
     </form>
 </details>
 
-<details name="life" id=c>
-    <summary>排泄</summary>
-    <form action="../guardian/ExcretionRecordExecute.action">
+
+<details name="life" id="medicine">
+    <summary>服薬</summary>
+    <form action="../guardian/MedicineRecordExecute.action">
         <div>
-            <label><input type="radio" name="type"  value="0">かたい</label><br>
-            <label><input type="radio" name="type"  value="1">やわらかい</label><br>
-            <label>
-                <input type="radio" name="excretion_detail" >その他
-            </label>
-            <input type="text" oninput="autoCheck(this.value, 'radio1')"><br>
+            <label><input type="radio" name="medicine" value="0" required>服薬済み</label><br>
+
+
+
+            <button type="submit">記録</button>
             <input type="hidden" name="guardian_id" value="${guardianID}">
         </div>
+    </form>
+</details>
+
+
+
+<details name="life" id="c">
+    <summary>排泄</summary>
+    <form action="../guardian/ExcretionRecordExecute.action" method="post">
+        <div>
+            <!-- 排泄種別のラジオボタン -->
+            <label><input type="radio" name="type" value="0">かたい</label><br>
+            <label><input type="radio" name="type" value="1">やわらかい</label><br>
+
+            <!-- その他の詳細を入力するテキストフィールド -->
+            <label>その他:</label>
+            <input type="text" name="excretion_detail" placeholder="詳細を記入"><br>
+
+            <!-- 隠しフィールド -->
+            <input type="hidden" name="guardian_id" value="${guardianID}">
+        </div>
+        <!-- 提出ボタン -->
         <button>記録</button>
     </form>
 </details>

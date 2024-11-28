@@ -10,28 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.MealRecord;
-import bean.StudentRecord;
-import dao.GuardianDao;
-import dao.MealRecordDao;  // MealRecordDaoをインポート
+import bean.MedicineRecord;
+import bean.StudentRecord;  // StudentRecordをインポート
+import dao.GuardianDao;  // GuardianDaoをインポート
+import dao.MedicineRecordDao;
 import tool.Action;
 
-public class MealRecordExecuteAction extends Action {
+public class MedicineRecordExecuteAction extends Action {
 
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
         // ローカル変数の宣言
         String student_id = null;  // 生徒ID
-        Integer meal_amount = null;  // 食事種別
-        MealRecordDao dao = new MealRecordDao();  // MealRecordDaoのインスタンス化
+        Integer medicine = null; // 睡眠種別
+        MedicineRecordDao dao = new MedicineRecordDao();
 
         // セッションから保護者IDを取得
         HttpSession session = req.getSession();
         String guardianId = (String) session.getAttribute("guardian_id");  // セッションから保護者IDを取得
-
-
-        student_id = req.getParameter("student_id");  // 生徒IDをリクエストから取得
-        String mealamountParam = req.getParameter("meal_amount");  // 食事種別をリクエストから取得
 
         if (guardianId == null || guardianId.isEmpty()) {
             req.setAttribute("errorMessage", "保護者IDが指定されていません。");
@@ -39,6 +35,8 @@ public class MealRecordExecuteAction extends Action {
             dispatcher.forward(req, res);
             return;
         }
+        System.out.println("Guardian ID: " + guardianId);
+
 
         // 保護者IDから生徒IDを取得
         GuardianDao guardianDao = new GuardianDao();  // ここでGuardianDaoをインスタンス化
@@ -55,21 +53,21 @@ public class MealRecordExecuteAction extends Action {
         StudentRecord studentRecord = new StudentRecord();
         studentRecord.setStudent_id(student_id);  // 生徒IDを設定
 
-        // 食事種別の取得
-//        String mealamountParam = req.getParameter("meal_amount");
+        // 睡眠種別の取得
+        String medicineParam = req.getParameter("medicine");
 
-        if (mealamountParam != null && !mealamountParam.isEmpty()) {
+        if (medicineParam != null && !medicineParam.isEmpty()) {
             try {
-                meal_amount = Integer.parseInt(mealamountParam);  // 睡眠種別を取得
+            	medicine = Integer.parseInt(medicineParam);  // 睡眠種別を取得
             } catch (NumberFormatException e) {
                 // 数値変換に失敗した場合
-                req.setAttribute("errorMessage", "無効な食事種別が指定されました。");
+                req.setAttribute("errorMessage", "無効な睡眠種別が指定されました。");
                 RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
                 dispatcher.forward(req, res);
                 return;
             }
         } else {
-            req.setAttribute("errorMessage", "食事種別が指定されていません。");
+            req.setAttribute("errorMessage", "睡眠種別が指定されていません。");
             RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
             dispatcher.forward(req, res);
             return;
@@ -77,7 +75,7 @@ public class MealRecordExecuteAction extends Action {
 
 
 
-        // 現在の日付と時刻を取得
+     // 現在の日付と時刻を取得
         LocalDate currentDate = LocalDate.now();  // 現在の日付
         LocalTime currentTime = LocalTime.now();  // 現在の時刻（時間、分、秒）
 
@@ -85,16 +83,14 @@ public class MealRecordExecuteAction extends Action {
         Date sqlDate = Date.valueOf(currentDate);  // LocalDateからDateに変換
 
         // 時間部分を設定するためにTimeを使う
-        Time sqlTime = Time.valueOf(currentTime);  // LocalTimeをsql.Timeに変換
+        Time sqlTime = Time.valueOf(currentTime.withNano(0).toString());  // ミリ秒を除外してSQL Timeに変換
 
-
-        // MealRecordオブジェクトの作成
-        MealRecord p = new MealRecord();
-        // student_idの登録
+        // MedicineRecordオブジェクトの作成
+        MedicineRecord p = new MedicineRecord();
         p.setStudentId(studentRecord.getStudent_id());
         p.setDay(sqlDate);  // 日付をセット
         p.setTime(sqlTime); // 正しい時間を設定
-        p.setMeal_Amount(meal_amount);   // 睡眠種別をセット
+        p.setMedicine(medicine);   // 睡眠種別をセット
 
         // データ保存処理
         boolean isSaved = dao.save(p);  // saveメソッドが成功した場合trueを返すと仮定
