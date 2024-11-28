@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.MealRecord;
 import bean.StudentRecord;
@@ -24,8 +25,10 @@ public class MealRecordExecuteAction extends Action {
         Integer meal_amount = null;  // 食事種別
         MealRecordDao dao = new MealRecordDao();  // MealRecordDaoのインスタンス化
 
-        // リクエストパラメータの取得とnullチェック
-        String guardianId = req.getParameter("guardian_id"); // 保護者IDをリクエストから取得
+        // セッションから保護者IDを取得
+        HttpSession session = req.getSession();
+        String guardianId = (String) session.getAttribute("guardian_id");  // セッションから保護者IDを取得
+
 
         student_id = req.getParameter("student_id");  // 生徒IDをリクエストから取得
         String mealamountParam = req.getParameter("meal_amount");  // 食事種別をリクエストから取得

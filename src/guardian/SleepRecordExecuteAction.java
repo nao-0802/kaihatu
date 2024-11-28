@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.SleepRecord;
 import bean.StudentRecord;  // StudentRecordをインポート
@@ -24,8 +25,9 @@ public class SleepRecordExecuteAction extends Action {
         Integer sleep = null; // 睡眠種別
         SleepRecordDao dao = new SleepRecordDao();
 
-        // リクエストパラメータの取得とnullチェック
-        String guardianId = req.getParameter("guardian_id"); // 保護者IDをリクエストから取得
+        // セッションから保護者IDを取得
+        HttpSession session = req.getSession();
+        String guardianId = (String) session.getAttribute("guardian_id");  // セッションから保護者IDを取得
 
         if (guardianId == null || guardianId.isEmpty()) {
             req.setAttribute("errorMessage", "保護者IDが指定されていません。");
@@ -33,6 +35,8 @@ public class SleepRecordExecuteAction extends Action {
             dispatcher.forward(req, res);
             return;
         }
+        System.out.println("Guardian ID: " + guardianId);
+
 
         // 保護者IDから生徒IDを取得
         GuardianDao guardianDao = new GuardianDao();  // ここでGuardianDaoをインスタンス化
