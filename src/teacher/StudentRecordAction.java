@@ -8,52 +8,60 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Guardian;
 import bean.Student;
 import bean.StudentRecord;
 import dao.ClassDao;
+import dao.GuardianDao;
 import dao.StudentDao;
 import dao.StudentRecordDao;
+import tool.Action;
 
-public class StudentRecordAction {
+public class StudentRecordAction extends Action{
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // リクエストパラメータから生徒IDを取得
         String studentid = request.getParameter("student_id");
         try {
+        // 生徒情報の取得
         StudentDao sdao=new StudentDao();
         Student slist = sdao.get(studentid);
+        // 生徒情報をリクエスト属性に設定
+        request.setAttribute("slist", slist);
+
+        // 保護者情報の取得
+        GuardianDao gdao=new GuardianDao();
+        List<Guardian> glist=gdao.getGuardianIdByStudentId(studentid);
+
+        request.setAttribute("glist", glist);
+
 
         StudentRecordDao srdao=new StudentRecordDao();
         // 生徒カルテ情報をデータベースから取得
-        List<StudentRecord> list;
+        List<StudentRecord> list=srdao.search(studentid);
+
+        // 生徒カルテ情報をリクエスト属性に設定
+        request.setAttribute("list", list);
 
         ClassDao cdao=new ClassDao();
         List<String> clist = new ArrayList<>();
 
-			list = srdao.search(studentid);
 
-        if (list != null) {
-            // 生徒カルテ情報をリクエスト属性に設定
-            request.setAttribute("list", list);
 
-            for (StudentRecord record : list) {
-		        String classId = record.getClassId();
-		        String sclass = cdao.getClassNameById(classId);
-		        if (sclass != null) {
-		            clist.add(sclass);
-		        }
-		    }
+        for (StudentRecord record : list) {
+	        String ClassId = record.getClassId();
+	        String student = cdao.getClassNameById(ClassId);
+	        clist.add(student);
+	    }
 
-            // classnameを取得
-            request.setAttribute("clist", clist);
+        // クラス情報をリクエスト属性に設定
+        request.setAttribute("clist", clist);
 
-            // 生徒カルテ詳細画面にフォワード
-            request.getRequestDispatcher("student_record_detail.jsp").forward(request, response);
-        } else {
-            // 生徒カルテが見つからなかった場合、エラーメッセージを設定して一覧画面にリダイレクト
-            request.setAttribute("errorMessage", "指定された生徒カルテが見つかりません。");
-            response.sendRedirect("student_directory.jsp");
-        }
+        System.out.println("glist: " + glist);
+
+        // 生徒カルテ詳細画面にフォワード
+        request.getRequestDispatcher("student_record_detail.jsp").forward(request, response);
+
 
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
