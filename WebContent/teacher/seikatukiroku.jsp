@@ -36,7 +36,7 @@ summary {
     <p>jibyou(hossa),taiou</p>
 </details>
 
-<form action="renrakutyou.jsp">
+<form action="ContactBook.action">
 <button>連絡帳</button>
 </form>
 
