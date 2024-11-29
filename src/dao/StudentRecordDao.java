@@ -249,5 +249,43 @@ public class StudentRecordDao extends Dao {
         return studentRecord;
     }
 
+ // allergyとfeaturesを更新するメソッド
+    public boolean updateAllergyAndFeatures(String studentRecordId, String allergy, String features) throws Exception {
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        boolean result = false;
+
+        String updateSql = "UPDATE t_student_record SET allergy = ?, features = ? WHERE student_record_id = ?";
+
+        try {
+            statement = connection.prepareStatement(updateSql);
+            statement.setString(1, allergy);
+            statement.setString(2, features);
+            statement.setString(3, studentRecordId);
+
+            int count = statement.executeUpdate();
+            result = count > 0; // 更新が成功したかどうかを確認
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return result;
+    }
+
 
 }
