@@ -25,12 +25,6 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
                 studentRecord.setAllergy(rSet.getString("allergy"));
                 studentRecord.setFeatures(rSet.getString("features"));
-                studentRecord.setMealId(rSet.getString("meal_id"));
-                studentRecord.setSleepId(rSet.getString("sleep_id"));
-                studentRecord.setExcretionId(rSet.getString("excretion_id"));
-                studentRecord.setStudent_id(rSet.getString("student_id"));
-                studentRecord.setAttendanceId(rSet.getString("attendance_id"));
-                studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
                 list.add(studentRecord);
             }
         } catch (SQLException e) {
@@ -127,12 +121,6 @@ public class StudentRecordDao extends Dao {
             statement.setDate(5, studentRecord.getBirthdate());
             statement.setString(6, studentRecord.getAllergy());
             statement.setString(7, studentRecord.getFeatures());
-            statement.setString(8, studentRecord.getMealId()); // 修正: インデックス 8
-            statement.setString(9, studentRecord.getSleepId()); // 修正: インデックス 9
-            statement.setString(10, studentRecord.getExcretionId()); // 修正: インデックス 10
-            statement.setString(11, studentRecord.getStudent_id()); // 修正: インデックス 11
-            statement.setString(12, studentRecord.getAttendanceId()); // 修正: インデックス 12
-            statement.setString(13, studentRecord.getAnualRecordId()); // 修正: インデックス 13
 
             count = statement.executeUpdate();
         } catch (Exception e) {
@@ -213,12 +201,6 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
                 studentRecord.setAllergy(rSet.getString("allergy"));
                 studentRecord.setFeatures(rSet.getString("features"));
-                studentRecord.setMealId(rSet.getString("meal_id"));
-                studentRecord.setSleepId(rSet.getString("sleep_id"));
-                studentRecord.setExcretionId(rSet.getString("excretion_id"));
-                studentRecord.setStudent_id(rSet.getString("student_id"));
-                studentRecord.setAttendanceId(rSet.getString("attendance_id"));
-                studentRecord.setAnualRecordId(rSet.getString("anual_record_id"));
             }
         } catch (Exception e) {
             throw e;
