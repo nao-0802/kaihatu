@@ -1,14 +1,16 @@
 package teacher;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.StudentRecord;
-import util.DatabaseConnection;
 
 public class StudentListExecuteAction {
 
@@ -18,7 +20,7 @@ public class StudentListExecuteAction {
 
         try {
             // データベース接続
-            Connection conn = DatabaseConnection.getConnection();
+        	Connection conn = getConnection();
 
             // 特定の生徒情報を取得するSQL文
             String sql = "SELECT * FROM t_student_record WHERE student_record_id = ?";
@@ -33,11 +35,10 @@ public class StudentListExecuteAction {
                 studentRecord.setStudentRecordId(rs.getString("student_record_id"));
                 studentRecord.setName(rs.getString("name"));
                 studentRecord.setClassId(rs.getString("class_id"));
-                studentRecord.setGuardianId(rs.getInt("guardian_id"));
+                studentRecord.setGuardianId(rs.getString("guardian_id"));
                 studentRecord.setBirthdate(rs.getDate("birthdate"));
                 studentRecord.setAllergy(rs.getString("allergy"));
                 studentRecord.setFeatures(rs.getString("features"));
-                studentRecord.setAnnualRecord(rs.getString("annual_record"));
             }
 
             // リソースの解放

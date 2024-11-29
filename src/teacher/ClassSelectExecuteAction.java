@@ -14,48 +14,40 @@ import dao.StudentRecordDao;
 import tool.Action;
 
 public class ClassSelectExecuteAction extends Action {
-	public void execute(
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		PrintWriter out=response.getWriter();
-		try {
+    public void execute(
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        PrintWriter out = response.getWriter();
 
-			String classid=request.getParameter("class_id");
+        try {
+            // リクエストパラメータからクラスIDを取得
+            String classId = request.getParameter("class_id");
 
-			StudentRecordDao dao=new StudentRecordDao();
-//			List<StudentRecord> list=dao.filter(classid);
+            // 生徒DAOを使用して、クラスIDに一致する生徒情報を取得
+            StudentDao studentDao = new StudentDao();
+            List<Student> studentList = studentDao.filterByClassId(classId);
+            request.setAttribute("studentList", studentList);
 
-//			request.setAttribute("list", list);
+            // 生徒記録DAOを使用して、生徒情報から対応する生徒記録を取得
+            StudentRecordDao recordDao = new StudentRecordDao();
+            List<StudentRecord> studentRecordList = new ArrayList<>();
 
-			List<StudentRecord> list = dao.filter(classid);
-			request.setAttribute("list", list);
+            for (Student student : studentList) {
+                String studentId = student.getStudentId(); // 生徒IDを取得
+                StudentRecord record = recordDao.getByStudentId(studentId); // 生徒記録を取得
+                if (record != null) {
+                    studentRecordList.add(record); // 生徒記録リストに追加
+                }
+            }
 
-			StudentDao sdao = new StudentDao();
-			List<Student> slist = new ArrayList<>();
-//			List<String> slist = new ArrayList<>();
+            // リクエストに生徒記録リストをセット
+            request.setAttribute("studentRecordList", studentRecordList);
 
-			try {
-			    // StudentRecord から student_id を取得し、対応する Student を取得
-			    for (StudentRecord record : list) {
-			        String studentId = record.getStudent_id();
-			        Student student = sdao.get(studentId);
-			        if (student != null) {
-			            slist.add(student);
-			        }
-			    }
+            // JSPページにフォワード
+            request.getRequestDispatcher("student_list.jsp").forward(request, response);
 
-			    request.setAttribute("slist", slist);
-			} catch (Exception e) {
-			    e.printStackTrace();
-			    // 必要に応じてエラーハンドリングを追加
-			}
-
-			request.getRequestDispatcher("student_list.jsp")
-				.forward(request, response);
-
-		} catch (Exception e) {
-			e.printStackTrace(out);
-		}
-	}
-
+        } catch (Exception e) {
+            e.printStackTrace(out);
+        }
+    }
 }

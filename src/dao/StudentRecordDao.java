@@ -104,6 +104,27 @@ public class StudentRecordDao extends Dao {
         return list;
     }
 
+    public StudentRecord getByStudentId(String studentId) throws Exception {
+        StudentRecord record = null;
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                 "SELECT * FROM t_student_record WHERE student_id = ?")) {
+            ps.setString(1, studentId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    record = new StudentRecord();
+                    record.setStudentRecordId(rs.getString("student_record_id"));
+                    record.setStudentId(rs.getString("student_id"));
+                    record.setFeatures(rs.getString("features"));
+                    record.setAllergy(rs.getString("allergy"));
+                    // 他のプロパティをセット
+                }
+            }
+        }
+        return record;
+    }
+
+
     // 学生記録を保存または更新するメソッド
     public boolean save(StudentRecord studentRecord) throws Exception {
         Connection connection = getConnection();

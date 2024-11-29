@@ -273,7 +273,7 @@ public class StudentDao extends Dao {
                 while (rs.next()) {
                     Student student = new Student();
                     student.setStudentId(rs.getString("student_id"));
-                    student.setStudentName(rs.getString("name"));
+                    student.setStudentName(rs.getString("student_name"));
                     student.setClassId(rs.getString("class_id"));
                     // 他のプロパティをセット
                     list.add(student);
