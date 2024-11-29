@@ -10,6 +10,7 @@ public class Attendance implements java.io.Serializable{
 	private Date day;
 	private int type;
 	private String notes;
+	private String student_name;
 
 	public String getAttendanceId(){
 		return attendance_id;
@@ -26,6 +27,9 @@ public class Attendance implements java.io.Serializable{
 	public String getNotes(){
 		return notes;
 	}
+	public String getStudentName(){
+		return student_name;
+	}
 	public void setAttendanceId(String attendance_id){
 		this.attendance_id=attendance_id;
 	}
@@ -40,5 +44,8 @@ public class Attendance implements java.io.Serializable{
 	}
 	public void setNotes(String notes){
 		this.notes=notes;
+	}
+	public void setStudentName(String student_name){
+		this.student_name=student_name;
 	}
 }
