@@ -288,7 +288,7 @@ public class StudentDao extends Dao {
 
 
 
-public List<Student> getStudentsByTeacherId(String teacherId) throws SQLException {
+public List<Student> getStudentsByTeacherId(String teacherId) throws Exception {
     List<Student> studentList = new ArrayList<>();
 
     // 教師IDに基づいて生徒を取得するSQLクエリ

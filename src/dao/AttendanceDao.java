@@ -201,46 +201,138 @@ public class AttendanceDao extends Dao {
 
 
 
-
-
-
-
     public List<Attendance> getAttendancesByTeacherId(String teacherId) throws Exception {
         List<Attendance> attendanceList = new ArrayList<>();
 
-        // 教師IDに基づいて生徒の出席情報を取得するSQLクエリ
-        String sql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.notes, s.student_name " +
-                     "FROM t_attendance a " +
-                     "JOIN t_student s ON a.student_id = s.student_id " +
-                     "JOIN teacher_student ts ON a.student_id = ts.student_id " +
-                     "WHERE ts.class_id = ? ORDER BY a.day DESC";
+        // まず、教師のclass_idを取得するSQLクエリ
+        String classIdSql = "SELECT CLASS_ID FROM teacher WHERE TEACHER_ID = ?";
 
-        // データベース接続
-        Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql);
+        // 教師のクラスIDを取得
+        String classId = null;
+        try (Connection connection = getConnection();
+             PreparedStatement psClassId = connection.prepareStatement(classIdSql)) {
 
-            // 教師IDをパラメータとして設定
-            ps.setString(1, teacherId);
+            psClassId.setString(1, teacherId);
 
-            // SQLクエリを実行して結果を取得
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    // 出席情報をAttendanceオブジェクトに設定
-                    Attendance attendance = new Attendance();
-                    attendance.setAttendanceId(rs.getString("attendance_id"));
-                    attendance.setStudentId(rs.getString("student_id"));
-                    attendance.setDay(rs.getDate("day"));
-                    attendance.setType(rs.getInt("type"));
-                    attendance.setNotes(rs.getString("notes"));
-//                    attendance.setStudentName(rs.getString("student_name"));  // 生徒名を設定
-
-                    // リストに追加
-                    attendanceList.add(attendance);
+            try (ResultSet rsClassId = psClassId.executeQuery()) {
+                if (rsClassId.next()) {
+                    classId = rsClassId.getString("CLASS_ID");
                 }
             }
+        }
 
+        // classIdがnullでない場合に、出席情報を取得するSQLクエリを実行
+        if (classId != null) {
+            String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.notes, s.student_name " +
+                                   "FROM t_attendance a " +
+                                   "JOIN t_student s ON a.student_id = s.student_id " +
+                                   "JOIN teacher_student ts ON a.student_id = ts.student_id " +
+                                   "WHERE ts.class_id = ? ORDER BY a.day DESC";
+
+            try (Connection connection = getConnection();
+                 PreparedStatement psAttendance = connection.prepareStatement(attendanceSql)) {
+
+                // クラスIDをパラメータとして設定
+                psAttendance.setString(1, classId);
+
+                // 出席情報を実行して結果を取得
+                try (ResultSet rs = psAttendance.executeQuery()) {
+                    while (rs.next()) {
+                        // 出席情報をAttendanceオブジェクトに設定
+                        Attendance attendance = new Attendance();
+                        attendance.setAttendanceId(rs.getString("attendance_id"));
+                        attendance.setStudentId(rs.getString("student_id"));
+                        attendance.setDay(rs.getDate("day"));
+                        attendance.setType(rs.getInt("type"));
+                        attendance.setNotes(rs.getString("notes"));
+                        attendance.setStudentName(rs.getString("student_name")); // 生徒名を設定
+
+                        // リストに追加
+                        attendanceList.add(attendance);
+                    }
+                }
+            }
         }
 
         return attendanceList;
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//
+//
+//    public List<Attendance> getAttendancesByTeacherId(String teacherId) throws Exception {
+//        List<Attendance> attendanceList = new ArrayList<>();
+//
+//        // 教師IDに基づいて生徒の出席情報を取得するSQLクエリ
+//        String sql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.notes, s.student_name " +
+//                     "FROM t_attendance a " +
+//                     "JOIN t_student s ON a.student_id = s.student_id " +
+//                     "JOIN teacher_student ts ON a.student_id = ts.student_id " +
+//                     "WHERE ts.class_id = ? ORDER BY a.day DESC";
+//
+//        // データベース接続
+//        Connection connection = getConnection();
+//             PreparedStatement ps = connection.prepareStatement(sql);
+//
+//            // 教師IDをパラメータとして設定
+//            ps.setString(1, teacherId);
+//
+//            // SQLクエリを実行して結果を取得
+//            try (ResultSet rs = ps.executeQuery()) {
+//                while (rs.next()) {
+//                    // 出席情報をAttendanceオブジェクトに設定
+//                    Attendance attendance = new Attendance();
+//                    attendance.setAttendanceId(rs.getString("attendance_id"));
+//                    attendance.setStudentId(rs.getString("student_id"));
+//                    attendance.setDay(rs.getDate("day"));
+//                    attendance.setType(rs.getInt("type"));
+//                    attendance.setNotes(rs.getString("notes"));
+////                    attendance.setStudentName(rs.getString("student_name"));  // 生徒名を設定
+//
+//                    // リストに追加
+//                    attendanceList.add(attendance);
+//                }
+//
+//
+//        }
+//
+//        return attendanceList;
+//    }
+//}
