@@ -133,7 +133,7 @@ public class StudentRecordDao extends Dao {
 
         try {
             statement = connection.prepareStatement(
-                "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, meal_id ,sleep_id, excretion_id, student_id, attendance_id, anual_record_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO t_student_record (student_record_id, name, class_id, guardian_id, birthdate, allergy, features, student_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
             statement.setString(1, studentRecord.getStudentRecordId());
             statement.setString(2, studentRecord.getName());
@@ -142,6 +142,7 @@ public class StudentRecordDao extends Dao {
             statement.setDate(5, studentRecord.getBirthdate());
             statement.setString(6, studentRecord.getAllergy());
             statement.setString(7, studentRecord.getFeatures());
+            statement.setString(8, studentRecord.getStudentId());
 
             count = statement.executeUpdate();
         } catch (Exception e) {
