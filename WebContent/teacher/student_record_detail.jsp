@@ -180,11 +180,13 @@
 	    <c:forEach var="list" items="${list}">
 	    	<p>誕生日<p>
 	        <p>${list.birthdate}</p>
-	        <p>アレルギー</p>
-	        <input type="hidden" name="studentrecordid" value="${list.studentReecordId}">
-	        <input type="text" name="allergy"value="${list.allergy}">
-	        <p>特徴</p>
-	        <input type="text" name="features" value="${list.features}" >
+		        <p>アレルギー</p>
+		        <input type="hidden" name="studentrecordid" value="${list.studentRecordId}">
+		        <input type="hidden" name="class_id" value="${slist.classId}">
+		        <input type="text" name="allergy"value="${list.allergy}">
+		        <p>特徴</p>
+		        <input type="text" name="features" value="${list.features}" >
+		        <input type="submit" value="更新">
 	    </c:forEach>
 	    </form>
     <!-- </div>  -->
