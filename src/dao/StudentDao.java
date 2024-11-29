@@ -296,14 +296,14 @@ public List<Student> getStudentsByTeacherId(String teacherId) throws SQLExceptio
                  "FROM students s " +
                  "JOIN teacher_student ts ON s.student_id = ts.student_id " +
                  "WHERE ts.teacher_id = ?";
-
+    // データベース接続
     try (Connection connection = getConnection();
-         PreparedStatement statement = connection.prepareStatement(sql)) {
+         PreparedStatement ps = connection.prepareStatement(sql)) {
 
         // 教師IDをパラメータとして設定
-    	statement.setString(1, teacherId);
+    	ps.setString(1, teacherId);
 
-        try (ResultSet rs = statement.executeQuery()) {
+        try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Student student = new Student();
                 student.setStudentId(rs.getString("student_id"));
@@ -312,8 +312,9 @@ public List<Student> getStudentsByTeacherId(String teacherId) throws SQLExceptio
                 studentList.add(student);
             }
         }
-    }
+    }catch (Exception e){
 
-    return studentList;
-  }
+    } return studentList;
 }
+}
+
