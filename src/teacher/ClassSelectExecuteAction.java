@@ -20,8 +20,10 @@ public class ClassSelectExecuteAction extends Action {
         PrintWriter out = response.getWriter();
 
         try {
+        	String id = "";
             // リクエストパラメータからクラスIDを取得
             String classId = request.getParameter("class_id");
+            id = request.getParameter("teacherID");
 
             // 生徒DAOを使用して、クラスIDに一致する生徒情報を取得
             StudentDao studentDao = new StudentDao();
@@ -43,6 +45,7 @@ public class ClassSelectExecuteAction extends Action {
             // リクエストに生徒記録リストをセット
             request.setAttribute("studentRecordList", studentRecordList);
 
+            request.setAttribute("teacherID", id);
             // JSPページにフォワード
             request.getRequestDispatcher("student_list.jsp").forward(request, response);
 

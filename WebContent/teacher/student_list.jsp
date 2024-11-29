@@ -26,6 +26,7 @@
 <!-- 生徒全体の出席確認に飛べるボタン -->
 <div>
     <form action="Attendance.action" method="post">
+    	<input type="hidden" name="teacherID" value="${teacherID }">
         <button type="submit">生徒全体の出席確認</button>
     </form>
 </div>

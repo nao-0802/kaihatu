@@ -15,5 +15,6 @@
 		</c:forEach>
 	</select>
 
+	<input type="hidden" name="teacherID" value="${teacherID }">
 	<input type="submit" name="Enter_Room_btn" value="入室">
 </form>

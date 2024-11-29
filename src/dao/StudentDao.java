@@ -293,9 +293,10 @@ public List<Student> getStudentsByTeacherId(String teacherId) throws Exception {
 
     // 教師IDに基づいて生徒を取得するSQLクエリ
     String sql = "SELECT s.student_id, s.student_name, s.class_id " +
-                 "FROM students s " +
-                 "JOIN teacher_student ts ON s.student_id = ts.student_id " +
-                 "WHERE ts.teacher_id = ?";
+                 "FROM t_student s " +
+                 "JOIN t_class tc ON s.class_id = tc.class_id " +
+                 "JOIN t_teacher tt ON tc.class_id = tt.class_id " +
+                 "WHERE tt.teacher_id = ?";
     // データベース接続
     try (Connection connection = getConnection();
          PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -310,6 +311,7 @@ public List<Student> getStudentsByTeacherId(String teacherId) throws Exception {
                 student.setStudentName(rs.getString("student_name"));
                 student.setClassId(rs.getString("class_id"));
                 studentList.add(student);
+                System.out.println(rs.getString("student_id"));
             }
         }
     }catch (Exception e){

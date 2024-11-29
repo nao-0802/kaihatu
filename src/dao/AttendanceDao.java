@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import bean.Attendance;
+import bean.Student;
 
 public class AttendanceDao extends Dao {
     // SQLクエリ: student_idに基づいてレコードを取得
@@ -205,7 +207,7 @@ public class AttendanceDao extends Dao {
         List<Attendance> attendanceList = new ArrayList<>();
 
         // まず、教師のclass_idを取得するSQLクエリ
-        String classIdSql = "SELECT CLASS_ID FROM teacher WHERE TEACHER_ID = ?";
+        String classIdSql = "SELECT CLASS_ID FROM t_teacher WHERE TEACHER_ID = ?";
 
         // 教師のクラスIDを取得
         String classId = null;
@@ -226,7 +228,7 @@ public class AttendanceDao extends Dao {
             String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.notes, s.student_name " +
                                    "FROM t_attendance a " +
                                    "JOIN t_student s ON a.student_id = s.student_id " +
-                                   "JOIN teacher_student ts ON a.student_id = ts.student_id " +
+                                   "JOIN t_teacher ts ON a.student_id = ts.student_id " +
                                    "WHERE ts.class_id = ? ORDER BY a.day DESC";
 
             try (Connection connection = getConnection();
@@ -257,28 +259,58 @@ public class AttendanceDao extends Dao {
         return attendanceList;
     }
 
+
+
+
+
+    public List<Attendance> getAttendancesByStudents(List<Student> students) throws Exception {
+        List<Attendance> attendanceList = new ArrayList<>();
+
+        // 学生IDを取得
+        List<String> studentIds = students.stream()
+                .map(Student::getStudentId)
+                .collect(Collectors.toList());
+
+
+        // 学生IDが空の場合、処理を終了
+        if (studentIds.isEmpty()) {
+            return attendanceList;
+        }
+
+        // 出席情報を取得するSQLクエリ
+        String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.notes, s.student_name " +
+                               "FROM t_attendance a " +
+                               "JOIN t_student s ON a.student_id = s.student_id " +
+                               "WHERE a.student_id IN (" + studentIds.stream().map(id -> "?").collect(Collectors.joining(",")) + ") " +
+                               "ORDER BY a.day DESC";
+
+        try (Connection connection = getConnection();
+             PreparedStatement psAttendance = connection.prepareStatement(attendanceSql)) {
+
+            // プレースホルダーに学生IDを設定
+            for (int i = 0; i < studentIds.size(); i++) {
+                psAttendance.setString(i + 1, studentIds.get(i));
+            }
+
+            // クエリ実行と結果処理
+            try (ResultSet rs = psAttendance.executeQuery()) {
+                while (rs.next()) {
+                    Attendance attendance = new Attendance();
+                    attendance.setAttendanceId(rs.getString("attendance_id"));
+                    attendance.setStudentId(rs.getString("student_id"));
+                    attendance.setDay(rs.getDate("day"));
+                    attendance.setType(rs.getInt("type"));
+                    attendance.setNotes(rs.getString("notes"));
+                    attendance.setStudentName(rs.getString("student_name"));
+                    attendanceList.add(attendance);
+                    System.out.println(rs.getString("student_id"));
+                }
+            }
+        }
+
+        return attendanceList;
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

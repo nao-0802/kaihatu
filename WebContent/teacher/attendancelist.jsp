@@ -15,8 +15,8 @@
     <c:forEach var="attendance" items="${attendanceList}">
         <div>
             <h3>生徒: ${attendance.studentName}</h3>
-            <p>日付: ${attendance.attendanceDate}</p>
-            <p>出席状況: ${attendance.status}</p>
+            <p>日付: ${attendance.day}</p>
+            <p>出席状況: ${attendance.type}</p>
         </div>
         <hr />
     </c:forEach>

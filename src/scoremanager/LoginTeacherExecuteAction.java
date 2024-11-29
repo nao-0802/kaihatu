@@ -49,6 +49,7 @@ public class LoginTeacherExecuteAction extends Action {
 			List<Class> list=dao.getAllClasses();
 
 			req.setAttribute("list", list);
+			req.setAttribute("teacherID", id);
 
 			url = "/teacher/class-selection.jsp";
 			req.getRequestDispatcher(url).forward(req, res);
