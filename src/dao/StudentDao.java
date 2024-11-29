@@ -272,9 +272,9 @@ public class StudentDao extends Dao {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Student student = new Student();
-                    student.setStudent_id(rs.getString("student_id"));
-                    student.setName(rs.getString("name"));
-                    student.setClass_id(rs.getString("class_id"));
+                    student.setStudentId(rs.getString("student_id"));
+                    student.setStudentName(rs.getString("name"));
+                    student.setClassId(rs.getString("class_id"));
                     // 他のプロパティをセット
                     list.add(student);
                 }
