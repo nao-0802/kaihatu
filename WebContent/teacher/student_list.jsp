@@ -25,7 +25,7 @@
 
 <!-- 生徒全体の出席確認に飛べるボタン -->
 <div>
-    <form action="AttendanceCheck.action" method="post">
+    <form action="Attendance.action" method="post">
         <button type="submit">生徒全体の出席確認</button>
     </form>
 </div>
