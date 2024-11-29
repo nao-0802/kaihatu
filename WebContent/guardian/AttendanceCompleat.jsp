@@ -9,6 +9,7 @@
 
 
 
-        <button type="return">戻る</button>
+        <button onclick="location.href='seikatukiroku.jsp'">戻る</button>
+
 </body>
 </html>

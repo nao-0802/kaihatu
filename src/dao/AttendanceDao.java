@@ -10,8 +10,8 @@ import java.util.List;
 import bean.Attendance;
 
 public class AttendanceDao extends Dao {
-    // SQLクエリ: student_record_idに基づいてレコードを取得
-    private String baseSql = "SELECT attendance_id, student_record_id, day, status, notes FROM t_attendance WHERE student_record_id = ?";
+    // SQLクエリ: student_idに基づいてレコードを取得
+    private String baseSql = "SELECT attendance_id, student_id, day, type, notes FROM t_attendance WHERE student_id = ?";
 
     // ResultSetからAttendanceリストを生成するメソッド
     private List<Attendance> postfilter(ResultSet rSet) throws Exception {
@@ -20,9 +20,9 @@ public class AttendanceDao extends Dao {
             while (rSet.next()) {
                 Attendance attendance = new Attendance();
                 attendance.setAttendanceId(rSet.getString("attendance_id"));
-                attendance.setStudentRecordId(rSet.getString("student_record_id"));
+                attendance.setStudentId(rSet.getString("student_id"));
                 attendance.setDay(rSet.getDate("day"));
-                attendance.setStatus(rSet.getInt("status"));
+                attendance.setType(rSet.getInt("type"));
                 attendance.setNotes(rSet.getString("notes"));
                 list.add(attendance);
             }
@@ -33,8 +33,8 @@ public class AttendanceDao extends Dao {
         return list;
     }
 
-    // 指定されたstudent_record_idのAttendanceを取得するメソッド
-    public List<Attendance> filter(String studentRecordId) throws Exception {
+    // 指定されたstudent_idのAttendanceを取得するメソッド
+    public List<Attendance> filter(String studentId) throws Exception {
         List<Attendance> list = new ArrayList<>();
         Connection connection = getConnection();
         PreparedStatement statement = null;
@@ -42,7 +42,7 @@ public class AttendanceDao extends Dao {
 
         try {
             statement = connection.prepareStatement(baseSql);
-            statement.setString(1, studentRecordId);
+            statement.setString(1, studentId);
             rSet = statement.executeQuery();
             list = postfilter(rSet);
         } catch (Exception e) {
@@ -81,21 +81,21 @@ public class AttendanceDao extends Dao {
             if (existingAttendance == null) {
                 // 新しいAttendanceの場合、挿入
                 statement = connection.prepareStatement(
-                        "INSERT INTO t_attendance (attendance_id, student_record_id, day, status, notes) VALUES (?, ?, ?, ?, ?)"
+                        "INSERT INTO t_attendance (attendance_id, student_id, day, type, notes) VALUES (?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, attendance.getAttendanceId());
-                statement.setString(2, attendance.getStudentRecordId());
+                statement.setString(2, attendance.getStudentId());
                 statement.setDate(3, attendance.getDay());
-                statement.setInt(4, attendance.getStatus());
+                statement.setInt(4, attendance.getType());
                 statement.setString(5, attendance.getNotes());
             } else {
                 // 既存のAttendanceの場合、更新
                 statement = connection.prepareStatement(
-                        "UPDATE t_attendance SET student_record_id = ?, day = ?, status = ?, notes = ? WHERE attendance_id = ?"
+                        "UPDATE t_attendance SET student_id = ?, day = ?, type = ?, notes = ? WHERE attendance_id = ?"
                 );
-                statement.setString(1, attendance.getStudentRecordId());
+                statement.setString(1, attendance.getStudentId());
                 statement.setDate(2, attendance.getDay());
-                statement.setInt(3, attendance.getStatus());
+                statement.setInt(3, attendance.getType());
                 statement.setString(4, attendance.getNotes());
                 statement.setString(5, attendance.getAttendanceId());
             }
@@ -137,9 +137,9 @@ public class AttendanceDao extends Dao {
             if (rSet.next()) {
                 attendance = new Attendance();
                 attendance.setAttendanceId(rSet.getString("attendance_id"));
-                attendance.setStudentRecordId(rSet.getString("student_record_id"));
+                attendance.setStudentId(rSet.getString("student_id"));
                 attendance.setDay(rSet.getDate("day"));
-                attendance.setStatus(rSet.getInt("status"));
+                attendance.setType(rSet.getInt("type"));
                 attendance.setNotes(rSet.getString("notes"));
             }
         } catch (Exception e) {

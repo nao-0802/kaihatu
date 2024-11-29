@@ -105,6 +105,9 @@ summary {
 </form>
 
 
+<form action="../guardian/AttendanceCreate.action">
+<button>出席連絡</button>
+</form>
 
 <!-- <input type="button" onclick="location.href='#'" value="連絡帳を書く"> -->
 
