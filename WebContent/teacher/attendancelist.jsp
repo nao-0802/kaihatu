@@ -1,47 +1,24 @@
-<%@page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="bean.Student" %>
-<%@page import="bean.Attendance" %>
-<%@page import="java.util.List" %>
+<%@ page isELIgnored="false" %>
 
-<h2>生徒の出席情報</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>出欠状況確認</title>
+</head>
+<body>
+    <h1>出欠状況一覧</h1>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>生徒名</th>
-            <th>出席状態</th>
-            <th>備考</th>
-            <th>出席日</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- 生徒リストのループ -->
-        <c:forEach var="student" items="${studentList}">
-            <tr>
-                <td>${student.studentName}</td>
-                <td>
-                    <!-- 生徒ごとの出席情報の表示 -->
-                    <c:forEach var="attendance" items="${student.attendanceList}">
-                        <c:choose>
-                            <c:when test="${attendance.status == 0}">出席</c:when>
-                            <c:when test="${attendance.status == 1}">欠席</c:when>
-                            <c:when test="${attendance.status == 2}">遅刻</c:when>
-                            <c:when test="${attendance.status == 3}">早退</c:when>
-                        </c:choose><br>
-                    </c:forEach>
-                </td>
-                <td>
-                    <c:forEach var="attendance" items="${student.attendanceList}">
-                        ${attendance.notes}<br>
-                    </c:forEach>
-                </td>
-                <td>
-                    <c:forEach var="attendance" items="${student.attendanceList}">
-                        ${attendance.date}<br>
-                    </c:forEach>
-                </td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
+    <!-- クラスごとに出欠状況を表示 -->
+    <c:forEach var="attendance" items="${attendanceList}">
+        <div>
+            <h3>生徒: ${attendance.studentName}</h3>
+            <p>日付: ${attendance.attendanceDate}</p>
+            <p>出席状況: ${attendance.status}</p>
+        </div>
+        <hr />
+    </c:forEach>
+</body>
+</html>

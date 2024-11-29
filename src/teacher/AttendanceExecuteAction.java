@@ -10,27 +10,23 @@ import dao.AttendanceDao;
 import dao.StudentDao;
 import tool.Action;
 
-public class TeacherAttendanceViewAction extends Action {
+public class AttendanceExecuteAction extends Action {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        String teacherId = req.getParameter("teacher_id"); // 教師ID
+        String teacherId = req.getParameter("teacherId");  // 教師IDを取得
 
-        // 教師のクラスに所属する生徒リストを取得
+        // 教師が担当するクラスの生徒リストを取得
         StudentDao studentDao = new StudentDao();
         List<Student> studentList = studentDao.getStudentsByTeacherId(teacherId);
 
-        // 各生徒に関連する出席情報を取得
+        // 生徒の出欠情報を取得
         AttendanceDao attendanceDao = new AttendanceDao();
-        for (Student student : studentList) {
-            // 各生徒の出席情報を取得
-            List<Attendance> attendanceList = attendanceDao.getAttendanceByStudentId(student.getStudentId());
-            student.setAttendanceList(attendanceList);  // 生徒オブジェクトに出席情報をセット
-        }
+        List<Attendance> attendanceList = attendanceDao.getAttendancesByStudents(studentList);
 
-        // 生徒リストをリクエストに設定
-        req.setAttribute("studentList", studentList);
+        // 出欠情報をリクエストに設定
+        req.setAttribute("attendanceList", attendanceList);
 
-        // 出席情報表示ページにフォワード
-        RequestDispatcher dispatcher = req.getRequestDispatcher("TeacherAttendanceView.jsp");
+        // 出欠情報一覧ページにフォワード
+        RequestDispatcher dispatcher = req.getRequestDispatcher("teacherAttendanceView.jsp");
         dispatcher.forward(req, res);
     }
 }

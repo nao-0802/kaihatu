@@ -10,6 +10,7 @@ import java.util.List;
 import bean.Student;
 
 public class StudentDao extends Dao {
+
     // SQLクエリ: 学生の情報を取得するための基本SQL
     private String baseSql = "SELECT * FROM t_student WHERE class_id = ?";
 
@@ -261,4 +262,58 @@ public class StudentDao extends Dao {
 
         return result;
     }
+
+    public List<Student> filterByClassId(String classId) throws Exception {
+        List<Student> list = new ArrayList<>();
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                 "SELECT * FROM t_student WHERE class_id = ?")) {
+            ps.setString(1, classId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Student student = new Student();
+                    student.setStudent_id(rs.getString("student_id"));
+                    student.setName(rs.getString("name"));
+                    student.setClass_id(rs.getString("class_id"));
+                    // 他のプロパティをセット
+                    list.add(student);
+                }
+            }
+        }
+        return list;
+    }
+
+
+
+
+
+
+public List<Student> getStudentsByTeacherId(String teacherId) throws SQLException {
+    List<Student> studentList = new ArrayList<>();
+
+    // 教師IDに基づいて生徒を取得するSQLクエリ
+    String sql = "SELECT s.student_id, s.student_name, s.class_id " +
+                 "FROM students s " +
+                 "JOIN teacher_student ts ON s.student_id = ts.student_id " +
+                 "WHERE ts.teacher_id = ?";
+
+    try (Connection connection = getConnection();
+         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+        // 教師IDをパラメータとして設定
+    	statement.setString(1, teacherId);
+
+        try (ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) {
+                Student student = new Student();
+                student.setStudentId(rs.getString("student_id"));
+                student.setStudentName(rs.getString("student_name"));
+                student.setClassId(rs.getString("class_id"));
+                studentList.add(student);
+            }
+        }
+    }
+
+    return studentList;
+  }
 }
