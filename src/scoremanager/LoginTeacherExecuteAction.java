@@ -44,6 +44,7 @@ public class LoginTeacherExecuteAction extends Action {
 			//teacher.setAuthenticated(true);
 			// セッションにログイン情報を保存
 			session.setAttribute("user", teacher);
+			session.setAttribute("userId", id);
 
 			ClassDao dao=new ClassDao();
 			List<Class> list=dao.getAllClasses();

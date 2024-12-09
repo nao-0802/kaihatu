@@ -10,7 +10,6 @@ import java.util.List;
 import bean.Guardian;
 
 public class GuardianDao extends Dao {
-	private Connection connection;
 
     // SQLクエリ: guardian_idに基づいてレコードを取得
     private String baseSql = "SELECT guardian_id, guardian_name, password, student_id FROM t_guardian WHERE guardian_id = ?";
@@ -362,6 +361,50 @@ public class GuardianDao extends Dao {
             }
         }
         return list;
+    }
+
+    public Guardian findByGuardianId(String guardianId) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Guardian guardian = null;
+
+        String selectSql = "SELECT * FROM t_guardian WHERE guardian_id = ?";
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(selectSql);
+            statement.setString(1, guardianId);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                guardian = new Guardian();
+                guardian.setGuardianId(resultSet.getString("guardian_id"));
+                guardian.setGuardianName(resultSet.getString("guardian_name"));
+                // 必要なら他のカラムも設定
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+        	// PreparedStatementを閉じる
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            // Connectionを閉じる
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return guardian;
     }
 }
 

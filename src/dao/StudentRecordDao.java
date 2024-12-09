@@ -291,5 +291,47 @@ public class StudentRecordDao extends Dao {
         return result;
     }
 
+    public StudentRecord findByStudentId(String studentId) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        StudentRecord studentRecord = null;
+
+        String selectSql = "SELECT * FROM t_student_record WHERE student_id = ?";
+
+        try {
+            connection = getConnection(); // BaseDaoのメソッドで接続取得
+            statement = connection.prepareStatement(selectSql);
+            statement.setString(1, studentId);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                studentRecord = new StudentRecord();
+                studentRecord.setStudentId(resultSet.getString("student_id"));
+                studentRecord.setGuardianId(resultSet.getString("guardian_id"));
+                // 必要なら他のカラムも設定
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+        	if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException sqle) {
+                    throw sqle;
+                }
+            }
+        }
+
+        return studentRecord;
+    }
+
 
 }

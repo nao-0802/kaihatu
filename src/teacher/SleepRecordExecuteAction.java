@@ -18,8 +18,8 @@ public class SleepRecordExecuteAction extends Action {
 
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-    	
-    	
+
+
         // ローカル変数の宣言
         String student_id = null;  // 生徒ID
         Integer sleep = null; // 睡眠種別
@@ -38,7 +38,7 @@ public class SleepRecordExecuteAction extends Action {
 
         // 生徒IDをStudentRecordに設定
         StudentRecord studentRecord = new StudentRecord();
-        studentRecord.setStudent_id(student_id);  // 生徒IDを設定
+        studentRecord.setStudentId(student_id);  // 生徒IDを設定
 
         // 睡眠種別の取得
         String sleepParam = req.getParameter("sleep");
@@ -60,7 +60,7 @@ public class SleepRecordExecuteAction extends Action {
             dispatcher.forward(req, res);
             return;
         }
-        
+
 
         // 現在の日付と時刻を取得
         LocalDate currentDate = LocalDate.now();  // 現在の日付
@@ -74,7 +74,7 @@ public class SleepRecordExecuteAction extends Action {
 
         // SleepRecordオブジェクトの作成
         SleepRecord p = new SleepRecord();
-        p.setStudentId(studentRecord.getStudent_id());
+        p.setStudentId(studentRecord.getStudentId());
         p.setDay(sqlDate);  // 日付をセット
         p.setTime(sqlTime); // 正しい時間を設定
         p.setSleep(sleep);  // 睡眠種別をセット

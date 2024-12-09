@@ -4,33 +4,57 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.Guardian;
+import bean.StudentRecord;
 import dao.GuardianDao;
+import dao.StudentRecordDao;
 import tool.Action;
 
-public class ContactBookWriteAction extends Action {
-    @Override
+public class ContactBookWriteAction extends Action{
+
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        String studentId = req.getParameter("student_id");
-        System.out.print(studentId);
+        try {
 
-        // GuardianDao を使用して studentId から guardianId を取得
-        GuardianDao guardianDao = new GuardianDao();
-        String guardianId = guardianDao.getGuardianIdbyStudentId(studentId);
-        System.out.print(guardianId);
+            // リクエストから student_id を取得
+            String studentId = req.getParameter("student_id");
+            if (studentId == null || studentId.isEmpty()) {
+                throw new IllegalArgumentException("Student ID is missing.");
+            }
 
-        if (guardianId != null) {
-            // guardianId を使用して Guardian 情報を取得
-            Guardian guardian = guardianDao.get(guardianId);
 
-            // リクエストスコープに必要な情報を設定
-            req.setAttribute("studentId", studentId);
-            req.setAttribute("guardianId", guardianId);
+            // student_record テーブルから情報を取得
+            StudentRecordDao studentRecordDao = new StudentRecordDao();
+            StudentRecord studentRecord = studentRecordDao.findByStudentId(studentId);
+
+
+
+            if (studentRecord == null) {
+                throw new IllegalArgumentException("Student record not found for ID: " + studentId);
+            }
+
+
+
+            // guardian テーブルから情報を取得
+            GuardianDao guardianDao = new GuardianDao();
+            Guardian guardian = guardianDao.findByGuardianId(studentRecord.getGuardianId());
+
+            if (guardian == null) {
+                throw new IllegalArgumentException("Guardian not found for ID: " + studentRecord.getGuardianId());
+            }
+
+
+
+            // リクエストスコープに情報をセット
+            req.setAttribute("studentRecord", studentRecord);
+            req.setAttribute("guardian", guardian);
+            req.setAttribute("guardianId", guardian.getGuardianId());
             req.setAttribute("guardianName", guardian.getGuardianName());
-        } else {
-            // エラー処理: 保護者情報が見つからない場合
-            req.setAttribute("errorMessage", "対応する保護者が見つかりませんでした。");
-        }
 
-        req.getRequestDispatcher("/teacher/contactbook_create.jsp").forward(req, res);
+
+            // JSP にフォワード
+            req.getRequestDispatcher("/teacher/contactbook_create.jsp").forward(req, res);
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher("/error.jsp").forward(req, res);
+        }
     }
 }

@@ -15,6 +15,8 @@ public class ContactBookWriteExecuteAction extends Action {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         // リクエストパラメータの取得
         String teacherId = (String) req.getSession().getAttribute("userId"); // セッションから教職員IDを取得
+
+        System.out.println(teacherId);
         String guardianId = req.getParameter("guardianId");
         String contactDetails = req.getParameter("contactDetails");
 
@@ -27,7 +29,7 @@ public class ContactBookWriteExecuteAction extends Action {
 
         // 連絡帳データの生成
         ContactBook notebook = new ContactBook();
-        notebook.setContactBookId(UUID.randomUUID().toString()); // 一意のIDを生成
+        notebook.setContactBookId(UUID.randomUUID().toString().replace("-", "").substring(0, 10)); // 一意のIDを生成
         notebook.setTeacherId(teacherId);
         notebook.setGuardianId(guardianId);
         notebook.setContactDetails(contactDetails);
@@ -39,7 +41,7 @@ public class ContactBookWriteExecuteAction extends Action {
         // 保存結果に応じてフォワード
         if (success) {
             req.setAttribute("message", "連絡帳が正常に保存されました。");
-            req.getRequestDispatcher("/teacher/contactbook_success.jsp").forward(req, res);
+            req.getRequestDispatcher("/teacher/contactbook_create_done.jsp").forward(req, res);
         } else {
             req.setAttribute("error", "連絡帳の保存中にエラーが発生しました。再試行してください。");
             req.getRequestDispatcher("/teacher/contactbook_create.jsp").forward(req, res);

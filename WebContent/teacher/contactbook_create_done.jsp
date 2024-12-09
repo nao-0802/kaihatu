@@ -12,6 +12,6 @@
 
     <p>連絡帳が正常に送信されました。</p>
 
-    <a href="ClassListAction">クラス一覧に戻る</a>
+    <a href="./StudentList.action">生徒一覧に戻る</a>
 </body>
 </html>

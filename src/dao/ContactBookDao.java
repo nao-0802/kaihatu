@@ -180,8 +180,8 @@ public class ContactBookDao extends Dao {
             if (!exists) {
                 // 新規作成の場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO communication_notebooks "
-                                + "(contact_book_id, teacher_id, guardian_id, date, contact_details, contact_check) "
+                        "INSERT INTO t_contact_book "
+                                + "(contact_book_id, teacher_id, guardian_id, day, contact_details, contact_check) "
                                 + "VALUES (?, ?, ?, ?, ?, ?)"
                 );
                 statement.setString(1, notebook.getContactBookId());
@@ -193,8 +193,8 @@ public class ContactBookDao extends Dao {
             } else {
                 // 更新の場合
                 statement = connection.prepareStatement(
-                        "UPDATE communication_notebooks SET "
-                                + "teacher_id = ?, guardian_id = ?, date = ?, contact_details = ?, contact_check = ? "
+                        "UPDATE t_contact_book SET "
+                                + "teacher_id = ?, guardian_id = ?, day = ?, contact_details = ?, contact_check = ? "
                                 + "WHERE contact_book_id = ?"
                 );
                 statement.setString(1, notebook.getTeacherId());
@@ -231,7 +231,7 @@ public class ContactBookDao extends Dao {
 
     // 指定された連絡帳IDが存在するか確認するメソッド
     private boolean notebookExists(String contactBookId, Connection connection) throws SQLException {
-        String sql = "SELECT 1 FROM communication_notebooks WHERE contact_book_id = ?";
+        String sql = "SELECT 1 FROM t_contact_book WHERE contact_book_id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, contactBookId);
             try (ResultSet rs = ps.executeQuery()) {
