@@ -266,7 +266,7 @@ public class GuardianDao extends Dao {
                     guardian = new Guardian();
                     guardian.setGuardianId(rSet.getString("guardian_id"));
                     guardian.setPassword(rSet.getString("password"));
-                    guardian.setStudentId(rSet.getString("student_id")); // student_id を設定
+                    //guardian.setStudentId(rSet.getString("student_id")); // student_id を設定
                 }
             }
         } catch (Exception e) {

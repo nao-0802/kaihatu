@@ -1,66 +1,62 @@
 package teacher;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import bean.Student;
 import bean.StudentRecord;
+import dao.StudentDao;
+import dao.StudentRecordDao;
+import tool.Action;
 
-public class StudentListExecuteAction {
-
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String studentRecordId = request.getParameter("student_record_id"); // 選択された生徒のIDを取得
-        StudentRecord studentRecord = null;
+public class StudentListExecuteAction extends Action {
+    public void execute(
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        PrintWriter out = response.getWriter();
 
         try {
-            // データベース接続
-        	Connection conn = getConnection();
+            // セッションからクラスIDを取得
+            HttpSession session = request.getSession();
+            String classId = (String) session.getAttribute("classId");
 
-            // 特定の生徒情報を取得するSQL文
-            String sql = "SELECT * FROM t_student_record WHERE student_record_id = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, studentRecordId); // student_record_id を設定
-
-            // SQLを実行して結果を取得
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                studentRecord = new StudentRecord();
-                studentRecord.setStudentRecordId(rs.getString("student_record_id"));
-                studentRecord.setName(rs.getString("name"));
-                studentRecord.setClassId(rs.getString("class_id"));
-                studentRecord.setGuardianId(rs.getString("guardian_id"));
-                studentRecord.setBirthdate(rs.getDate("birthdate"));
-                studentRecord.setAllergy(rs.getString("allergy"));
-                studentRecord.setFeatures(rs.getString("features"));
+            if (classId == null || classId.isEmpty()) {
+                // クラスIDがセッションに存在しない場合、エラーメッセージを表示して終了
+                request.setAttribute("error", "クラスIDが指定されていません。");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+                return;
             }
 
-            // リソースの解放
-            rs.close();
-            stmt.close();
-            conn.close();
+            // 生徒DAOを使用して、クラスIDに一致する生徒情報を取得
+            StudentDao studentDao = new StudentDao();
+            List<Student> studentList = studentDao.filterByClassId(classId);
+            request.setAttribute("studentList", studentList);
 
-            if (studentRecord != null) {
-                // 生徒のカルテ情報をリクエスト属性に設定
-                request.setAttribute("studentRecord", studentRecord);
+            // 生徒記録DAOを使用して、生徒情報から対応する生徒記録を取得
+            StudentRecordDao recordDao = new StudentRecordDao();
+            List<StudentRecord> studentRecordList = new ArrayList<>();
 
-                // カルテ詳細画面にフォワード
-                request.getRequestDispatcher("student_record_detail.jsp").forward(request, response);
-            } else {
-                // 生徒が見つからない場合はエラーページにリダイレクト
-                response.sendRedirect("error.jsp");
+            for (Student student : studentList) {
+                String studentId = student.getStudentId(); // 生徒IDを取得
+                StudentRecord record = recordDao.getByStudentId(studentId); // 生徒記録を取得
+                if (record != null) {
+                    studentRecordList.add(record); // 生徒記録リストに追加
+                }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // エラーが発生した場合はエラーページにリダイレクト
-            response.sendRedirect("error.jsp");
+            // リクエストに生徒記録リストをセット
+            request.setAttribute("studentRecordList", studentRecordList);
+
+            // JSPページにフォワード
+            request.getRequestDispatcher("student_list.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace(out);
         }
     }
 }

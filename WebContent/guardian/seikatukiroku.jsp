@@ -100,12 +100,17 @@ summary {
 
 
 
-<form action="../guardian/ContactBookWrite.action">
+<form action="ContactBookWrite.action">
 <button>連絡帳を書く</button>
 </form>
 
+<form action="../guardian/ContactBookList.action">
+<button>連絡帳を見る</button>
+</form>
 
-<form action="../guardian/AttendanceCreate.action">
+
+
+<form action="AttendanceCreate.action">
 <button>出席連絡</button>
 </form>
 

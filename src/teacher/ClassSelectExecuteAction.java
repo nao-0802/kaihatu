@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Student;
 import bean.StudentRecord;
@@ -20,10 +21,14 @@ public class ClassSelectExecuteAction extends Action {
         PrintWriter out = response.getWriter();
 
         try {
-        	String id = "";
+            String id = "";
             // リクエストパラメータからクラスIDを取得
             String classId = request.getParameter("class_id");
             id = request.getParameter("teacherID");
+
+            // セッションにクラスIDを保存
+            HttpSession session = request.getSession();
+            session.setAttribute("classId", classId);
 
             // 生徒DAOを使用して、クラスIDに一致する生徒情報を取得
             StudentDao studentDao = new StudentDao();

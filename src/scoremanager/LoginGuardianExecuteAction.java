@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import bean.Guardian;
 import dao.GuardianDao;
+import dao.StudentRecordDao;
 import tool.Action;
 
 public class LoginGuardianExecuteAction extends Action {
@@ -20,6 +21,7 @@ public class LoginGuardianExecuteAction extends Action {
         String password = req.getParameter("password"); // パスワード
 
         GuardianDao guardianDao = new GuardianDao();
+        StudentRecordDao srDao = new StudentRecordDao();
         Guardian guardian = guardianDao.login(id, password); // DBからデータ取得
 
         if (guardian != null) { // 認証成功の場合
@@ -29,11 +31,11 @@ public class LoginGuardianExecuteAction extends Action {
             req.setAttribute("guardianID", id);
 
             // 保護者IDを基に生徒IDを取得
-            String studentId = guardianDao.getStudentIdByGuardianId(id);  // ここでguardian_idを基にstudent_idを取得
+            List<String> studentIds = srDao.getStudentIdsByGuardianId(id); // guardian_idを基にstudent_idを取得
 
-            // student_idが正常に取得できた場合
-            if (studentId != null) {
-                // セッションにstudent_idを保存
+            if (studentIds != null && !studentIds.isEmpty()) {
+                // 最初の student_id を取得しセッションに保存
+                String studentId = studentIds.get(0);
                 session.setAttribute("student_id", studentId);
             } else {
                 // student_idが取得できなかった場合のエラーハンドリング

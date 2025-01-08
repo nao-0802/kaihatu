@@ -334,4 +334,30 @@ public class StudentRecordDao extends Dao {
     }
 
 
+ // guardian_id を用いて t_student_record を検索し、対応する student_id を取得するメソッド
+    public List<String> getStudentIdsByGuardianId(String guardianId) throws Exception {
+        List<String> studentIds = new ArrayList<>();
+
+        // データベース接続
+        Connection connection = getConnection();
+        String sql = "SELECT student_id FROM t_student_record WHERE guardian_id = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, guardianId);
+
+        // クエリ実行
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            // student_id をリストに追加
+            studentIds.add(resultSet.getString("student_id"));
+        }
+
+        // リソース解放
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return studentIds;
+    }
+
+
 }

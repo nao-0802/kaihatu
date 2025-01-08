@@ -353,6 +353,59 @@ public List<ContactBook> findByGuardianId(String guardianId) throws Exception {
     }
 
     return list;
+	}
+
+//保護者IDに基づく連絡帳リストを取得
+public List<ContactBook> getByGuardianId(String guardianId) throws Exception {
+    List<ContactBook> list = new ArrayList<>();
+    Connection con = getConnection();
+
+    String sql = "SELECT * FROM t_contact_book WHERE guardian_id = ?";
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setString(1, guardianId);
+    ResultSet rs = ps.executeQuery();
+
+    while (rs.next()) {
+        ContactBook cb = new ContactBook();
+        cb.setContactBookId(rs.getString("contact_book_id"));
+        cb.setTeacherId(rs.getString("teacher_id"));
+        cb.setGuardianId(rs.getString("guardian_id"));
+        cb.setDay(rs.getDate("day"));
+        cb.setContactDetails(rs.getString("contact_details"));
+        cb.setContactCheck(rs.getBoolean("contact_check"));
+        list.add(cb);
+    }
+
+    rs.close();
+    ps.close();
+    con.close();
+    return list;
+}
+
+// 連絡帳IDに基づく連絡帳の詳細を取得
+public ContactBook getById(String contactBookId) throws Exception {
+    ContactBook cb = null;
+    Connection con = getConnection();
+
+    String sql = "SELECT * FROM t_contact_book WHERE contact_book_id = ?";
+    PreparedStatement ps = con.prepareStatement(sql);
+    ps.setString(1, contactBookId);
+    ResultSet rs = ps.executeQuery();
+
+    if (rs.next()) {
+        cb = new ContactBook();
+        cb.setContactBookId(rs.getString("contact_book_id"));
+        cb.setTeacherId(rs.getString("teacher_id"));
+        cb.setGuardianId(rs.getString("guardian_id"));
+        cb.setDay(rs.getDate("day"));
+        cb.setContactDetails(rs.getString("contact_details"));
+        cb.setContactCheck(rs.getBoolean("contact_check"));
+    }
+
+    rs.close();
+    ps.close();
+    con.close();
+    return cb;
 }
 }
 

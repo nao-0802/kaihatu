@@ -1,33 +1,35 @@
 package guardian;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.ContactBook;
 import dao.ContactBookDao;
 import tool.Action;
 
 public class ContactBookListAction extends Action {
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
 
-        // 保護者IDをセッションまたはリクエストから取得
-        String guardianId = (String) request.getSession().getAttribute("guardian_id");
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        HttpSession session = req.getSession();
+        String guardianId = (String) session.getAttribute("guardian_id");
 
-        // ContactBookDaoのインスタンスを作成
+        if (guardianId == null) {
+            res.sendRedirect("login.jsp");
+            return;
+        }
+
+        // 保護者IDに基づく連絡帳の取得
         ContactBookDao dao = new ContactBookDao();
+        List<ContactBook> contactBookList = dao.getByGuardianId(guardianId);
 
-        // 保護者IDに基づいて連絡帳リストを取得
-        List<ContactBook> contactBookList = dao.findByGuardianId(guardianId);
+        // リクエスト属性に連絡帳リストを設定
+        req.setAttribute("contactBookList", contactBookList);
 
-        // 連絡帳のリストをリクエスト属性に設定
-        request.setAttribute("contactBookList", contactBookList);
-
-        // JSPに転送
-        request.getRequestDispatcher("/guardian/contactBookList.jsp").forward(request, response);
+        // JSPへフォワード
+        req.getRequestDispatcher("contactbook_list.jsp").forward(req, res);
     }
 }

@@ -29,6 +29,6 @@
     </form>
 
     <br>
-    <a href="./StudentList.action">生徒一覧に戻る</a>
+    <a href="./StudentListExecute.action">生徒一覧に戻る</a>
 </body>
 </html>
