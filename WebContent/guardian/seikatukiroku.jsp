@@ -5,6 +5,7 @@
 
 
 <style>
+@media only screen and (max-width: 769px){
 main{
     margin-top: 52px;
     margin-left:  auto;
@@ -112,6 +113,7 @@ form{
 .kiroku{
   width: 100px;
   margin-top: 10px;
+}
 }
 </style>
 
@@ -229,7 +231,6 @@ window.addEventListener('pageshow',()=>{
         <button>記録</button>
     </form>
 </details>
-
 
 
 <form action="../guardian/ContactBookWrite.action">
