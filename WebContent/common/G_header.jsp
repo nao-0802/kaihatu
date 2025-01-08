@@ -1,9 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 
-  <header class="header">
-    <div class="navtext-container">
-      <h2 class="navtext">すてっぷのーと</h2>
-    </div>
+
+
     <input type="checkbox" class="menu-btn" id="menu-btn">
     <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
     <ul class="menu">
@@ -14,13 +12,11 @@
       <li><a href="#">ログアウト</a></li>
     </ul>
 
-  </header>
 
 <style>
 body {
   height: 100vh;
   display: flex;
-  background-color: #C5E99B;
   margin: 0;
 }
 

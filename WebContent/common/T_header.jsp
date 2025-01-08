@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 
+
   <header class="header">
     <div class="navtext-container">
       <h2 class="navtext">すてっぷのーと</h2>
@@ -11,9 +12,8 @@
       <li><a href="#">連絡帳</a></li>
       <li><a href="#">全体掲示板</a></li>
       <li><a href="#">カルテ</a></li>
-      <li><a href="#">ログアウト</a></li>
+      <li><a href="../teacher/logout.jsp">ログアウト</a></li>
     </ul>
-
   </header>
 
 <style>
@@ -29,10 +29,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--background-navbar);
-  position: fixed;
-  width: 100%;
-  height: 52px;
+  /* position: fixed */
+  /* padding: 0 20px;  */
 }
 
 .logo {
@@ -45,6 +43,12 @@ body {
   --background-navbar: #757575;
 }
 
+.header {
+  background: var(--background-navbar);
+  position: fixed;
+  width: 100%;
+  height: 52px;
+}
 
 /* Nav items */
 .menu {
@@ -172,9 +176,7 @@ body {
   letter-spacing: 4px;
   font-size: 25px;
   position: absolute;
-  text-transform: uppercase;
   text-align: center;
   color: #E9E9E9;
 }
-
 </style>
