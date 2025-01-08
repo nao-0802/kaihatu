@@ -1,43 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>連絡帳の閲覧</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* レイアウト用の簡単なスタイル */
-        .container {
-            display: flex;
-        }
-        .left-panel {
-            width: 200px;
-            padding: 20px;
-            border-right: 2px solid #000;
-        }
-        .right-panel {
-            flex-grow: 1;
-            padding: 20px;
-        }
-        .button-container {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-        }
-        .contact-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .contact-table th, .contact-table td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-    </style>
-    <script>
+
+<!--     <script>
         function validateDate() {
             const dateInput = document.getElementById("date");
             const dateValue = dateInput.value;
@@ -49,59 +13,223 @@
             }
             return true;
         }
-    </script>
-</head>
-<body>
+    </script>-->
 
-    <h1>連絡帳の閲覧</h1>
 
-    <div class="container">
-        <!-- 左側のパネル：日付選択 -->
-        <div class="left-panel">
-            <h2>日付選択</h2>
-            <form action="ContactBookListExecuteAction" method="get" onsubmit="return validateDate()">
-                <label for="date">閲覧する日付を入力してください：</label><br>
-                <input type="text" id="date" name="selectedDate" placeholder="YYYY-MM-DD" required><br>
-                <button type="submit">確認</button>
-            </form>
+<style>
+body{
+  overflow: hidden;
+}
 
-            <div class="button-container">
-                <!-- 連絡帳を書くボタン -->
-                <form action="ContactBookWrite.action" method="get">
-                    <button type="submit">連絡帳を書く</button>
-                </form>
-            </div>
+
+main{
+  margin-top: 52px;
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+
+
+.bb{
+  /* display: block; */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: right;
+  width: 100vw;
+}
+.button{
+  /* display: inline; */
+  padding: 5px;
+  margin-right: 10px;
+}
+
+
+
+ a{
+   text-decoration: none;
+ }
+
+ .test{
+  /* width: 100vw; */
+  text-align: center;
+  /* display: flex; */
+}
+
+input{
+  text-align: center;
+  width: 200px;
+  height: 30px;
+}
+
+
+
+
+.test{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.m{
+  font-size: 20px;
+    /* flex: 1; */
+    overflow-y: scroll;
+    padding: 10px 20px;
+}
+
+table{
+  width: 90%;
+  font-size: 20px;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+table td{
+text-align: center;
+  border-bottom: solid 1px red;
+}
+
+a{
+  color: black;
+  text-decoration: none;
+}
+
+</style>
+
+
+
+
+
+
+<body onload="filterTable()">
+   <header class="header">
+        <div class="navtext-container">
+            <p class="navtext">連絡帳</p>
         </div>
+        <%@include file="../common/G_header.jsp" %>
 
-        <!-- 右側のパネル：連絡帳の内容表示 -->
-        <div class="right-panel">
-            <c:if test="${not empty list}">
-                <h2>選択された日付の連絡帳</h2>
-                <table class="contact-table">
-                    <thead>
-                        <tr>
-                            <th>先生名</th>
-                            <th>連絡内容</th>
-                            <th>確認</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="contact" items="${list}">
-                            <tr>
-                                <td>${contact.teacherName}</td>
-                                <td>${contact.contactDetails}</td>
-                                <td>${contact.checked ? '確認済み' : '未確認'}</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
+</header>
 
-            <c:if test="${empty list}">
-                <p>指定された日付の連絡帳は存在しません。</p>
-            </c:if>
-        </div>
+
+
+<main>
+  <div class="test">
+    <div class="bb">
+      <button class="button" onclick="location.href=''">連絡帳を書く</button>
     </div>
 
+    <div>
+      <input type="month" id="searchTable" min="2020-04" value="">
+    </div>
+    <div class="m">
+
+    <table id="dataTable">
+        <tr>
+            <th>
+                <td hidden>日付</td>
+            </th>
+        </tr>
+        <tr>
+          <th>
+              <td><a href=""><option value="">2024-11-01</option></a></td>
+          </th>
+      </tr>
+
+      <tr>
+          <th>
+              <td>2024-11-02</td>
+          </th>
+      </tr>
+      <tr>
+        <th>
+            <td><a href=""><option value="">2024-11-01</option></a></td>
+        </th>
+    </tr>
+
+
+        <tr>
+            <th>
+                <td><a href=""><option value="">2024-11-01</option></a></td>
+            </th>
+        </tr>
+
+        <tr>
+            <th>
+                <td>2024-11-02</td>
+            </th>
+        </tr>
+
+        <tr>
+            <th>
+                <td><a href=""><option value="">2024-11-03</option></a></td>
+            </th>
+        </tr>
+
+        <tr>
+            <th>
+                <td>2024-11-04</td>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <td>2024-12-24</td>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <td><a href="renrakutyou_e.html"><option value="">2024-12-25</option></a></td>
+            </th>
+        </tr>
+
+    </table>
+    </div>
+
+</div>
+
+
+</main>
 </body>
-</html>
+
+
+<script>
+
+
+    //月自動入力
+    function displayDateTime() {
+      const now = new Date();
+      const date = new Date();
+      const yyyy = date.getFullYear();
+      const mm = ('0' + (date.getMonth() + 1)).slice(-2);
+      const datetimeString = now.toLocaleString();
+      return document.getElementById("searchTable").value = `${yyyy}-${mm}`;
+  }
+  displayDateTime();
+
+  //検索.テーブル表示
+  function filterTable() {
+      const input = document.getElementById("searchTable").value;
+      const table = document.getElementById("dataTable");
+      const tr = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < tr.length; i++) {
+          const td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+              const txtValue = td.textContent || td.innerText;
+              if (txtValue.indexOf(input) > -1) {
+                  tr[i].style.display = "";
+              } else {
+                  tr[i].style.display = "none";
+              }
+          }
+      }
+  }
+
+
+
+  document.getElementById('searchTable').addEventListener('input', function() {
+      filterTable()},);
+
+
+</script>

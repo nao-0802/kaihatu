@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<!-- %@include file="../G_header.html" % -->
+
 <%@page import="bean.StudentRecord, java.util.List"%>
 
 
@@ -143,10 +143,9 @@ window.addEventListener('pageshow',()=>{
 </header>
 
 
-
 <main>
     <div class="bb">
-        <button class="button" onclick="location.href='renrakutyou.html'">連絡帳を書く</button>
+        <button class="button" onclick="location.href='contactbookwrite.jsp'">連絡帳を書く</button>
     </div>
 
     <div class="container add-control">
@@ -247,7 +246,6 @@ window.addEventListener('pageshow',()=>{
 <button>出席連絡</button>
 </form>
 
-<!-- <input type="button" onclick="location.href='#'" value="連絡帳を書く"> -->
 
 
 <!--  %@include file="../footer.html" % -->
