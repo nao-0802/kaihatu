@@ -51,7 +51,7 @@ public class SleepRecordExecuteAction extends Action {
 
         // 取得した生徒IDをStudentRecordに設定
         StudentRecord studentRecord = new StudentRecord();
-        studentRecord.setStudent_id(student_id);  // 生徒IDを設定
+        studentRecord.setStudentId(student_id);  // 生徒IDを設定
 
         // 睡眠種別の取得
         String sleepParam = req.getParameter("sleep");
@@ -89,7 +89,7 @@ public class SleepRecordExecuteAction extends Action {
         // SleepRecordオブジェクトの作成
         SleepRecord p = new SleepRecord();
         // student_idの登録
-        p.setStudentId(studentRecord.getStudent_id());
+        p.setStudentId(studentRecord.getStudentId());
         p.setDay(sqlDate);  // 日付をセット
         p.setTime(sqlTime); // 正しい時間を設定
         p.setSleep(sleep);   // 睡眠種別をセット

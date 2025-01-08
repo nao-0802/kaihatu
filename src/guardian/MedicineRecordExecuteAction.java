@@ -51,7 +51,7 @@ public class MedicineRecordExecuteAction extends Action {
 
         // 取得した生徒IDをStudentRecordに設定
         StudentRecord studentRecord = new StudentRecord();
-        studentRecord.setStudent_id(student_id);  // 生徒IDを設定
+        studentRecord.setStudentId(student_id);  // 生徒IDを設定
 
         // 睡眠種別の取得
         String medicineParam = req.getParameter("medicine");
@@ -87,7 +87,7 @@ public class MedicineRecordExecuteAction extends Action {
 
         // MedicineRecordオブジェクトの作成
         MedicineRecord p = new MedicineRecord();
-        p.setStudentId(studentRecord.getStudent_id());
+        p.setStudentId(studentRecord.getStudentId());
         p.setDay(sqlDate);  // 日付をセット
         p.setTime(sqlTime); // 正しい時間を設定
         p.setMedicine(medicine);   // 睡眠種別をセット

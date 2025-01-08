@@ -1,7 +1,10 @@
 package teacher;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.StudentRecord;
-import util.DatabaseConnection;
 
 public class StudentListAction {
 
@@ -19,7 +21,7 @@ public class StudentListAction {
 
         try {
             // データベース接続
-            Connection conn = DatabaseConnection.getConnection();
+            Connection conn = getConnection();
 
             // 生徒情報を取得するSQL文
             String sql = "SELECT * FROM t_student_record";
@@ -34,7 +36,7 @@ public class StudentListAction {
                 record.setStudentRecordId(rs.getString("student_record_id"));
                 record.setName(rs.getString("name"));
                 record.setClassId(rs.getString("class_id"));
-                record.setGuardianId(rs.getInt("guardian_id"));
+                record.setGuardianId(rs.getString("guardian_id"));
                 record.setBirthdate(rs.getDate("birthdate"));
                 record.setAllergy(rs.getString("allergy"));
                 record.setFeatures(rs.getString("features"));
