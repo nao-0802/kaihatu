@@ -143,7 +143,6 @@ window.addEventListener('pageshow',()=>{
 </header>
 
 
-
 <main>
     <div class="bb">
         <button class="button" onclick="location.href='contactbookwrite.jsp'">連絡帳を書く</button>
@@ -247,7 +246,6 @@ window.addEventListener('pageshow',()=>{
 <button>出席連絡</button>
 </form>
 
-<!-- <input type="button" onclick="location.href='#'" value="連絡帳を書く"> -->
 
 
 <!--  %@include file="../footer.html" % -->
