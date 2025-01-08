@@ -100,7 +100,7 @@ summary {
 
 
 
-<form action="ContactBookWrite.action">
+<form action="../guardian/ContactBookWrite.action">
 <button>連絡帳を書く</button>
 </form>
 
