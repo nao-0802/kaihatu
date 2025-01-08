@@ -21,6 +21,6 @@
             <td>${contactBook.contactCheck ? "確認済み" : "未確認"}</td>
         </tr>
     </table>
-    <a href="../guardain/ContactBookListAction">一覧に戻る</a>
+    <a href="../guardian/ContactBookList.action">一覧に戻る</a>
 </body>
 </html>

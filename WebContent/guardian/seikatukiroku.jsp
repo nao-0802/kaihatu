@@ -209,5 +209,45 @@ window.addEventListener('pageshow',()=>{
 </body>
 
 
+<<<<<<< HEAD
+
+<details name="life" id="c">
+    <summary>排泄</summary>
+    <form action="../guardian/ExcretionRecordExecute.action" method="post">
+        <div>
+            <!-- 排泄種別のラジオボタン -->
+            <label><input type="radio" name="type" value="0">かたい</label><br>
+            <label><input type="radio" name="type" value="1">やわらかい</label><br>
+
+            <!-- その他の詳細を入力するテキストフィールド -->
+            <label>その他:</label>
+            <input type="text" name="excretion_detail" placeholder="詳細を記入"><br>
+
+            <!-- 隠しフィールド -->
+            <input type="hidden" name="guardian_id" value="${guardianID}">
+        </div>
+        <!-- 提出ボタン -->
+        <button>記録</button>
+    </form>
+</details>
+
+
+
+<form action="../guardian/ContactBookWrite.action">
+<button>連絡帳を書く</button>
+</form>
+
+<form action="../guardian/ContactBookList.action">
+<button>連絡帳を見る</button>
+</form>
+
+
+
+<form action="AttendanceCreate.action">
+<button>出席連絡</button>
+</form>
+
+<!-- <input type="button" onclick="location.href='#'" value="連絡帳を書く"> -->
+
 
 <!--  %@include file="../footer.html" % -->

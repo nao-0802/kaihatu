@@ -53,7 +53,7 @@ public class MealRecordExecuteAction extends Action {
 
         // 取得した生徒IDをStudentRecordに設定
         StudentRecord studentRecord = new StudentRecord();
-        studentRecord.setStudent_id(student_id);  // 生徒IDを設定
+        studentRecord.setStudentId(student_id);  // 生徒IDを設定
 
         // 食事種別の取得
 //        String mealamountParam = req.getParameter("meal_amount");
@@ -91,7 +91,7 @@ public class MealRecordExecuteAction extends Action {
         // MealRecordオブジェクトの作成
         MealRecord p = new MealRecord();
         // student_idの登録
-        p.setStudentId(studentRecord.getStudent_id());
+        p.setStudentId(studentRecord.getStudentId());
         p.setDay(sqlDate);  // 日付をセット
         p.setTime(sqlTime); // 正しい時間を設定
         p.setMeal_Amount(meal_amount);   // 睡眠種別をセット
