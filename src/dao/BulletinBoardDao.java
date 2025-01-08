@@ -159,7 +159,7 @@ public class BulletinBoardDao extends Dao {
     }
 
     // post_idでBulletinBoardを取得するメソッド
-    private BulletinBoard getBulletinBoard(String postId) throws Exception {
+    public BulletinBoard getBulletinBoard(String postId) throws Exception {
         BulletinBoard bulletinBoard = null;
         Connection connection = getConnection();
         PreparedStatement statement = null;
