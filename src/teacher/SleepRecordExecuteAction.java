@@ -85,7 +85,7 @@ public class SleepRecordExecuteAction extends Action {
         // 保存処理後の処理
         if (isSaved) {
             // 保存成功時の処理
-            RequestDispatcher dispatcher = req.getRequestDispatcher("LifeRecord.action");  // 適切な遷移先を指定
+            RequestDispatcher dispatcher = req.getRequestDispatcher("LifeRecord_done.jsp");  // 適切な遷移先を指定
             dispatcher.forward(req, res);
         } else {
             // 保存失敗時の処理 - エラーメッセージを設定
