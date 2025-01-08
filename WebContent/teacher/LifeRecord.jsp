@@ -89,10 +89,7 @@
             </form>
         </details>
 
-        <!-- 連絡帳 -->
-        <form action="../guardian/ContactBookWrite.action" method="post">
-            <button type="submit">連絡帳を書く</button>
-        </form>
+
     </div>
 </body>
 </html>
