@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<!-- %@include file="../G_header.html" % -->
+
 <%@page import="bean.StudentRecord, java.util.List"%>
 
 
@@ -146,7 +146,7 @@ window.addEventListener('pageshow',()=>{
 
 <main>
     <div class="bb">
-        <button class="button" onclick="location.href='renrakutyou.html'">連絡帳を書く</button>
+        <button class="button" onclick="location.href='contactbookwrite.jsp'">連絡帳を書く</button>
     </div>
 
     <div class="container add-control">

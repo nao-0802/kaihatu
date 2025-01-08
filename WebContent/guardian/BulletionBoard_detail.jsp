@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>投稿の詳細</title>
-</head>
+
+
 <body>
+<header class="header">
+    <div class="navtext-container">
+      <p class="navtext">全体掲示板</p>
+    </div>
+<%@include file="../common/G_header.jsp" %>
+
+
+</header>
+
+
+
     <h3>投稿の詳細</h3>
 
     <c:if test="${not empty bulletin}">
