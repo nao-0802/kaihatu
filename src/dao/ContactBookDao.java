@@ -15,7 +15,7 @@ public class ContactBookDao extends Dao {
     private String baseSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, contact_check FROM t_contact_book WHERE teacher_id = ?";
 
     // 新しいSQLクエリ: guardian_id と date に基づいてレコードを取得
-    private String findByGuardianIdAndDateSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, contact_check FROM t_contact_book WHERE guardian_id = ? AND day = ?";
+    public String findByGuardianIdAndDateSql = "SELECT contact_book_id, teacher_id, guardian_id, day, contact_details, contact_check FROM t_contact_book WHERE guardian_id = ? AND day = ?";
 
     // ResultSetからContactBookリストを生成するメソッド
     private List<ContactBook> postfilter(ResultSet rSet) throws Exception {
