@@ -117,7 +117,7 @@ a{
 <main>
   <div class="test">
     <div class="bb">
-      <button class="button" onclick="location.href=''">連絡帳を書く</button>
+      <button class="button" onclick="location.href='contactbookwrite.jsp'">連絡帳を書く</button>
     </div>
 
     <div>

@@ -210,7 +210,6 @@ window.addEventListener('pageshow',()=>{
 </body>
 
 
-<<<<<<< HEAD
 
 <details name="life" id="c">
     <summary>排泄</summary>
