@@ -119,4 +119,3 @@ a.navtext{
 
 </style>
 
-</style>
