@@ -5,7 +5,7 @@
 
 <header class="header">
 <div class="navtext-container">
-    <h2 name="title" class="navtext">すてっぷのーと</h2>
+    <p name="title" class="navtext">すてっぷのーと</p>
 </div>
 </header>
 
@@ -54,7 +54,6 @@
 
 <style>
 body{
-    background-color: #C5E99B;
     margin: 0;
 }
 
@@ -68,15 +67,9 @@ body{
 
 .a button{
     font-size: 15px;
-    color: #919291;
-    /* background-color: #daf3df; */
     padding: 5px;
-    border-radius: 5px;
 }
-.a button:hover{
-    color: #daf3df;
-    background-color: #919291;
-}
+
 
 .a{
     text-align: center;

@@ -5,6 +5,19 @@
 <%@ page import="bean.StudentRecord, java.util.List" %>
 <%@ page import="bean.Student, java.util.List" %>
 
+
+<body>
+<header class="header">
+    <div class="navtext-container">
+      <p class="navtext">クラス</p>
+    </div>
+<%@include file="../common/T_header.jsp" %>
+</header>
+
+
+<main>
+
+
 <table>
     <p>名前</p>
     <c:forEach var="student" items="${studentList}">
@@ -30,3 +43,14 @@
         <button type="submit">生徒全体の出席確認</button>
     </form>
 </div>
+</main>
+</body>
+
+
+<style>
+main{
+    margin-top: 52px;
+    margin-left:  auto;
+    margin-right: auto;
+  }
+</style>

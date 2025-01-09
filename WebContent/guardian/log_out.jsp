@@ -3,7 +3,7 @@
 
 
 <style>
-@media only screen and (max-width: 769px){
+
 main{
     margin-top: 52px;
     margin-left:  auto;
@@ -32,7 +32,7 @@ main{
     padding: 5px;
     width: 60px;
 }
-}
+
 
 </style>
 
