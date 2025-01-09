@@ -283,6 +283,31 @@ public class StudentDao extends Dao {
         return list;
     }
 
+ // student_id に紐づく学生情報を取得
+    public Student findById(String studentId) throws Exception {
+        Student student = null;
+        String sql = "SELECT student_id, student_name, class_id FROM t_student WHERE student_id = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, studentId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    student = new Student();
+                    student.setStudentId(resultSet.getString("student_id"));
+                    student.setStudentName(resultSet.getString("student_name"));
+                    student.setClassId(resultSet.getString("class_id"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("学生情報の取得中にエラーが発生しました。");
+        }
+
+        return student;
+    }
+
 
 
 

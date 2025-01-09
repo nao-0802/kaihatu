@@ -155,13 +155,13 @@ window.addEventListener('pageshow',()=>{
         <input type="checkbox" id="tab3" class="radio" name="tab" onclick="onlyOne(this)"><label class="tab-title title3" id="title3" for="tab3">トイレ</label>
 
         <div class="tab-body" id="body1">
-            <form action="">
+            <form action="../guardian/SleepRecordExecute.action">
                 <table>
                     <tr>
-                        <td><label><input type="radio" name="sleep_amount" required>寝た</label></td>
+                        <td><label><input type="radio" name="sleep" value="0" required>寝た</label></td>
                     </tr>
                     <tr>
-                        <td><label><input type="radio" name="sleep_amount" required>起きた</label></td>
+                        <td><label><input type="radio" name="sleep" value="1" required>起きた</label></td>
                     </tr>
                 </table>
                 <button class="kiroku" name="sleep_btn">記録</button>
@@ -209,7 +209,6 @@ window.addEventListener('pageshow',()=>{
 </body>
 
 
-<<<<<<< HEAD
 
 <details name="life" id="c">
     <summary>排泄</summary>

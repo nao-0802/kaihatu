@@ -1,9 +1,6 @@
 package guardian;
 
-import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,42 +12,41 @@ import tool.Action;
 public class ContactBookWriteExecuteAction extends Action {
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        PrintWriter out = response.getWriter();
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // セッションから教師IDと保護者IDを取得
+        String teacherId = req.getParameter("teacherId"); // セッションから教師IDを取得
+        String guardianId = (String)req.getSession().getAttribute("guardian_id");
+        String contactDetails = req.getParameter("contactDetails");
 
-        try {
-            // 現在時刻をDate型で取得
-            LocalDateTime nowDateTime = LocalDateTime.now();
-            Date nowDate = Date.from(nowDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println(teacherId);
+        System.out.println(guardianId);
+        System.out.println(contactDetails);
 
-            // パラメータ取得
-            String TeacherId = request.getParameter("TeacherId");
-            String contactBookWrite = request.getParameter("ContactBookWrite");
+        // 入力チェック
+        if (guardianId == null || guardianId.isEmpty() || contactDetails == null || contactDetails.isEmpty()) {
+            req.setAttribute("error", "必要な情報が不足しています。全ての項目を入力してください。");
+            req.getRequestDispatcher("/teacher/contactbook_create.jsp").forward(req, res);
+            return;
+        }
 
-            // Daoのインスタンス作成
-            ContactBookDao dao = new ContactBookDao();
+        // 連絡帳データの生成
+        ContactBook contactBook = new ContactBook();
+        contactBook.setContactBookId(UUID.randomUUID().toString().replace("-", "").substring(0, 10)); // 一意のIDを生成
+        contactBook.setTeacherId(teacherId);
+        contactBook.setGuardianId(guardianId);
+        contactBook.setContactDetails(contactDetails);
 
-            // ContactBookオブジェクトの作成
-            ContactBook p = new ContactBook();
-            p.setTeacherId(TeacherId);
-            p.setContactDetails(contactBookWrite);
-            p.setDay(nowDate);
+        // ContactBookDaoを使ってデータを保存
+        ContactBookDao contactBookDao = new ContactBookDao();
+        boolean isSaved = contactBookDao.save(contactBook);
 
-         // データ保存処理
-            boolean isSaved = dao.save(p); // saveメソッドが成功した場合trueを返すと仮定
-
-
-            // 未定
-            if (isSaved) {
-                // 保存成功時の処理 - 別のJavaファイルにリダイレクト
-                response.sendRedirect("ContactBookCreateSuccessAction");
-            } else {
-                // 保存失敗時の処理 - 別のJavaファイルにリダイレクト
-                response.sendRedirect("ContactBookCreateFailureAction");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace(out);
+        // 保存結果に応じてフォワード
+        if (isSaved) {
+            req.setAttribute("message", "連絡帳が正常に保存されました。");
+            req.getRequestDispatcher("/guardian/contactbook_create_done.jsp").forward(req, res);
+        } else {
+            req.setAttribute("error", "連絡帳の保存中にエラーが発生しました。再試行してください。");
+            req.getRequestDispatcher("/guardian/contactbook_create.jsp").forward(req, res);
         }
     }
 }
