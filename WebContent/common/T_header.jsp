@@ -10,7 +10,7 @@
     <ul class="menu">
       <li class="top"><a href="../teacher/seikatukiroku.jsp">生活記録</a></li>
       <li><a href="../teacher/contactbook_list.jsp">連絡帳</a></li>
-      <li><a href="../teacher/BullietinBoardPost.jsp">全体掲示板</a></li>
+      <li><a href="../teacher/BullietinBoard.jsp">全体掲示板</a></li>
       <li><a href="../teacher/.jsp">カルテ</a></li>
       <li><a href="../teacher/logout.jsp">ログアウト</a></li>
     </ul>
@@ -176,6 +176,6 @@ body {
   font-size: 25px;
   position: absolute;
   text-align: center;
-  color: #E9E9E9;
+  color: aliceblue;
 }
 </style>
