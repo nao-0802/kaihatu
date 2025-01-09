@@ -4,8 +4,6 @@
 
 
 
-
-
 <body>
 <header class="header">
         <div class="navtext-container">
