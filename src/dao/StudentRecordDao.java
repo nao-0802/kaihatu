@@ -34,6 +34,29 @@ public class StudentRecordDao extends Dao {
         return list;
     }
 
+    public String findStudentIdByGuardianId(String guardianId) {
+        String studentId = null;
+        String sql = "SELECT student_id FROM t_student_record WHERE guardian_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, guardianId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    studentId = rs.getString("student_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // エラーが発生した場合はスタックトレースを表示
+        } catch (Exception e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+
+        return studentId;
+    }
+
     // 指定されたclass_idの学生記録リストを取得するメソッド
     public List<StudentRecord> filter(String classId) throws Exception {
         List<StudentRecord> list = new ArrayList<>();

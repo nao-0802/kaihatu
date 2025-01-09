@@ -38,7 +38,7 @@ public class ContactBookWriteExecuteAction extends Action {
 
         // ContactBookDaoを使ってデータを保存
         ContactBookDao contactBookDao = new ContactBookDao();
-        boolean isSaved = contactBookDao.save(contactBook);
+        boolean isSaved = contactBookDao.saveNotebook(contactBook);
 
         // 保存結果に応じてフォワード
         if (isSaved) {

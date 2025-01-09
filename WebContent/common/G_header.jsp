@@ -8,7 +8,8 @@
     <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
     <ul class="menu">
       <li class="top"><a href="../guardian/seikatukiroku.jsp">生活記録</a></li>
-      <li><a href="../guardian/contactbook.jsp">連絡帳</a></li>
+      <li><a href="../guardian/ContactBookList.action">連絡帳を見る</a></li>
+      <li><a href="../guardian/ContactBookWrite.action">連絡帳を書く</a></li>
       <li><a href="../guardian/BulletinBoard.jsp">全体掲示板</a></li>
       <li><a href="../guardian/renraku.jsp">欠席連絡</a></li>
       <li><a href="../guardian/log_out.jsp">ログアウト</a></li>
