@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,4 +167,28 @@ public class TeacherDao extends Dao {
         }
         return teacher;
     }
+ // class_id に紐づく教師情報を取得
+    public Teacher findByClassId(String classId) throws Exception {
+        Teacher teacher = null;
+        String sql = "SELECT teacher_id, teacher_name FROM t_teacher WHERE class_id = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, classId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    teacher = new Teacher();
+                    teacher.setTeacherId(resultSet.getString("teacher_id"));
+                    teacher.setTeacherName(resultSet.getString("teacher_name"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("教師情報の取得中にエラーが発生しました。");
+        }
+
+        return teacher;
+    }
+
 }
