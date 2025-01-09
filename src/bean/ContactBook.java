@@ -10,6 +10,26 @@ public class ContactBook implements java.io.Serializable{
 	private Date day;
 	private String contact_details;
 	private boolean contact_check;
+	private String studentName;
+	private String class_id;
+
+	public String getStudentName() {
+        return studentName;
+    }
+
+    // 生徒名を設定するメソッド
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+ // getterとsetterを追加
+    public String getClassId() {
+        return class_id;
+    }
+
+    public void setClassId(String class_id) {
+        this.class_id = class_id;
+    }
 
 	public String getContactBookId(){
 		return contact_book_id;

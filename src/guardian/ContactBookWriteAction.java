@@ -39,6 +39,7 @@ public class ContactBookWriteAction extends Action {
             Teacher teacher = teacherDao.findByClassId(classId);
             String teacherId = teacher.getTeacherId();
             String teacherName = teacher.getTeacherName();
+            System.out.println(teacherId);
 
             // リクエストスコープにセット
             request.setAttribute("teacherId", teacherId);

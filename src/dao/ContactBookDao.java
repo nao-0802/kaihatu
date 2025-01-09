@@ -38,6 +38,48 @@ public class ContactBookDao extends Dao {
         return list;
     }
 
+ // ContactBook を ID で取得するメソッド
+    public ContactBook findById(String contactBookId) throws Exception {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+
+            String sql = "SELECT * FROM t_contact_book WHERE contact_book_id = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, contactBookId);
+
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                ContactBook contactBook = new ContactBook();
+                contactBook.setContactBookId(rs.getString("contact_book_id"));
+                contactBook.setTeacherId(rs.getString("teacher_id"));
+                contactBook.setGuardianId(rs.getString("guardian_id"));
+                contactBook.setDay(rs.getDate("day"));
+                contactBook.setContactDetails(rs.getString("contact_details"));
+                contactBook.setContactCheck(rs.getBoolean("contact_check"));
+
+                return contactBook;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("連絡帳データの取得中にエラーが発生しました: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null; // ID に該当するデータが見つからなかった場合
+    }
+
     // 指定されたteacher_idのContactBookを取得するメソッド
     public List<ContactBook> filter(String teacherId) throws Exception {
         List<ContactBook> list = new ArrayList<>();
@@ -71,6 +113,32 @@ public class ContactBookDao extends Dao {
         }
 
         return list;
+    }
+
+    public List<ContactBook> findByTeacherId(String teacherId) throws Exception {
+        List<ContactBook> contactBooks = new ArrayList<>();
+
+        String sql = "SELECT * FROM t_contact_book WHERE teacher_id = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, teacherId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    ContactBook contactBook = new ContactBook();
+                    contactBook.setContactBookId(resultSet.getString("contact_book_id"));
+                    contactBook.setTeacherId(resultSet.getString("teacher_id"));
+                    contactBook.setGuardianId(resultSet.getString("guardian_id"));
+                    contactBook.setDay(resultSet.getDate("day"));
+                    contactBook.setContactDetails(resultSet.getString("contact_details"));
+                    contactBook.setContactCheck(resultSet.getBoolean("contact_check"));
+                    contactBooks.add(contactBook);
+                }
+            }
+        }
+
+        return contactBooks;
     }
 
     // guardian_id と date に基づいて ContactBook を検索するメソッド

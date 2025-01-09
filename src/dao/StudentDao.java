@@ -18,6 +18,32 @@ public class StudentDao extends Dao {
             "SELECT student_id, student_name, class_id, flag " +
             "FROM t_student";
 
+ // guardian_idから生徒名を取得するメソッド
+    public String getStudentNameByGuardianId(String guardianId) {
+        String studentName = null;
+        String sql = "SELECT s.student_name FROM t_student s " +
+                     "JOIN t_student_record sr ON s.student_id = sr.student_id " +
+                     "WHERE sr.guardian_id = ?";
+
+        try (Connection conn = getConnection();
+        	     PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        	    stmt.setString(1, guardianId);
+        	    try (ResultSet rs = stmt.executeQuery()) {
+        	        if (rs.next()) {
+        	            studentName = rs.getString("student_name");
+        	        }
+        	    }
+        	} catch (SQLException e) {
+        	    // SQLExceptionの処理
+        	    e.printStackTrace();
+        	} catch (Exception e) {
+        	    // その他のExceptionの処理
+        	    e.printStackTrace();
+        	}
+        return studentName;
+    }
+
     // ResultSetからStudentリストを生成するメソッド
     private List<Student> postFilter(ResultSet rSet) throws SQLException {
         List<Student> list = new ArrayList<>();
@@ -73,6 +99,27 @@ public class StudentDao extends Dao {
         }
 
         return studentId; // 見つからない場合はnullを返す
+    }
+
+    public Student findStudentById(String studentId) throws SQLException {
+        Student student = null;
+        String sql = "SELECT student_name FROM t_student WHERE student_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    student = new Student();
+                    student.setStudentName(rs.getString("student_name"));
+                }
+            }
+        } catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+        return student;
     }
 
     public Student get(String student_id) throws Exception {
@@ -306,6 +353,30 @@ public class StudentDao extends Dao {
         }
 
         return student;
+    }
+
+    public Student findByGuardianId(String guardianId) throws Exception {
+        String sql = "SELECT s.student_id, s.student_name, s.class_id " +
+                     "FROM t_student_record sr " +
+                     "INNER JOIN t_student s ON sr.student_id = s.student_id " +
+                     "WHERE sr.guardian_id = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, guardianId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Student student = new Student();
+                    student.setStudentId(resultSet.getString("student_id"));
+                    student.setStudentName(resultSet.getString("student_name"));
+                    student.setClassId(resultSet.getString("class_id"));
+                    return student;
+                }
+            }
+        }
+
+        return null; // 該当する学生が存在しない場合
     }
 
 
