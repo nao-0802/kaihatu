@@ -1,6 +1,9 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 
+
+
 <style>
+@media only screen and (max-width: 769px){
 body{
     margin: 0;
 }
@@ -78,7 +81,8 @@ input[type="password"]{
     text-align: center;
     color: #E9E9E9;
 }
-  </style>
+}
+</style>
 
 <body>
 <header class="header">

@@ -1,7 +1,9 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<!-- %@include file="../header.html" % -->
+
+
 
 <style>
+
 main{
     margin-top: 52px;
     margin-left:  auto;
@@ -20,32 +22,18 @@ main{
 
 .a{
     margin: 10px;
-    /* font-size: 15px; */
-    /* color: #919291; */
     padding: 5px;
     width: 60px;
-    /* border-radius: 5px; */
 }
-
-/* .a:hover{
-    color: #daf3df;
-    background-color: #919291;
-} */
 
 
 .b{
     margin: 10px;
-    /* font-size: 15px; */
-    /* color: #919291; */
     padding: 5px;
     width: 60px;
-    /* border-radius: 5px; */
 }
 
-/* .b:hover{
-    color: #daf3df;
-    background-color: #919291;
-} */
+
 </style>
 
 

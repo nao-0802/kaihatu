@@ -2,7 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
+
 <style>
+@media only screen and (max-width: 769px){
 body{
     overflow: hidden;
   }
@@ -53,6 +55,7 @@ body{
   a{
     color: black;
     text-decoration: none;
+  }
   }
 </style>
 

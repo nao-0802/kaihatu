@@ -1,26 +1,25 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-sccle=1">
+</head>
 
-  <header class="header">
-    <div class="navtext-container">
-      <h2 class="navtext">すてっぷのーと</h2>
-    </div>
+
     <input type="checkbox" class="menu-btn" id="menu-btn">
     <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
     <ul class="menu">
-      <li class="top"><a href="#">生活記録</a></li>
-      <li><a href="#">連絡帳</a></li>
-      <li><a href="#">全体掲示板</a></li>
-      <li><a href="#">カルテ</a></li>
+      <li class="top"><a href="../teacher/seikatukiroku.jsp">生活記録</a></li>
+      <li><a href="../teacher/contactbook_list.jsp">連絡帳</a></li>
+      <li><a href="../teacher/BullietinBoard.jsp">全体掲示板</a></li>
+      <li><a href="../teacher/.jsp">カルテ</a></li>
       <li><a href="../teacher/logout.jsp">ログアウト</a></li>
     </ul>
-  </header>
+
 
 <style>
 body {
   height: 100vh;
   display: flex;
-  background-color: #C5E99B;
   margin: 0;
 }
 
@@ -177,6 +176,6 @@ body {
   font-size: 25px;
   position: absolute;
   text-align: center;
-  color: #E9E9E9;
+  color: aliceblue;
 }
 </style>

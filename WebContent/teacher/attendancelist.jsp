@@ -4,6 +4,11 @@
 
 
 
+
+
+
+
+
 <body>
 <header class="header">
         <div class="navtext-container">
@@ -111,4 +116,8 @@ a.navtext{
 }
 
 }
+
+</style>
+
+
 </style>

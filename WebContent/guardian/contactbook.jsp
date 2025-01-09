@@ -16,7 +16,10 @@
     </script>-->
 
 
+
+
 <style>
+@media only screen and (max-width: 769px){
 body{
   overflow: hidden;
 }
@@ -27,8 +30,6 @@ main{
   margin-left:  auto;
   margin-right: auto;
 }
-
-
 
 .bb{
   /* display: block; */
@@ -42,8 +43,6 @@ main{
   padding: 5px;
   margin-right: 10px;
 }
-
-
 
  a{
    text-decoration: none;
@@ -60,9 +59,6 @@ input{
   width: 200px;
   height: 30px;
 }
-
-
-
 
 .test{
   display: flex;
@@ -95,7 +91,7 @@ a{
   color: black;
   text-decoration: none;
 }
-
+}
 </style>
 
 

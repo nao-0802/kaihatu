@@ -1,6 +1,12 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-sccle=1">
+</head>
+
 <style>
+@media only screen and (max-width: 769px){
 body {
     height: 100vh;
     display: flex;
@@ -75,6 +81,27 @@ input[type="submit"]{
     width: 60px;
     height: 30px;
 }
+}
+
+@media only screen and (max-width: 480px) {
+    #table01 th,
+    #table01 td {
+      width: 100%;
+      display: block;
+    }
+
+    #table01 th {
+      width: 100%;
+    }
+
+    #table01 td {
+      padding-top: 0;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+  }
 
 
 </style>

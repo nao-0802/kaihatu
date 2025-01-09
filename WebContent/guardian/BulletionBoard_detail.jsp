@@ -2,9 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-sccle=1">
-</head>
 
 
 <style>
