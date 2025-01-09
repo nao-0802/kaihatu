@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -13,11 +13,10 @@
     <p>生活記録が正常に送信されました。</p>
 
     <!-- セッションから学生情報を取得して名前とIDを表示 -->
-    <p>名前: ${sessionScope.student.studentName} (${sessionScope.student.studentId})</p>
+    <p>名前: ${sessionScope.studentName} (${sessionScope.studentId})</p>
 
     <!-- 生活記録一覧に戻るリンク -->
-    <a href="./LifeRecord.action?student_id=${sessionScope.student.studentId}">生活記録一覧に戻る</a>
+    <a href="./LifeRecord.action?student_id=${sessionScope.studentId}">生活記録一覧に戻る</a>
 
 </body>
 </html>
-	
