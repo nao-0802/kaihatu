@@ -13,22 +13,24 @@
 </header>
 
 <main>
-<div>
+  <div>
     <button class="a" name=Arrow_btn  onclick="history.back()">←</button>
-</div>
+  </div>
 
-<div>
+  <div>
+  <div class="c">
     <p>本文または画像を選択してください。</p>
     <form action="BulletinBoardExecuteAction">
       <div>
         <a>題</a>
         <input type="text" required><br>
-        <textarea name=Annct_Entry placeholder="本文を入力"></textarea><br>
+        <textarea placeholder="本文を入力"></textarea><br>
         <input type="file" placeholder="画像を選択">
         <button class="b" name=Contribution_btn>投稿</button>
       </div>
     </form>
-</div>
+  </div>
+  </div>
 </main>
 </body>
 
@@ -40,22 +42,32 @@ main{
     margin-right: auto;
   }
 
+div{
+  width: 100vw;
+}
+
+div .c{
+  text-align: center;
+}
+
 textarea{
   resize: none;
-  width: 300px;
+  width: 80%;
   height: 200px;
+}
+
+input{
+  padding: 3px;
+  width: 60%;
+  margin-bottom: 5px;
 }
 
 button{
   padding: 5px;
   font-size: 12px;
-  /* color: #919291; */
+  margin-left: 10px;
 }
 
-/* button:hover{
-  color: #daf3df;
-  background-color: #919291;
-} */
 
 .a{
   margin-top: 15px;
@@ -65,5 +77,4 @@ button{
 .b{
   margin: 5px;
 }
-
 </style>
