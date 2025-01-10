@@ -24,7 +24,7 @@
             </c:forEach></a></td>
         </tr>
         <tr>
-          <td>pu-ru</td>
+          <td><a href="BullietinBoarddetail.jsp">pu-ru</a></td>
         </tr>
       </table>
   </div>
