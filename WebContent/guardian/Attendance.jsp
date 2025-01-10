@@ -7,6 +7,7 @@
             <p class="navtext">欠席等連絡</p>
         </div>
 
+<%@include file="../common/G_header.jsp" %>
 </header>
 
 
