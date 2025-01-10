@@ -83,7 +83,7 @@ public class ExcretionRecordExecuteAction extends Action {
         // 保存処理後の処理
         if (isSaved) {
             // 保存成功時の処理
-            RequestDispatcher dispatcher = req.getRequestDispatcher("LifeRecord_done.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("LifeRecord.jsp");
             dispatcher.forward(req, res);
         } else {
             // 保存失敗時の処理

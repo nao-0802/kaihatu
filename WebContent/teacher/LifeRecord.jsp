@@ -6,6 +6,12 @@
 <head>
     <meta charset="UTF-8">
     <title>生活記録</title>
+    <script>
+        // 記録成功時にアラートを表示する関数
+        function showSuccessAlert() {
+            alert("記録が正常に保存されました！");
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -34,7 +40,7 @@
         <!-- 服薬 -->
         <details name="life" id="medicine">
             <summary>服薬</summary>
-            <form action="../teacher/MedicineRecordExecute.action" method="post">
+            <form action="../teacher/MedicineRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <input type="hidden" name="student_id" value="${list.studentId}">
                 <div>
                     <label><input type="radio" name="medicine" value="0" required>服薬済み</label><br>
@@ -46,7 +52,7 @@
         <!-- 睡眠 -->
         <details name="life" id="a">
             <summary>睡眠</summary>
-            <form action="../teacher/SleepRecordExecute.action" method="post">
+            <form action="../teacher/SleepRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <input type="hidden" name="student_id" value="${list.studentId}">
                 <div>
                     <label><input type="radio" name="sleep" value="1">寝た</label><br>
@@ -59,7 +65,7 @@
         <!-- 食事 -->
         <details name="life" id="b">
             <summary>食事</summary>
-            <form action="../teacher/MealRecordExecute.action" method="post">
+            <form action="../teacher/MealRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <input type="hidden" name="student_id" value="${list.studentId}">
                 <div>
                     <label><input type="radio" name="meal_amount" value="0">全量</label><br>
@@ -73,7 +79,7 @@
         <!-- 排泄 -->
         <details name="life" id="c">
             <summary>排泄</summary>
-            <form action="../teacher/ExcretionRecordExecute.action" method="post">
+            <form action="../teacher/ExcretionRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <input type="hidden" name="student_id" value="${list.studentId}">
                 <div>
                     <!-- 排泄種別のラジオボタン -->
@@ -88,8 +94,6 @@
                 <button type="submit">記録</button>
             </form>
         </details>
-
-
     </div>
 </body>
 </html>
