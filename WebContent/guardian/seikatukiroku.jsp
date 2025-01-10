@@ -13,7 +13,7 @@
 
 <main>
     <div class="bb">
-        <button class="button" onclick="location.href='contactbookwrite.jsp'">連絡帳を書く</button>
+        <button class="button" onclick="location.href='ContactBookWrite.action'">連絡帳を書く</button>
     </div>
 
     <div class="container add-control">
@@ -77,10 +77,10 @@
             <form action="../guardian/MedicineRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <table>
                     <tr>
-                        <td><label><input type="radio" class="test" name="option" id="radio2">備考欄</label></td>
+                        <td><label><input type="radio" name="medicine" value="0" required>服薬済み</label><br></td>
                     </tr>
                 </table>
-                <input type="text" oninput="autoCheck(this.value, 'radio2')">
+
                 <br>
                 <button class="kiroku" name="medicine_btn">記録</button>
             </form>
