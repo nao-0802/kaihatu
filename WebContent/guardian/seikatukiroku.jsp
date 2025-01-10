@@ -1,4 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="bean.StudentRecord, java.util.List"%>
 
 
 <body>
@@ -21,13 +23,13 @@
         <input type="checkbox" id="tab4" class="radio" name="tab" onclick="onlyOne(this)"><label class="tab-title title4" id="title4" for="tab4">くすり</label>
 
         <div class="tab-body" id="body1">
-            <form action="">
+            <form action="../guardian/SleepRecordExecute.action"  method="post" onsubmit="showSuccessAlert();" >
                 <table>
                     <tr>
-                        <td><label><input type="radio" name="sleep_amount" required>寝た</label></td>
+                        <td><label><input type="radio" name="sleep" value="0" required>寝た</label></td>
                     </tr>
                     <tr>
-                        <td><label><input type="radio" name="sleep_amount" required>起きた</label></td>
+                        <td><label><input type="radio" name="sleep" value="1" required>起きた</label></td>
                     </tr>
                 </table>
                 <button class="kiroku" name="sleep_btn">記録</button>
@@ -35,16 +37,16 @@
         </div>
 
         <div class='tab-body' id="body2">
-            <form action="">
+            <form action="../guardian/MealRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <table>
                     <tr>
-                        <td><label><input type="radio" name="meal_amount" required>ぜんぶ</label></td>
+                        <td><label><input type="radio" name="meal_amount" value="0" required>ぜんぶ</label></td>
                     </tr>
                     <tr>
-                        <td><label><input type="radio" name="meal_amount" required>はんぶん</label></td>
+                        <td><label><input type="radio" name="meal_amount" value="1" required>はんぶん</label></td>
                     </tr>
                     <tr>
-                        <td><label><input type="radio" name="meal_amount" required>すこし</label></td>
+                        <td><label><input type="radio" name="meal_amount" value="2" required>すこし</label></td>
                     </tr>
                 </table>
                 <button class="kiroku" name="meal_btn">記録</button>
@@ -52,26 +54,27 @@
         </div>
 
         <div class="tab-body" id="body3">
-            <form action="">
+            <form action="../guardian/ExcretionRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <table>
                     <tr>
-                        <td><label><input type="checkbox" name="excretion_amount">かたい</label></td>
+                        <td><label><input type="radio" name="type" value="0">かたい</label></td>
                     </tr>
                     <tr>
-                        <td><label><input type="checkbox" name="excretion_amount">やわらかい</label></td>
+                        <td><label><input type="radio" name="type" value="1">やわらかい</label></td>
                     </tr>
                     <tr>
-                        <td><label><input type="radio" name="option" id="radio1">その他</label></td>
+                        <td><label>備考欄:</label>
+
                     </tr>
                 </table>
-                <input type="text" oninput="autoCheck(this.value, 'radio1')">
+                <input type="text" name="excretion_detail" placeholder="詳細を記入" oninput="autoCheck(this.value, 'radio1')">
                 <br>
                 <button class="kiroku" name="excretion_btn">記録</button>
             </form>
         </div>
 
         <div class="tab-body" id="body4">
-            <form action="">
+            <form action="../guardian/MedicineRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <table>
                     <tr>
                         <td><label><input type="radio" class="test" name="option" id="radio2">備考欄</label></td>
@@ -224,6 +227,10 @@ form{
 
 
 <script>
+// 記録成功時にアラートを表示する関数
+function showSuccessAlert() {
+    alert("記録が正常に保存されました！");
+}
     function onlyOne(checkbox) {
         var checkboxes = document.getElementsByName('tab');
         checkboxes.forEach((item) => {
