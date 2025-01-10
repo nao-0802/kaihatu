@@ -4,21 +4,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-import bean.BulletinBoard;
+import bean.BulletionBoard;
 
-public class BulletinBoardDao extends Dao {
+public class BulletionBoardDao extends Dao {
     // SQLクエリ: teacher_idに基づいてレコードを取得
     private String baseSql = "SELECT post_id, title, content, teacher_id FROM t_bulletin_board WHERE teacher_id = ?";
 
     // ResultSetからBulletinBoardリストを生成するメソッド
-    private List<BulletinBoard> postfilter(ResultSet rSet) throws Exception {
-        List<BulletinBoard> list = new ArrayList<>();
+    private List<BulletionBoard> postfilter(ResultSet rSet) throws Exception {
+        List<BulletionBoard> list = new ArrayList<>();
         try {
             while (rSet.next()) {
-                BulletinBoard bulletin = new BulletinBoard();
+                BulletionBoard bulletin = new BulletionBoard();
                 bulletin.setPostId(rSet.getString("post_id"));
                 bulletin.setTitle(rSet.getString("title"));
                 bulletin.setContent(rSet.getString("content"));
@@ -31,10 +33,31 @@ public class BulletinBoardDao extends Dao {
         }
         return list;
     }
+    public BulletionBoard findById(String postId) {
+        String sql = "SELECT * FROM t_bulletion_board WHERE post_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, postId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    BulletionBoard board = new BulletionBoard();
+                    board.setPostId(rs.getString("post_id"));
+                    board.setTitle(rs.getString("title"));
+                    board.setContent(rs.getString("content"));
+                    board.setDay(rs.getDate("day"));
+                    return board;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     // 指定されたteacher_idのBulletinBoardを取得するメソッド
-    public List<BulletinBoard> filter(String teacherId) throws Exception {
-        List<BulletinBoard> list = new ArrayList<>();
+    public List<BulletionBoard> filter(String teacherId) throws Exception {
+        List<BulletionBoard> list = new ArrayList<>();
         Connection connection = getConnection();
         PreparedStatement statement = null;
         ResultSet rSet = null;
@@ -69,7 +92,7 @@ public class BulletinBoardDao extends Dao {
     }
 
     // BulletinBoardを新規作成するメソッド
-    public boolean create(BulletinBoard bulletinBoard) throws Exception {
+    public boolean create(BulletionBoard bulletinBoard) throws Exception {
         Connection connection = getConnection();
         PreparedStatement statement = null;
         int count = 0;
@@ -107,60 +130,63 @@ public class BulletinBoardDao extends Dao {
         return count > 0;
     }
 
-    // BulletinBoardを保存または更新するメソッド
-    public boolean save(BulletinBoard bulletinBoard) throws Exception {
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        int count = 0;
+    public boolean save(String title, String content, String teacherId) {
+        String sql = "INSERT INTO t_bulletion_board (post_id, title, content, teacher_id, day) VALUES (?, ?, ?, ?, ?)";
+        String postId = generateRandomId();
+        String day = LocalDate.now().toString();
 
-        try {
-            // 既存のBulletinBoardを検索
-            BulletinBoard existingBulletinBoard = getBulletinBoard(bulletinBoard.getPostId());
-            if (existingBulletinBoard == null) {
-                // 新しいBulletinBoardの場合
-                statement = connection.prepareStatement(
-                        "INSERT INTO t_bulletin_board (post_id, title, content, teacher_id) VALUES (?, ?, ?, ?)"
-                );
-                statement.setString(1, bulletinBoard.getPostId());
-                statement.setString(2, bulletinBoard.getTitle());
-                statement.setString(3, bulletinBoard.getContent());
-                statement.setString(4, bulletinBoard.getTeacherId());
-            } else {
-                // 既存のBulletinBoardの更新
-                statement = connection.prepareStatement(
-                        "UPDATE t_bulletin_board SET title = ?, content = ?, teacher_id = ? WHERE post_id = ?"
-                );
-                statement.setString(1, bulletinBoard.getTitle());
-                statement.setString(2, bulletinBoard.getContent());
-                statement.setString(3, bulletinBoard.getTeacherId());
-                statement.setString(4, bulletinBoard.getPostId());
-            }
-            count = statement.executeUpdate();
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, postId);
+            stmt.setString(2, title);
+            stmt.setString(3, content);
+            stmt.setString(4, teacherId);
+            stmt.setString(5, day);
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
         } catch (Exception e) {
-            throw e;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
+            e.printStackTrace();
+            return false;
         }
-
-        return count > 0;
     }
 
+    private String generateRandomId() {
+        Random random = new Random();
+        StringBuilder idBuilder = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            idBuilder.append(random.nextInt(10));
+        }
+        return idBuilder.toString();
+    }
+    public List<BulletionBoard> findByTeacherId(String teacherId) {
+        List<BulletionBoard> boardList = new ArrayList<>();
+        String sql = "SELECT * FROM t_bulletion_board WHERE teacher_id = ? ORDER BY day DESC";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, teacherId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    BulletionBoard board = new BulletionBoard();
+                    board.setPostId(rs.getString("post_id"));
+                    board.setTitle(rs.getString("title"));
+                    board.setContent(rs.getString("content"));
+                    board.setDay(rs.getDate("day"));
+                    boardList.add(board);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return boardList;
+    }
+
+
     // post_idでBulletinBoardを取得するメソッド
-    public BulletinBoard getBulletinBoard(String postId) throws Exception {
-        BulletinBoard bulletinBoard = null;
+    public BulletionBoard getBulletinBoard(String postId) throws Exception {
+        BulletionBoard bulletinBoard = null;
         Connection connection = getConnection();
         PreparedStatement statement = null;
         ResultSet rSet = null;
@@ -170,7 +196,7 @@ public class BulletinBoardDao extends Dao {
             statement.setString(1, postId);
             rSet = statement.executeQuery();
             if (rSet.next()) {
-                bulletinBoard = new BulletinBoard();
+                bulletinBoard = new BulletionBoard();
                 bulletinBoard.setPostId(rSet.getString("post_id"));
                 bulletinBoard.setTitle(rSet.getString("title"));
                 bulletinBoard.setContent(rSet.getString("content"));
