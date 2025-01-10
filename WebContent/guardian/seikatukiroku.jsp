@@ -1,7 +1,16 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="bean.StudentRecord, java.util.List"%>
-
+<head>
+    <meta charset="UTF-8">
+    <title>生活記録</title>
+    <script>
+        // 記録成功時にアラートを表示する関数
+        function showSuccessAlert() {
+            alert("記録が正常に保存されました！");
+        }
+    </script>
+</head>
 
 
 <style>
@@ -144,8 +153,8 @@ window.addEventListener('pageshow',()=>{
 <%@include file="../common/G_header.jsp" %>
 </header>
 
-
 <main>
+
     <div class="bb">
         <button class="button" onclick="location.href='contactbookwrite.jsp'">連絡帳を書く</button>
     </div>
@@ -156,7 +165,7 @@ window.addEventListener('pageshow',()=>{
         <input type="checkbox" id="tab3" class="radio" name="tab" onclick="onlyOne(this)"><label class="tab-title title3" id="title3" for="tab3">トイレ</label>
 
         <div class="tab-body" id="body1">
-            <form action="../guardian/SleepRecordExecute.action">
+            <form action="../guardian/SleepRecordExecute.action"  method="post" onsubmit="showSuccessAlert();">
                 <table>
                     <tr>
                         <td><label><input type="radio" name="sleep" value="0" required>寝た</label></td>
@@ -169,67 +178,61 @@ window.addEventListener('pageshow',()=>{
             </form>
         </div>
 
-        <div class='tab-body' id="body2">
-            <form action="">
-                <table>
-                    <tr>
-                        <td><label><input type="radio" name="meal_amount" required>ぜんぶ</label></td>
-                    </tr>
-                    <tr>
-                        <td><label><input type="radio" name="meal_amount" required>はんぶん</label></td>
-                    </tr>
-                    <tr>
-                        <td><label><input type="radio" name="meal_amount" required>すこし</label></td>
-                    </tr>
-                </table>
-                <button class="kiroku" name="meal_btn">記録</button>
+         <!-- 食事 -->
+        <details name="life" id="b">
+            <summary>食事</summary>
+            <form action="../guardian/MealRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
+
+                <div>
+                    <label><input type="radio" name="meal_amount" value="0">全量</label><br>
+                    <label><input type="radio" name="meal_amount" value="1">半量</label><br>
+                    <label><input type="radio" name="meal_amount" value="2">少量</label><br>
+                    <button type="submit">記録</button>
+                </div>
             </form>
-        </div>
+        </details>
 
         <div class="tab-body" id="body3">
-            <form action="">
-                <table>
-                    <tr>
-                        <td><label><input type="checkbox" name="excretion_amount">かたい</label></td>
-                    </tr>
-                    <tr>
-                        <td><label><input type="checkbox" name="excretion_amount">やわらかい</label></td>
-                    </tr>
-                    <tr>
-                        <td><label><input type="radio" name="option" id="radio1">その他</label></td>
-                    </tr>
-                </table>
-                <input type="text" oninput="autoCheck(this.value, 'radio1')">
-                <br>
-                <button class="kiroku" name="excretion_btn">記録</button>
-            </form>
+
+        <!-- 排泄 -->
+        <details name="life" id="c">
+            <summary>排泄</summary>
+            <form action="../guardian/ExcretionRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
+
+                <div>
+                    <!-- 排泄種別のラジオボタン -->
+                    <label><input type="radio" name="type" value="0">かたい</label><br>
+                    <label><input type="radio" name="type" value="1">やわらかい</label><br>
+
+                    <!-- その他の詳細を入力するテキストフィールド -->
+                    <label>その他:</label>
+                    <input type="text" name="excretion_detail" placeholder="詳細を記入"><br>
+                </div>
+                <!-- 提出ボタン -->
+                <button type="submit">記録</button>
+                </form>
+           </details>
         </div>
     </div>
+<!-- 服薬 -->
+        <details name="life" id="medicine">
+            <summary>服薬</summary>
+            <form action="../guardian/MedicineRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
+
+                <div>
+                    <label><input type="radio" name="medicine" value="0" required>服薬済み</label><br>
+                    <button type="submit">記録</button>
+                </div>
+            </form>
+        </details>
+
 
    </main>
 </body>
 
 
 
-<details name="life" id="c">
-    <summary>排泄</summary>
-    <form action="../guardian/ExcretionRecordExecute.action" method="post">
-        <div>
-            <!-- 排泄種別のラジオボタン -->
-            <label><input type="radio" name="type" value="0">かたい</label><br>
-            <label><input type="radio" name="type" value="1">やわらかい</label><br>
 
-            <!-- その他の詳細を入力するテキストフィールド -->
-            <label>その他:</label>
-            <input type="text" name="excretion_detail" placeholder="詳細を記入"><br>
-
-            <!-- 隠しフィールド -->
-            <input type="hidden" name="guardian_id" value="${guardianID}">
-        </div>
-        <!-- 提出ボタン -->
-        <button>記録</button>
-    </form>
-</details>
 
 
 <form action="../guardian/ContactBookWrite.action">
@@ -248,4 +251,3 @@ window.addEventListener('pageshow',()=>{
 
 
 
-<!--  %@include file="../footer.html" % -->
