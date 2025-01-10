@@ -100,7 +100,7 @@ public class MealRecordExecuteAction extends Action {
         // 保存処理後の処理
         if (isSaved) {
             // 保存成功時の処理
-            RequestDispatcher dispatcher = req.getRequestDispatcher("LifeRecord.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("LifeRecord.action");
             dispatcher.forward(req, res);
         } else {
             // 保存失敗時の処理 - エラーメッセージを設定
