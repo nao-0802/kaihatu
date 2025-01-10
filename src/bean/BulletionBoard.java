@@ -1,11 +1,14 @@
 package bean;
 
-public class BulletinBoard implements java.io.Serializable{
+import java.util.Date;
+
+public class BulletionBoard implements java.io.Serializable{
 
 	private String post_id;
 	private String title;
 	private String content;
 	private String teacher_id;
+	private Date day;
 
 	public String getPostId(){
 		return post_id;
@@ -19,6 +22,9 @@ public class BulletinBoard implements java.io.Serializable{
 	public String getTeacherId(){
 		return teacher_id;
 	}
+	public Date getDay(){
+		return day;
+	}
 	public void setPostId(String post_id){
 		this.post_id=post_id;
 	}
@@ -30,5 +36,8 @@ public class BulletinBoard implements java.io.Serializable{
 	}
 	public void setTeacherId(String teacher_id){
 		this.teacher_id=teacher_id;
+	}
+	public void setDay(Date day){
+		this.day = day;
 	}
 }

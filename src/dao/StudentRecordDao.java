@@ -33,6 +33,23 @@ public class StudentRecordDao extends Dao {
         }
         return list;
     }
+    public String findClassIdByGuardianId(String guardianId) throws Exception {
+        String classId = null;
+
+        try (Connection connection = getConnection()) {
+            String sql = "SELECT class_id FROM t_student_record WHERE guardian_id = ?";
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, guardianId);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        classId = rs.getString("class_id");
+                    }
+                }
+            }
+        }
+        return classId;
+    }
 
     public String findStudentIdByGuardianId(String guardianId) {
         String studentId = null;

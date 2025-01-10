@@ -86,6 +86,23 @@ public class TeacherDao extends Dao {
         }
         return list;
     }
+    public String findTeacherIdByClassId(String classId) throws Exception {
+        String teacherId = null;
+
+        try (Connection connection = getConnection()) {
+            String sql = "SELECT teacher_id FROM t_teacher WHERE class_id = ?";
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, classId);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        teacherId = rs.getString("teacher_id");
+                    }
+                }
+            }
+        }
+        return teacherId;
+    }
 
     // 特定の教師を取得
     public Teacher get(String teacherId) throws Exception {
