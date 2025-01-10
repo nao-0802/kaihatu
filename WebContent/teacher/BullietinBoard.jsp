@@ -12,7 +12,7 @@
 <main>
   <div class="div">
     <div class="b">
-      <button name="Newer_Posts_btn" onclick="location.href='BullietinBoard.jsp'">お知らせを追加</button>
+      <button name="Newer_Posts_btn" onclick="location.href='BullietinBoardPost.jsp'">お知らせを追加</button>
       <div class="aa"><p class="a" name=Notice>お知らせ一覧</p></div>
     </div>
 
