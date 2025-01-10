@@ -4,7 +4,7 @@
 <body>
 <header class="header">
     <div class="navtext-container">
-      <p class="navtext">ログアウト</p>
+      <p class="navtext">生活記録</p>
     </div>
 <%@include file="../common/G_header.jsp" %>
 </header>
