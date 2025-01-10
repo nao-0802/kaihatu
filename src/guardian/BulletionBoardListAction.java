@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import bean.BulletionBoard;
 import dao.BulletionBoardDao;
 import dao.StudentRecordDao;
-import dao.TeacherDao;
 import tool.Action;
 
 public class BulletionBoardListAction extends Action {
@@ -30,14 +29,10 @@ public class BulletionBoardListAction extends Action {
         String classId = studentRecordDao.findClassIdByGuardianId(guardianId);
         System.out.println(classId);
 
-        // teacher_idを取得
-        TeacherDao teacherDao = new TeacherDao();
-        String teacherId = teacherDao.findTeacherIdByClassId(classId);
-        System.out.println(teacherId);
 
         // 全体掲示板データを取得
         BulletionBoardDao bulletionBoardDao = new BulletionBoardDao();
-        List<BulletionBoard> bulletionBoardList = bulletionBoardDao.findByTeacherId(teacherId);
+        List<BulletionBoard> bulletionBoardList = bulletionBoardDao.findByClassId(classId);
         System.out.println(bulletionBoardList);
 
         // リクエストスコープにセット

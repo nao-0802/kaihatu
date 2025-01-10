@@ -19,6 +19,6 @@ public class BulletionBoardAction extends Action {
         }
 
         req.setAttribute("teacherId", teacherId);
-        req.getRequestDispatcher("bulletionboard_create.jsp").forward(req, res);
+        req.getRequestDispatcher("../teacher/bulletionboard_create.jsp").forward(req, res);
     }
 }

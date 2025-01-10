@@ -130,8 +130,8 @@ public class BulletionBoardDao extends Dao {
         return count > 0;
     }
 
-    public boolean save(String title, String content, String teacherId) {
-        String sql = "INSERT INTO t_bulletion_board (post_id, title, content, teacher_id, day) VALUES (?, ?, ?, ?, ?)";
+    public boolean save(String title, String content, String classId) {
+        String sql = "INSERT INTO t_bulletion_board (post_id, title, content, class_id, day) VALUES (?, ?, ?, ?, ?)";
         String postId = generateRandomId();
         String day = LocalDate.now().toString();
 
@@ -141,7 +141,7 @@ public class BulletionBoardDao extends Dao {
             stmt.setString(1, postId);
             stmt.setString(2, title);
             stmt.setString(3, content);
-            stmt.setString(4, teacherId);
+            stmt.setString(4, classId);
             stmt.setString(5, day);
 
             int rowsInserted = stmt.executeUpdate();
@@ -160,13 +160,13 @@ public class BulletionBoardDao extends Dao {
         }
         return idBuilder.toString();
     }
-    public List<BulletionBoard> findByTeacherId(String teacherId) {
+    public List<BulletionBoard> findByClassId(String classId) {
         List<BulletionBoard> boardList = new ArrayList<>();
-        String sql = "SELECT * FROM t_bulletion_board WHERE teacher_id = ? ORDER BY day DESC";
+        String sql = "SELECT * FROM t_bulletion_board WHERE class_id = ? ORDER BY day DESC";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, teacherId);
+            stmt.setString(1, classId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     BulletionBoard board = new BulletionBoard();

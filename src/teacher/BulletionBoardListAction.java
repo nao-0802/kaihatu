@@ -15,15 +15,15 @@ public class BulletionBoardListAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         HttpSession session = req.getSession();
-        String teacherId = (String) session.getAttribute("userId");
+        String classId = (String) session.getAttribute("classId");
 
-        if (teacherId == null) {
+        if (classId == null) {
             res.sendRedirect("login.jsp");
             return;
         }
 
         BulletionBoardDao dao = new BulletionBoardDao();
-        List<BulletionBoard> boardList = dao.findByTeacherId(teacherId);
+        List<BulletionBoard> boardList = dao.findByClassId(classId);
 
         req.setAttribute("boardList", boardList);
         req.getRequestDispatcher("bulletionboard_list.jsp").forward(req, res);
