@@ -34,6 +34,27 @@ public class ExcretionRecordDao extends Dao {
         return list;
     }
 
+    public List<ExcretionRecord> findByStudentId(String studentId) throws Exception {
+        List<ExcretionRecord> excretionRecords = new ArrayList<>();
+        String sql = "SELECT * FROM t_excretion_record WHERE student_id = ? ORDER BY day, time";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ExcretionRecord record = new ExcretionRecord();
+                    record.setDay(rs.getDate("day"));
+                    record.setTime(rs.getTime("time"));
+                    record.setType(rs.getInt("type"));
+                    record.setExcretionDetail(rs.getString("excretion_detail"));
+                    excretionRecords.add(record);
+                }
+            }
+        }
+        return excretionRecords;
+    }
+
     // 指定されたstudent_idのExcretionRecordを取得するメソッド
     public List<ExcretionRecord> filter(String studentId) throws Exception {
         List<ExcretionRecord> list = new ArrayList<>();

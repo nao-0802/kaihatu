@@ -33,6 +33,26 @@ public class SleepRecordDao extends Dao {
         return list;
     }
 
+    public List<SleepRecord> findByStudentId(String studentId) throws Exception {
+        List<SleepRecord> sleepRecords = new ArrayList<>();
+        String sql = "SELECT * FROM t_sleep_record WHERE student_id = ? ORDER BY day, time";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    SleepRecord record = new SleepRecord();
+                    record.setDay(rs.getDate("day"));
+                    record.setTime(rs.getTime("time"));
+                    record.setSleep(rs.getInt("sleep"));
+                    sleepRecords.add(record);
+                }
+            }
+        }
+        return sleepRecords;
+    }
+
     // 指定されたstudent_idのSleepRecordを取得するメソッド
     public List<SleepRecord> filter(String studentId) throws Exception {
         List<SleepRecord> list = new ArrayList<>();

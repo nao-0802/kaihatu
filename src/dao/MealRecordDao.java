@@ -24,7 +24,7 @@ public class MealRecordDao extends Dao {
                 mealRecord.setDay(rSet.getDate("day"));
                 mealRecord.setTime(rSet.getTime("time"));
 //                mealRecord.setType(rSet.getInt("type"));
-                mealRecord.setMeal_Amount(rSet.getInt("meal_amount"));
+                mealRecord.setMealAmount(rSet.getInt("meal_amount"));
                 list.add(mealRecord);
             }
         } catch (Exception e) {
@@ -32,6 +32,26 @@ public class MealRecordDao extends Dao {
             list = null;
         }
         return list;
+    }
+
+    public List<MealRecord> findByStudentId(String studentId) throws Exception {
+        List<MealRecord> mealRecords = new ArrayList<>();
+        String sql = "SELECT * FROM t_meal_record WHERE student_id = ? ORDER BY day, time";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    MealRecord record = new MealRecord();
+                    record.setDay(rs.getDate("day"));
+                    record.setTime(rs.getTime("time"));
+                    record.setMealAmount(rs.getInt("meal_amount"));
+                    mealRecords.add(record);
+                }
+            }
+        }
+        return mealRecords;
     }
 
     // 指定されたstudent_idのMealRecordを取得するメソッド
@@ -144,7 +164,7 @@ public class MealRecordDao extends Dao {
                 mealRecord.setDay(rSet.getDate("day"));
                 mealRecord.setTime(rSet.getTime("time"));
 //                mealRecord.setType(rSet.getInt("type"));
-                mealRecord.setMeal_Amount(rSet.getInt("meal_amount"));
+                mealRecord.setMealAmount(rSet.getInt("meal_amount"));
             }
         } catch (Exception e) {
             throw e;

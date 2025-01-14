@@ -86,6 +86,10 @@
             </form>
         </div>
 
+        <form action="../guardian/LifeRecordList.action">
+            <button>生活記録閲覧</button>
+        </form>
+
     </div>
 
    </main>

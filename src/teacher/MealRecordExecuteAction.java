@@ -92,7 +92,7 @@ public class MealRecordExecuteAction extends Action {
         p.setStudentId(studentRecord.getStudentId());
         p.setDay(sqlDate);  // 日付をセット
         p.setTime(sqlTime); // 正しい時間を設定
-        p.setMeal_Amount(meal_amount);   // 睡眠種別をセット
+        p.setMealAmount(meal_amount);   // 睡眠種別をセット
 
         // データ保存処理
         boolean isSaved = dao.save(p);  // saveメソッドが成功した場合trueを返すと仮定

@@ -1,0 +1,46 @@
+package teacher;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import bean.ExcretionRecord;
+import bean.MealRecord;
+import bean.SleepRecord;
+import dao.ExcretionRecordDao;
+import dao.MealRecordDao;
+import dao.SleepRecordDao;
+import tool.Action;
+
+public class LifeRecordListAction extends Action {
+
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+        String studentId = req.getParameter("student_id");
+        System.out.println(studentId);
+        if (studentId == null) {
+            res.sendRedirect("login.jsp");
+            return;
+        }
+
+        // DAOインスタンスを作成
+        MealRecordDao mealRecordDao = new MealRecordDao();
+        SleepRecordDao sleepRecordDao = new SleepRecordDao();
+        ExcretionRecordDao excretionRecordDao = new ExcretionRecordDao();
+
+        // 各テーブルのデータを取得
+        List<MealRecord> mealRecords = mealRecordDao.findByStudentId(studentId);
+        List<SleepRecord> sleepRecords = sleepRecordDao.findByStudentId(studentId);
+        List<ExcretionRecord> excretionRecords = excretionRecordDao.findByStudentId(studentId);
+
+        // リクエストスコープにセット
+        req.setAttribute("mealRecords", mealRecords);
+        req.setAttribute("sleepRecords", sleepRecords);
+        req.setAttribute("excretionRecords", excretionRecords);
+
+        // JSPへフォワード
+        req.getRequestDispatcher("../teacher/life_record_list.jsp").forward(req, res);
+    }
+}

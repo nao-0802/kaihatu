@@ -45,7 +45,7 @@ public class MealRecord implements java.io.Serializable{
 //	public void setType(int type){
 //		this.type=type;
 //	}
-	public void setMeal_Amount(int meal_amount){
+	public void setMealAmount(int meal_amount){
 		this.meal_amount=meal_amount;
 	}
 }

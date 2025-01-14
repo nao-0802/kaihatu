@@ -47,6 +47,9 @@
             <p>${student.studentName}</p>
             <button name="student_id" value="${student.studentId}">生活記録</button>
         </form>
+        <form action="LifeRecordList.action">
+        	<button name="student_id" value="${student.studentId }">生活記録閲覧</button>
+        </form>
         <form action="StudentRecord.action">
             <button name="student_id" value="${student.studentId}">カルテ</button>
         </form>
