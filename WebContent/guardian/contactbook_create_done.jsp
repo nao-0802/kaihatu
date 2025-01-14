@@ -6,6 +6,6 @@
 </head>
 <body>
     <h1>連絡帳の作成が完了しました。</h1>
-    <a href="../guardian/contactbook_list.jsp">連絡帳一覧に戻る</a>
+    <a href="../guardian/ContactBookList.action">連絡帳一覧に戻る</a>
 </body>
 </html>
