@@ -44,6 +44,7 @@ public class StudentDao extends Dao {
         return studentName;
     }
 
+
     // ResultSetからStudentリストを生成するメソッド
     private List<Student> postFilter(ResultSet rSet) throws SQLException {
         List<Student> list = new ArrayList<>();

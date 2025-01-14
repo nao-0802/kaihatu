@@ -24,16 +24,6 @@
                         <input type="password" class="form-control" id="guardian-password-input" name="password" maxlength="20" required placeholder="パスワードを入力してください">
                         <div class="mt-2 text-warning">${errors.password}</div>
                     </div>
-                    <div>
-                        <label class="form-label" for="guardian-student-select">生徒</label>
-                        <select class="form-select" id="guardian-student-select" name="student_id" required>
-                            <option value="">--生徒を選択--</option>
-                            <c:forEach var="studentItem" items="${student_list}">
-                                <option value="${studentItem.studentId}" <c:if test="${studentItem.studentId == student_id}">selected</c:if>>${studentItem.studentName}</option>
-                            </c:forEach>
-                        </select>
-                        <div class="mt-2 text-warning">${errors.student_id}</div>
-                    </div>
                     <br>
                     <div>
                         <br>

@@ -33,6 +33,32 @@ public class StudentRecordDao extends Dao {
         }
         return list;
     }
+
+    public void createStudentRecord(String studentId, String birthdate, String allergy, String guardianId) throws Exception {
+        try (Connection con = getConnection()) {
+            String sql = "INSERT INTO t_student_record (student_record_id, class_id, guardian_id, birthdate, allergy, features, student_id) " +
+                         "SELECT ?, class_id, ?, ?, ?, NULL, student_id FROM t_student WHERE student_id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, generateStudentRecordId());
+            ps.setString(2, guardianId);
+            ps.setString(3, birthdate);
+            ps.setString(4, allergy.isEmpty() ? null : allergy);
+            ps.setString(5, studentId);
+            ps.executeUpdate();
+        }
+    }
+
+    private String generateStudentRecordId() {
+        // 現在のミリ秒を取得
+        String timestamp = String.valueOf(System.currentTimeMillis());
+
+        // 必要な長さに調整（下位10桁を使用）
+        String uniquePart = timestamp.substring(timestamp.length() - 8);
+
+        // プレフィックス "SR" を付与して10文字にする
+        return "SR" + uniquePart;
+    }
+
     public String findClassIdByGuardianId(String guardianId) throws Exception {
         String classId = null;
 

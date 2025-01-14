@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Admin;
 import bean.Guardian;
 import dao.GuardianDao;
 import dao.StudentDao;
@@ -20,7 +19,7 @@ public class GuardianSignupExecuteAction extends Action {
             throws Exception {
 
         HttpSession session = req.getSession();
-        Admin admin = (Admin) session.getAttribute("user");
+        
         Map<String, String> errors = new HashMap<>();
         GuardianDao guardianDao = new GuardianDao();
         Guardian guardian = new Guardian();
@@ -29,7 +28,7 @@ public class GuardianSignupExecuteAction extends Action {
         String guardianId = req.getParameter("guardian_id");
         String guardianName = req.getParameter("guardian_name");
         String password = req.getParameter("password");
-        String studentId = req.getParameter("student_id");
+     
 
         // バリデーションチェック
         boolean isValid = true;
@@ -51,18 +50,14 @@ public class GuardianSignupExecuteAction extends Action {
             isValid = false;
         }
 
-        if (studentId == null || studentId.isEmpty() || studentId.equals("0")) {
-            errors.put("student_id", "生徒を選択してください");
-            isValid = false;
-        }
+        
 
         // エラーがある場合は再表示
         if (!isValid) {
             req.setAttribute("errors", errors);
             req.setAttribute("guardian_id", guardianId);
             req.setAttribute("guardian_name", guardianName);
-            req.setAttribute("student_id", studentId);
-
+            
             // 生徒選択肢の再設定
             StudentDao studentDao = new StudentDao();
             List<bean.Student> studentList = studentDao.getAllStudents();
@@ -76,8 +71,7 @@ public class GuardianSignupExecuteAction extends Action {
         guardian.setGuardianId(guardianId);
         guardian.setGuardianName(guardianName);
         guardian.setPassword(password);
-        guardian.setStudentId(studentId);
-
+        
         // データベースに保存
         try {
             guardianDao.save(guardian);
@@ -87,10 +81,7 @@ public class GuardianSignupExecuteAction extends Action {
             errors.put("database", "登録中にエラーが発生しました。再試行してください。");
             req.setAttribute("errors", errors);
 
-            // 生徒選択肢の再設定
-            StudentDao studentDao = new StudentDao();
-            List<bean.Student> studentList = studentDao.getAllStudents();
-            req.setAttribute("student_list", studentList);
+            
 
             req.getRequestDispatcher("/admin/guardian_create.jsp").forward(req, res);
         }
