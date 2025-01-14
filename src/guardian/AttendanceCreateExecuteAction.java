@@ -1,7 +1,9 @@
 package guardian;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -59,14 +61,22 @@ public class AttendanceCreateExecuteAction extends Action {
         // 日付取得
         Date sqlDate = Date.valueOf(LocalDate.now());
 
+        // 時間取得 (notification_time)
+        Time notificationTime = Time.valueOf(LocalTime.now());
+
         // 備考取得
         String notes = req.getParameter("notes"); // 備考を取得 (任意項目)
+
+        // 症状取得 (symptom)
+        String symptom = req.getParameter("symptom"); // フォームで選択された症状
 
         // AttendanceRecordオブジェクト作成
         Attendance record = new Attendance();
         record.setStudentId(student_id);
         record.setDay(sqlDate);
         record.setType(type); // 出席状況をセット
+        record.setNotificationTime(notificationTime); // 登校または早退の時間をセット
+        record.setSymptom(symptom); // 症状をセット
         record.setNotes(notes); // 備考をセット
 
         // データ保存

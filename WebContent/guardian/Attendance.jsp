@@ -1,20 +1,19 @@
-<%@page contentType="text/html; charset=UTF-8" %>
 
+<%@page contentType="text/html; charset=UTF-8" %>
 
 <body>
 <header class="header">
-        <div class="navtext-container">
-            <p class="navtext">欠席等連絡</p>
-        </div>
+    <div class="navtext-container">
+        <p class="navtext">欠席等連絡</p>
+    </div>
 
-<%@include file="../common/G_header.jsp" %>
+    <%@include file="../common/G_header.jsp" %>
 </header>
-
 
 <main>
 
   <div>
-    <form action="b.html">
+    <form action="AttendanceCreateExecute.action" method="post">
         <table id="table0">
             <tr>
                 <th class="a">日付</th>
@@ -26,31 +25,32 @@
             <tr>
                 <th class="a">連絡内容</th>
                 <td>
-                    <select class="form_renraku" id="renraku" required onchange="aviewChange();">
+                    <select id="type" name="type" required onchange="aviewChange();">
                         <option value="" selected disabled>選択してください</option>
-                        <option value="renraku1">欠席</option>
-                        <option value="renraku2">遅刻</option>
-                        <option value="renraku3">早退</option>
+
+                        <option value="0">欠席</option>
+                        <option value="1" name="Tardiness">遅刻</option>
+                        <option value="2" name="Early">早退</option>
                     </select>
                 </td>
             </tr>
            </table>
 
-            <div class="renraku_remarks">
-                <div id="renraku2" style="display:none;">
+            <div class="notificationTime">
+                <div id="Tardiness" style="display:none;">
                     <table>
                         <tr>
                             <th class="a">登校する時間</th>
-                            <td><input type="time"></td>
+                            <td><input type="time"  name="notificationTime"></td>
                         </tr>
                     </table>
                 </div>
 
-                <div id="renraku3" style="display:none;">
+                <div id="Early" style="display:none;">
                     <table>
                         <tr>
                             <th class="a">早退する時間</th>
-                            <td><input type="time"></td>
+                            <td><input type="time"  name="notificationTime"></td>
                         </tr>
                     </table>
                 </div>
@@ -122,8 +122,9 @@
 
             </div>
 
-            <a>備考欄</a><br>
-            <textarea placeholder="その他連絡事項をご記入ください。"></textarea>
+             <a><label for="notes">備考欄</label></a><br>
+
+         <textarea id="notes" name="notes" rows="4" cols="50" placeholder="その他連絡事項をご記入ください。"></textarea>
 
         <input type="submit">
     </form>
@@ -163,8 +164,6 @@ table {
     font-weight: normal;
   }
 
-
-
 #table01 tr {
     border-top: 1px solid #b5b1b1;
   }
@@ -179,7 +178,6 @@ table {
     width: 50%;
   }
 
-
 #table01 th,
 #table01 td {
   padding: 12px 0;
@@ -191,12 +189,11 @@ table {
   }
 
 textarea{
-	resize: none;
-	width: 300px;
-	height: 50px;
+    resize: none;
+    width: 300px;
+    height: 50px;
   margin-bottom: 5px;
 }
-
 
 input[type="submit"]{
     display: block;
@@ -213,8 +210,8 @@ form{
   padding-bottom: 40px;
 }
 
-  /* sp */
-  @media only screen and (max-width: 480px) {
+/* sp */
+@media only screen and (max-width: 480px) {
     #table0 th,
     #table0 td {
       width: 100%;
@@ -248,9 +245,7 @@ form{
       margin-right: auto;
       text-align: center;
     }
-
-  }
-
+}
 </style>
 
 <script>
@@ -265,9 +260,6 @@ form{
     }
 
     displayDateTime();
-
-
-
 
     function aviewChange(){
         if(document.getElementById('renraku')){
@@ -289,7 +281,6 @@ form{
     window.onload = aviewChange;
     }
 
-
     function viewChange(){
         if(document.getElementById('reason')){
             id = document.getElementById('reason').value;
@@ -304,9 +295,8 @@ form{
     window.onload = viewChange;
     }
 
-
     window.addEventListener('pageshow',()=>{
         if(window.performance.navigation.type==2) location.reload();
     });
-
 </script>
+

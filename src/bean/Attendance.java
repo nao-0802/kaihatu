@@ -1,6 +1,8 @@
 package bean;
 
 import java.sql.Date;
+import java.sql.Time;
+
 
 
 public class Attendance implements java.io.Serializable{
@@ -11,6 +13,8 @@ public class Attendance implements java.io.Serializable{
 	private int type;
 	private String notes;
 	private String student_name;
+	private Time notificationTime;
+	private String symptom;
 
 	public String getAttendanceId(){
 		return attendance_id;
@@ -30,6 +34,12 @@ public class Attendance implements java.io.Serializable{
 	public String getStudentName(){
 		return student_name;
 	}
+    public Time getNotificationTime() {
+        return notificationTime;
+    }
+    public String getSymptom() {
+        return symptom;
+    }
 	public void setAttendanceId(String attendance_id){
 		this.attendance_id=attendance_id;
 	}
@@ -48,4 +58,12 @@ public class Attendance implements java.io.Serializable{
 	public void setStudentName(String student_name){
 		this.student_name=student_name;
 	}
+    public void setNotificationTime(Time notificationTime) {
+        this.notificationTime = notificationTime;
+    }
+    public void setSymptom(String symptom) {
+        this.symptom = symptom;
+    }
+
+
 }
