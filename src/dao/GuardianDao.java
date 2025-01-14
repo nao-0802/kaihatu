@@ -12,7 +12,7 @@ import bean.Guardian;
 public class GuardianDao extends Dao {
 
     // SQLクエリ: guardian_idに基づいてレコードを取得
-    private String baseSql = "SELECT guardian_id, guardian_name, password, student_id FROM t_guardian WHERE guardian_id = ?";
+    private String baseSql = "SELECT guardian_id, guardian_name, password FROM t_guardian WHERE guardian_id = ?";
 
     // ResultSetからGuardianリストを生成するメソッド
     private List<Guardian> postfilter(ResultSet rSet) throws Exception {
@@ -138,21 +138,21 @@ public class GuardianDao extends Dao {
             if (existingGuardian == null) {
                 // 新しいGuardianの場合
                 statement = connection.prepareStatement(
-                        "INSERT INTO t_guardian (guardian_id, guardian_name, password, student_id) VALUES (?, ?, ?, ?)"
+                        "INSERT INTO t_guardian (guardian_id, guardian_name, password) VALUES (?, ?, ?)"
                 );
                 statement.setString(1, guardian.getGuardianId());
                 statement.setString(2, guardian.getGuardianName());
                 statement.setString(3, guardian.getPassword());
-                statement.setString(4, guardian.getStudentId());  // 生徒IDを設定
+
             } else {
                 // 既存のGuardianの更新
                 statement = connection.prepareStatement(
-                        "UPDATE t_guardian SET guardian_name = ?, password = ?, student_id = ? WHERE guardian_id = ?"
+                        "UPDATE t_guardian SET guardian_name = ?, password = ?, WHERE guardian_id = ?"
                 );
                 statement.setString(1, guardian.getGuardianName());
                 statement.setString(2, guardian.getPassword());
-                statement.setString(3, guardian.getStudentId());  // 生徒IDを設定
-                statement.setString(4, guardian.getGuardianId());
+
+                statement.setString(3, guardian.getGuardianId());
             }
 
             count = statement.executeUpdate();
@@ -194,7 +194,7 @@ public class GuardianDao extends Dao {
                 guardian.setGuardianId(rSet.getString("guardian_id"));
                 guardian.setGuardianName(rSet.getString("guardian_name"));
                 guardian.setPassword(rSet.getString("password"));
-                guardian.setStudentId(rSet.getString("student_id"));
+
 
             }
         } catch (Exception e) {
