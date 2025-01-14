@@ -1,12 +1,10 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 
-
 <head>
     <meta name="viewport" content="width=device-width, initial-sccle=1">
 </head>
 
 <style>
-@media only screen and (max-width: 769px){
 body {
     height: 100vh;
     display: flex;
@@ -18,6 +16,7 @@ main{
     margin-left:  auto;
     margin-right: auto;
 }
+
 
 .rn{
   padding: 10px;
@@ -74,16 +73,15 @@ textarea{
 	height: 50px;
 }
 
-
 input[type="submit"]{
     display: block;
     margin-left: auto;
     width: 60px;
     height: 30px;
 }
-}
 
-@media only screen and (max-width: 480px) {
+  /* sp */
+  @media screen and (max-width: 480px) {
     #table01 th,
     #table01 td {
       width: 100%;
@@ -102,7 +100,6 @@ input[type="submit"]{
     }
 
   }
-
 
 </style>
 
