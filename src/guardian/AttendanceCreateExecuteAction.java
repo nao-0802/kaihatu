@@ -47,8 +47,11 @@ public class AttendanceCreateExecuteAction extends Action {
         Date sqlDate = Date.valueOf(LocalDate.now());
 
         // 遅刻時間と早退時間を取得
-        Time tardiness_time = parseTime(req.getParameter("tardiness_time"));
-        Time early_time = parseTime(req.getParameter("early_time"));
+        Time time = null;
+        if (type == 1 || type == 2) { // 遅刻または早退の場合
+            time = parseTime(req.getParameter("time"));
+        }
+        System.out.println(time);
 
         // 症状取得 (複数選択対応)
         String[] symptomsArray = req.getParameterValues("symptoms");
@@ -70,8 +73,7 @@ public class AttendanceCreateExecuteAction extends Action {
         record.setStudentId(student_id);
         record.setDay(sqlDate);
         record.setType(type);
-        record.setTardinessTime(tardiness_time);
-        record.setEarlyTime(early_time);
+        record.setTime(time); // 早退時間を設定（遅刻または早退の場合のみ）
         record.setSymptom(symptom);
         record.setNotes(notes);
         record.setReason(reason); // 理由をセット

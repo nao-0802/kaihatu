@@ -12,8 +12,7 @@ public class Attendance implements java.io.Serializable {
     private int reason;
     private String notes;
     private String student_name;
-    private Time tardiness_time;
-    private Time early_time;
+    private Time time;
     private String symptom;
 
     public String getAttendanceId() {
@@ -40,13 +39,10 @@ public class Attendance implements java.io.Serializable {
         return student_name;
     }
 
-    public Time getTardinessTime() {
-        return tardiness_time;
+    public Time getTime() {
+        return time;
     }
 
-    public Time getEarlyTime() {
-        return early_time;
-    }
 
     public String getSymptom() {
         return symptom;
@@ -80,13 +76,10 @@ public class Attendance implements java.io.Serializable {
         this.student_name = student_name;
     }
 
-    public void setTardinessTime(Time tardiness_time) {
-        this.tardiness_time = tardiness_time;
+    public void setTime(Time time) {
+        this.time = time;
     }
 
-    public void setEarlyTime(Time early_time) {
-        this.early_time = early_time;
-    }
 
     public void setSymptom(String symptom) {
         this.symptom = symptom;

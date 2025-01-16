@@ -13,7 +13,7 @@ import bean.Student;
 
 public class AttendanceDao extends Dao {
     // SQLクエリ: student_idに基づいてレコードを取得
-    private String baseSql = "SELECT attendance_id, student_id, day, type,tardiness_time,early_time,reason,symptom, notes FROM t_attendance WHERE student_id = ?";
+    private String baseSql = "SELECT attendance_id, student_id, day, type,time,reason,symptom, notes FROM t_attendance WHERE student_id = ?";
 
     // ResultSetからAttendanceリストを生成するメソッド
     private List<Attendance> postfilter(ResultSet rSet) throws Exception {
@@ -26,8 +26,7 @@ public class AttendanceDao extends Dao {
                 attendance.setDay(rSet.getDate("day"));
                 attendance.setType(rSet.getInt("type"));
                 attendance.setNotes(rSet.getString("notes"));
-                attendance.setTardinessTime(rSet.getTime("tardiness_time"));
-                attendance.setEarlyTime(rSet.getTime("early_time"));
+                attendance.setTime(rSet.getTime("time"));
                 attendance.setSymptom(rSet.getString("symptom"));
                 attendance.setReason(rSet.getInt("reason"));
                 list.add(attendance);
@@ -88,7 +87,7 @@ public class AttendanceDao extends Dao {
             if (existingAttendance == null) {
                 // 新しいAttendanceの場合、挿入
                 statement = connection.prepareStatement(
-                		"INSERT INTO t_attendance (attendance_id, student_id, day, type, tardiness_time, early_time,symptom,reason, notes) VALUES (?,?, ?,?, ?, ?, ?, ?, ?)"
+                		"INSERT INTO t_attendance (attendance_id, student_id, day, type,time,symptom,reason, notes) VALUES (?, ?,?, ?, ?, ?, ?, ?)"
 
 
 
@@ -97,27 +96,25 @@ public class AttendanceDao extends Dao {
                 statement.setString(2, attendance.getStudentId());
                 statement.setDate(3, attendance.getDay());
                 statement.setInt(4, attendance.getType());
-                statement.setTime(5, attendance.getTardinessTime());
-                statement.setTime(6, attendance.getEarlyTime());
-                statement.setString(7, attendance.getSymptom());
-                statement.setInt(8, attendance.getReason());
-                statement.setString(9, attendance.getNotes());
+                statement.setTime(5, attendance.getTime());
+                statement.setString(6, attendance.getSymptom());
+                statement.setInt(7, attendance.getReason());
+                statement.setString(8, attendance.getNotes());
 
             } else {
                 // 既存のAttendanceの場合、更新
                 statement = connection.prepareStatement(
-                		"UPDATE t_attendance SET student_id = ?, day = ?, type = ?, tardiness_time = ?, early_time = ?,reason = ?, symptom = ?, notes = ? WHERE attendance_id = ?"
+                		"UPDATE t_attendance SET student_id = ?, day = ?, type = ?, time = ?,reason = ?, symptom = ?, notes = ? WHERE attendance_id = ?"
 
                 );
                 statement.setString(1, attendance.getStudentId());
                 statement.setDate(2, attendance.getDay());
                 statement.setInt(3, attendance.getType());
-                statement.setTime(5, attendance.getTardinessTime());
-                statement.setTime(6, attendance.getEarlyTime());
-                statement.setInt(7, attendance.getReason());
-                statement.setString(8, attendance.getSymptom());
-                statement.setString(9, attendance.getNotes());
-                statement.setString(10, attendance.getAttendanceId());
+                statement.setTime(4, attendance.getTime());
+                statement.setInt(5, attendance.getReason());
+                statement.setString(6, attendance.getSymptom());
+                statement.setString(7, attendance.getNotes());
+                statement.setString(8, attendance.getAttendanceId());
             }
 
             count = statement.executeUpdate();
@@ -160,8 +157,7 @@ public class AttendanceDao extends Dao {
                 attendance.setStudentId(rSet.getString("student_id"));
                 attendance.setDay(rSet.getDate("day"));
                 attendance.setType(rSet.getInt("type"));
-                attendance.setTardinessTime(rSet.getTime("tardiness_time"));
-                attendance.setEarlyTime(rSet.getTime("early_time"));
+                attendance.setTime(rSet.getTime("time"));
                 attendance.setReason(rSet.getInt("reason"));
                 attendance.setSymptom(rSet.getString("symptom"));
                 attendance.setNotes(rSet.getString("notes"));
@@ -247,7 +243,7 @@ public class AttendanceDao extends Dao {
 
         // classIdがnullでない場合に、出席情報を取得するSQLクエリを実行
         if (classId != null) {
-            String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.tardiness_time,  a.early_time, a.notes, s.student_name " +
+            String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.time, a.notes, s.student_name " +
                                    "FROM t_attendance a " +
                                    "JOIN t_student s ON a.student_id = s.student_id " +
                                    "JOIN t_teacher ts ON a.student_id = ts.student_id " +
@@ -268,8 +264,7 @@ public class AttendanceDao extends Dao {
                         attendance.setStudentId(rs.getString("student_id"));
                         attendance.setDay(rs.getDate("day"));
                         attendance.setType(rs.getInt("type"));
-                        attendance.setTardinessTime(rs.getTime("tardiness_time"));
-                        attendance.setEarlyTime(rs.getTime("early_time"));
+                        attendance.setTime(rs.getTime("time"));
                         attendance.setReason(rs.getInt("reason"));
                         attendance.setSymptom(rs.getString("symptom"));
                         attendance.setNotes(rs.getString("notes"));
@@ -304,7 +299,7 @@ public class AttendanceDao extends Dao {
         }
 
         // 出席情報を取得するSQLクエリ
-        String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.tardiness_time,  a.early_time,a.reason,a.symptom, a.notes, s.student_name " +
+        String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type,a.time,a.reason,a.symptom, a.notes, s.student_name " +
                                "FROM t_attendance a " +
                                "JOIN t_student s ON a.student_id = s.student_id " +
                                "WHERE a.student_id IN (" + studentIds.stream().map(id -> "?").collect(Collectors.joining(",")) + ") " +
@@ -325,7 +320,7 @@ public class AttendanceDao extends Dao {
                     attendance.setStudentId(rs.getString("student_id"));
                     attendance.setDay(rs.getDate("day"));
                     attendance.setType(rs.getInt("type"));
-                    attendance.setTardinessTime(rs.getTime("tardiness_time"));
+                    attendance.setTime(rs.getTime("time"));
                     attendance.setReason(rs.getInt("reason"));
                     attendance.setSymptom(rs.getString("symptom"));
                     attendance.setNotes(rs.getString("notes"));
