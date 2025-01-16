@@ -36,4 +36,7 @@
     </c:forEach>
 </table>
 
+<form action="../admin/logout_admin.jsp">
+        	<button>ログアウト</button>
+        </form>
 <!--%@ include file="../footer.html" %-->

@@ -12,9 +12,6 @@
 </header>
 
 <main>
-    <div class="bb">
-        <button class="button" onclick="location.href='ContactBookWrite.action'">連絡帳を書く</button>
-    </div>
 
     <div class="container add-control">
         <input type="checkbox" id="tab1" class="radio" name="tab" onclick="onlyOne(this)"><label class="tab-title title1" id="title1" for="tab1">睡眠</label>
@@ -86,9 +83,7 @@
             </form>
         </div>
 
-        <form action="../guardian/LifeRecordList.action">
-            <button>生活記録閲覧</button>
-        </form>
+
 
     </div>
 

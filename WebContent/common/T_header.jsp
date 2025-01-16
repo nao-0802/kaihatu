@@ -9,10 +9,10 @@
     <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
     <ul class="menu">
       <li class="top"><a href="../teacher/seikatukiroku.jsp">生活記録</a></li>
-      <li><a href="../teacher/contactbook_list.jsp">連絡帳</a></li>
+      <li><a href="../teacher/ContactBookList.action">連絡帳</a></li>
       <li><a href="../teacher/BulletionBoardList.action">全体掲示板</a></li>
       <li><a href="../teacher/.jsp">カルテ</a></li>
-      <li><a href="../teacher/logout.jsp">ログアウト</a></li>
+      <li><a href="../teacher/logout_teacher.jsp">ログアウト</a></li>
     </ul>
 
 
