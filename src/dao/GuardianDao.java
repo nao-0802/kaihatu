@@ -147,7 +147,7 @@ public class GuardianDao extends Dao {
             } else {
                 // 既存のGuardianの更新
                 statement = connection.prepareStatement(
-                        "UPDATE t_guardian SET guardian_name = ?, password = ?, WHERE guardian_id = ?"
+                        "UPDATE t_guardian SET guardian_name = ?, password = ? WHERE guardian_id = ?"
                 );
                 statement.setString(1, guardian.getGuardianName());
                 statement.setString(2, guardian.getPassword());
