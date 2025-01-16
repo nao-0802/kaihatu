@@ -13,7 +13,7 @@ import dao.AttendanceDao;
 public class AttendanceExecuteAction {
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String resultPage = "attendanceResult.jsp"; // 遷移先のページ
+        String resultPage = "attendancelist.jsp"; // 遷移先のページ
         try {
             // リクエストから教師IDまたは学生リストを取得
             String teacherId = request.getParameter("teacherId");
