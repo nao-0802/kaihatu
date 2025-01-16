@@ -247,7 +247,13 @@
 			else if (id == '2') {
 			    document.getElementById('1').style.display = "none"; // 登校する時間は非表示
 			    document.getElementById('2').style.display = ""; // 早退する時間を表示
-			    //timeInput.value = ''; // 時間をリセットしない
+			    console.log("Early leave time input is visible.");
+			    console.log("Initial time input value:", timeInput.value); // 初期値を確認
+
+			    if (!timeInput.value) {
+			        console.error("Error: Time input for early leave is empty.");
+			    }
+			    timeInput.value = ''; // 時間をリセットしない
 			}
 
             // それ以外（欠席）の場合
