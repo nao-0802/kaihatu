@@ -3,7 +3,6 @@ package guardian;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -18,80 +17,105 @@ import tool.Action;
 public class AttendanceCreateExecuteAction extends Action {
 
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        String student_id = null;
-        Integer type = null;
-        AttendanceDao dao = new AttendanceDao(); // AttendanceRecordDaoを使用
+        AttendanceDao dao = new AttendanceDao();
 
         // セッションから保護者IDを取得
         HttpSession session = req.getSession();
-        String guardianId = (String) session.getAttribute("guardian_id"); // セッションから保護者IDを取得
+        String guardianId = (String) session.getAttribute("guardian_id");
 
-        // 保護者ID取得とチェック
         if (guardianId == null || guardianId.isEmpty()) {
-            req.setAttribute("errorMessage", "保護者IDが指定されていません。");
-            forwardToError(req, res);
+            setErrorAndForward(req, res, "保護者IDが指定されていません。");
             return;
         }
 
-        // 生徒ID取得
+        // 保護者IDから生徒IDを取得
         GuardianDao guardianDao = new GuardianDao();
-        student_id = guardianDao.getStudentIdByGuardianId(guardianId);
+        String student_id = guardianDao.getStudentIdByGuardianId(guardianId);
         if (student_id == null || student_id.isEmpty()) {
-            req.setAttribute("errorMessage", "指定された保護者IDに対応する生徒IDが見つかりません。");
-            forwardToError(req, res);
+            setErrorAndForward(req, res, "指定された保護者IDに対応する生徒IDが見つかりません。");
             return;
         }
 
         // 出席状況(type)取得
-        String typeParam = req.getParameter("type");
-        if (typeParam != null && !typeParam.isEmpty()) {
-            try {
-                type = Integer.parseInt(typeParam);
-            } catch (NumberFormatException e) {
-                req.setAttribute("errorMessage", "無効な出席状況が指定されました。");
-                forwardToError(req, res);
-                return;
-            }
-        } else {
-            req.setAttribute("errorMessage", "出席状況が指定されていません。");
-            forwardToError(req, res);
+        Integer type = parseInteger(req.getParameter("type"));
+        if (type == null) {
+            setErrorAndForward(req, res, "出席状況が指定されていません。または無効な値です。");
             return;
         }
 
         // 日付取得
         Date sqlDate = Date.valueOf(LocalDate.now());
 
-        // 時間取得 (notification_time)
-        Time notificationTime = Time.valueOf(LocalTime.now());
+        // 遅刻時間と早退時間を取得
+        Time tardiness_time = parseTime(req.getParameter("tardiness_time"));
+        Time early_time = parseTime(req.getParameter("early_time"));
+
+        // 症状取得 (複数選択対応)
+        String[] symptomsArray = req.getParameterValues("symptoms");
+        String symptom = (symptomsArray != null) ? String.join(",", symptomsArray) : null;
 
         // 備考取得
-        String notes = req.getParameter("notes"); // 備考を取得 (任意項目)
+        String notes = req.getParameter("notes");
 
-        // 症状取得 (symptom)
-        String symptom = req.getParameter("symptom"); // フォームで選択された症状
+        // 理由(reason)取得 (int型に変更)
+        Integer reason = parseInteger(req.getParameter("reason"));
 
-        // AttendanceRecordオブジェクト作成
+        if (reason == null) {
+            setErrorAndForward(req, res, "理由が指定されていません。または無効な値です。");
+            return;
+        }
+
+        // Attendanceオブジェクト作成
         Attendance record = new Attendance();
         record.setStudentId(student_id);
         record.setDay(sqlDate);
-        record.setType(type); // 出席状況をセット
-        record.setNotificationTime(notificationTime); // 登校または早退の時間をセット
-        record.setSymptom(symptom); // 症状をセット
-        record.setNotes(notes); // 備考をセット
+        record.setType(type);
+        record.setTardinessTime(tardiness_time);
+        record.setEarlyTime(early_time);
+        record.setSymptom(symptom);
+        record.setNotes(notes);
+        record.setReason(reason); // 理由をセット
 
         // データ保存
-        boolean isSaved = dao.save(record);
-        if (isSaved) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("AttendanceCompleat.jsp"); // 保存後のページ
-            dispatcher.forward(req, res);
-        } else {
-            req.setAttribute("errorMessage", "データの保存に失敗しました。");
-            forwardToError(req, res);
+        try {
+            boolean isSaved = dao.save(record);
+            if (isSaved) {
+                res.sendRedirect("AttendanceCompleat.jsp");
+            } else {
+                setErrorAndForward(req, res, "データの保存に失敗しました。");
+            }
+        } catch (Exception e) {
+            setErrorAndForward(req, res, "システムエラーが発生しました: " + e.getMessage());
         }
     }
 
-    // エラーページへの遷移処理
-    private void forwardToError(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    // 時間のパース処理 (共通化)
+    private Time parseTime(String timeParam) {
+        if (timeParam != null && !timeParam.isEmpty()) {
+            try {
+                return Time.valueOf(timeParam + ":00");
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    // 整数のパース処理 (共通化)
+    private Integer parseInteger(String intParam) {
+        if (intParam != null && !intParam.isEmpty()) {
+            try {
+                return Integer.parseInt(intParam);
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    // エラーメッセージを設定してエラーページに遷移
+    private void setErrorAndForward(HttpServletRequest req, HttpServletResponse res, String errorMessage) throws Exception {
+        req.setAttribute("errorMessage", errorMessage);
         RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");
         dispatcher.forward(req, res);
     }

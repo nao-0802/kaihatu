@@ -13,7 +13,7 @@ import bean.Student;
 
 public class AttendanceDao extends Dao {
     // SQLクエリ: student_idに基づいてレコードを取得
-    private String baseSql = "SELECT attendance_id, student_id, day, type, notes FROM t_attendance WHERE student_id = ?";
+    private String baseSql = "SELECT attendance_id, student_id, day, type,tardiness_time,early_time,reason,symptom, notes FROM t_attendance WHERE student_id = ?";
 
     // ResultSetからAttendanceリストを生成するメソッド
     private List<Attendance> postfilter(ResultSet rSet) throws Exception {
@@ -26,6 +26,10 @@ public class AttendanceDao extends Dao {
                 attendance.setDay(rSet.getDate("day"));
                 attendance.setType(rSet.getInt("type"));
                 attendance.setNotes(rSet.getString("notes"));
+                attendance.setTardinessTime(rSet.getTime("tardiness_time"));
+                attendance.setEarlyTime(rSet.getTime("early_time"));
+                attendance.setSymptom(rSet.getString("symptom"));
+                attendance.setReason(rSet.getInt("reason"));
                 list.add(attendance);
             }
         } catch (Exception e) {
@@ -34,6 +38,7 @@ public class AttendanceDao extends Dao {
         }
         return list;
     }
+
 
     // 指定されたstudent_idのAttendanceを取得するメソッド
     public List<Attendance> filter(String studentId) throws Exception {
@@ -83,23 +88,36 @@ public class AttendanceDao extends Dao {
             if (existingAttendance == null) {
                 // 新しいAttendanceの場合、挿入
                 statement = connection.prepareStatement(
-                        "INSERT INTO t_attendance (attendance_id, student_id, day, type, notes) VALUES (?, ?, ?, ?, ?)"
+                		"INSERT INTO t_attendance (attendance_id, student_id, day, type, tardiness_time, early_time,symptom,reason, notes) VALUES (?,?, ?,?, ?, ?, ?, ?, ?)"
+
+
+
                 );
                 statement.setString(1, attendance.getAttendanceId());
                 statement.setString(2, attendance.getStudentId());
                 statement.setDate(3, attendance.getDay());
                 statement.setInt(4, attendance.getType());
-                statement.setString(5, attendance.getNotes());
+                statement.setTime(5, attendance.getTardinessTime());
+                statement.setTime(6, attendance.getEarlyTime());
+                statement.setString(7, attendance.getSymptom());
+                statement.setInt(8, attendance.getReason());
+                statement.setString(9, attendance.getNotes());
+
             } else {
                 // 既存のAttendanceの場合、更新
                 statement = connection.prepareStatement(
-                        "UPDATE t_attendance SET student_id = ?, day = ?, type = ?, notes = ? WHERE attendance_id = ?"
+                		"UPDATE t_attendance SET student_id = ?, day = ?, type = ?, tardiness_time = ?, early_time = ?,reason = ?, symptom = ?, notes = ? WHERE attendance_id = ?"
+
                 );
                 statement.setString(1, attendance.getStudentId());
                 statement.setDate(2, attendance.getDay());
                 statement.setInt(3, attendance.getType());
-                statement.setString(4, attendance.getNotes());
-                statement.setString(5, attendance.getAttendanceId());
+                statement.setTime(5, attendance.getTardinessTime());
+                statement.setTime(6, attendance.getEarlyTime());
+                statement.setInt(7, attendance.getReason());
+                statement.setString(8, attendance.getSymptom());
+                statement.setString(9, attendance.getNotes());
+                statement.setString(10, attendance.getAttendanceId());
             }
 
             count = statement.executeUpdate();
@@ -142,6 +160,10 @@ public class AttendanceDao extends Dao {
                 attendance.setStudentId(rSet.getString("student_id"));
                 attendance.setDay(rSet.getDate("day"));
                 attendance.setType(rSet.getInt("type"));
+                attendance.setTardinessTime(rSet.getTime("tardiness_time"));
+                attendance.setEarlyTime(rSet.getTime("early_time"));
+                attendance.setReason(rSet.getInt("reason"));
+                attendance.setSymptom(rSet.getString("symptom"));
                 attendance.setNotes(rSet.getString("notes"));
             }
         } catch (Exception e) {
@@ -225,7 +247,7 @@ public class AttendanceDao extends Dao {
 
         // classIdがnullでない場合に、出席情報を取得するSQLクエリを実行
         if (classId != null) {
-            String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.notes, s.student_name " +
+            String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.tardiness_time,  a.early_time, a.notes, s.student_name " +
                                    "FROM t_attendance a " +
                                    "JOIN t_student s ON a.student_id = s.student_id " +
                                    "JOIN t_teacher ts ON a.student_id = ts.student_id " +
@@ -246,6 +268,10 @@ public class AttendanceDao extends Dao {
                         attendance.setStudentId(rs.getString("student_id"));
                         attendance.setDay(rs.getDate("day"));
                         attendance.setType(rs.getInt("type"));
+                        attendance.setTardinessTime(rs.getTime("tardiness_time"));
+                        attendance.setEarlyTime(rs.getTime("early_time"));
+                        attendance.setReason(rs.getInt("reason"));
+                        attendance.setSymptom(rs.getString("symptom"));
                         attendance.setNotes(rs.getString("notes"));
                         attendance.setStudentName(rs.getString("student_name")); // 生徒名を設定
 
@@ -278,7 +304,7 @@ public class AttendanceDao extends Dao {
         }
 
         // 出席情報を取得するSQLクエリ
-        String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.notes, s.student_name " +
+        String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.tardiness_time,  a.early_time,a.reason,a.symptom, a.notes, s.student_name " +
                                "FROM t_attendance a " +
                                "JOIN t_student s ON a.student_id = s.student_id " +
                                "WHERE a.student_id IN (" + studentIds.stream().map(id -> "?").collect(Collectors.joining(",")) + ") " +
@@ -291,7 +317,6 @@ public class AttendanceDao extends Dao {
             for (int i = 0; i < studentIds.size(); i++) {
                 psAttendance.setString(i + 1, studentIds.get(i));
             }
-
             // クエリ実行と結果処理
             try (ResultSet rs = psAttendance.executeQuery()) {
                 while (rs.next()) {
@@ -300,6 +325,9 @@ public class AttendanceDao extends Dao {
                     attendance.setStudentId(rs.getString("student_id"));
                     attendance.setDay(rs.getDate("day"));
                     attendance.setType(rs.getInt("type"));
+                    attendance.setTardinessTime(rs.getTime("tardiness_time"));
+                    attendance.setReason(rs.getInt("reason"));
+                    attendance.setSymptom(rs.getString("symptom"));
                     attendance.setNotes(rs.getString("notes"));
                     attendance.setStudentName(rs.getString("student_name"));
                     attendanceList.add(attendance);
@@ -311,60 +339,3 @@ public class AttendanceDao extends Dao {
         return attendanceList;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//
-//
-//    public List<Attendance> getAttendancesByTeacherId(String teacherId) throws Exception {
-//        List<Attendance> attendanceList = new ArrayList<>();
-//
-//        // 教師IDに基づいて生徒の出席情報を取得するSQLクエリ
-//        String sql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.notes, s.student_name " +
-//                     "FROM t_attendance a " +
-//                     "JOIN t_student s ON a.student_id = s.student_id " +
-//                     "JOIN teacher_student ts ON a.student_id = ts.student_id " +
-//                     "WHERE ts.class_id = ? ORDER BY a.day DESC";
-//
-//        // データベース接続
-//        Connection connection = getConnection();
-//             PreparedStatement ps = connection.prepareStatement(sql);
-//
-//            // 教師IDをパラメータとして設定
-//            ps.setString(1, teacherId);
-//
-//            // SQLクエリを実行して結果を取得
-//            try (ResultSet rs = ps.executeQuery()) {
-//                while (rs.next()) {
-//                    // 出席情報をAttendanceオブジェクトに設定
-//                    Attendance attendance = new Attendance();
-//                    attendance.setAttendanceId(rs.getString("attendance_id"));
-//                    attendance.setStudentId(rs.getString("student_id"));
-//                    attendance.setDay(rs.getDate("day"));
-//                    attendance.setType(rs.getInt("type"));
-//                    attendance.setNotes(rs.getString("notes"));
-////                    attendance.setStudentName(rs.getString("student_name"));  // 生徒名を設定
-//
-//                    // リストに追加
-//                    attendanceList.add(attendance);
-//                }
-//
-//
-//        }
-//
-//        return attendanceList;
-//    }
-//}
