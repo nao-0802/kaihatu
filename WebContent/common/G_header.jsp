@@ -174,7 +174,7 @@ body {
   position: absolute;
   text-transform: uppercase;
   text-align: center;
-  color: #E9E9E9;
+  color: aliceblue;
 }
 
 </style>
