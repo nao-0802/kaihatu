@@ -42,6 +42,7 @@ public class AttendanceCreateExecuteAction extends Action {
             setErrorAndForward(req, res, "出席状況が指定されていません。または無効な値です。");
             return;
         }
+        System.out.println(type);
 
         // 日付取得
         Date sqlDate = Date.valueOf(LocalDate.now());
@@ -49,9 +50,15 @@ public class AttendanceCreateExecuteAction extends Action {
         // 遅刻時間と早退時間を取得
         Time time = null;
         if (type == 1 || type == 2) { // 遅刻または早退の場合
-            time = parseTime(req.getParameter("time"));
+        	String timeParam = req.getParameter("time");
+        	System.out.println(timeParam);
+            if (timeParam != null) {
+                time = parseTime(timeParam);
+            }
+            System.out.println("Received time for type " + type + ": " + timeParam); // 追加: 受け取ったtimeの値をログに出力
+
         }
-        System.out.println(time);
+
 
         // 症状取得 (複数選択対応)
         String[] symptomsArray = req.getParameterValues("symptoms");
