@@ -5,7 +5,6 @@
 
 
 <style>
-@media only screen and (max-width: 769px){
 body{
     overflow: hidden;
  }
@@ -63,7 +62,7 @@ body{
     padding: 10px 20px;
     word-break: break-all;
 }
-}
+
 </style>
 
 <body>

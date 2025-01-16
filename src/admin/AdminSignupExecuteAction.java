@@ -1,45 +1,38 @@
-//package admin;
+package admin;
 
-//import java.io.PrintWriter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
+import dao.AdminDao;
+import dao.MasterAdminDao;
+import tool.Action;
 
-//import bean.Admin;
-//import dao.AdminDao;
+public class AdminSignupExecuteAction extends Action {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // パラメータ取得
+        String masterId = req.getParameter("master_id");
+        String masterPassword = req.getParameter("master_password");
+        String adminId = req.getParameter("admin_id");
+        String adminPassword = req.getParameter("password");
 
-//@WebServlet(urlPatterns={"/kouka/create"})
-//public class AdminSignupExecuteAction {
+        MasterAdminDao masterAdminDao = new MasterAdminDao();
+        AdminDao adminDao = new AdminDao();
 
-//	public void doGet(
-//		HttpServletRequest request, HttpServletResponse response
-//	) throws Exception {
-//		PrintWriter out=response.getWriter();
+        // マスターアカウント認証
+        if (!masterAdminDao.validateMasterAccount(masterId, masterPassword)) {
+            req.setAttribute("error", "マスターアカウント認証に失敗しました。");
+            req.getRequestDispatcher("../admin/admin_signup.jsp").forward(req, res);
+            return;
+        }
 
-//		try{
-//			String Admin_id=request.getParameter("admin_id");
-//			String Password=request.getParameter("password");
-
-//			Admin p = new Admin();
-//			p.setAdminId(Admin_id);
-//			p.setPassword(Password);
-
-//			AdminDao dao =	new AdminDao();
-//			int line=dao.insert(p);
-
-//			if (line>0) {
-//				out.println("追加に成功しました。");
-//				request.getRequestDispatcher("/admin/createTrue.jsp")
-//				.forward(request, response);
-//			}
-//			else {
-//				request.getRequestDispatcher("/admin/createFalse.jsp")
-//				.forward(request, response);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace(out);
-//		}
-//	}
-
-//}
+        // 管理者アカウント保存
+        boolean isRegistered = adminDao.registerAdmin(adminId, adminPassword);
+        if (isRegistered) {
+            req.getRequestDispatcher("../admin/admin_signup_done.jsp").forward(req, res);
+        } else {
+            req.setAttribute("error", "管理者アカウント登録に失敗しました。");
+            req.getRequestDispatcher("admin_signup.jsp").forward(req, res);
+        }
+    }
+}

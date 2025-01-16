@@ -100,10 +100,7 @@
                 <label for="password">パスワード:</label>
                 <input type="password" id="password" name="password" required maxlength="255" value="${pass}">
             </div>
-            <div class="form-group">
-               <label for="student-name">お子様氏名</label>
-                <input type="text" id="student-name" name="studentName" readonly value="${studentName}">
-            </div>
+
 
             <button type="submit" class="btn">変更</button>
             <a href="./AccountList.action" class="btn-back">戻る</a>

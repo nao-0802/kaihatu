@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import bean.Admin;
+import tool.DbUtil;
 
 public class AdminDao extends Dao {
 
@@ -42,6 +43,19 @@ public class AdminDao extends Dao {
             }
         }
         return admin;
+    }
+    public boolean registerAdmin(String adminId, String password) {
+        try (Connection con = DbUtil.getConnection()) {
+            String sql = "INSERT INTO t_admin (admin_id, password) VALUES (?, ?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, adminId);
+            stmt.setString(2, password); // 必要ならハッシュ化
+            int result = stmt.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     public Admin login(String admin_id, String password) throws Exception {
 		// 管理者クラスのインスタンスを取得

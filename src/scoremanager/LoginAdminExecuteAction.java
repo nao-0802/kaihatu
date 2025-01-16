@@ -15,60 +15,66 @@ import dao.GuardianDao;
 import dao.TeacherDao;
 import tool.Action;
 
-
 public class LoginAdminExecuteAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		//ローカル変数の宣言 1
-		String url = "";
-		String id = "";
-		String password = "";
-		AdminDao adminDao = new AdminDao();
-		Admin admin = null;
-		TeacherDao teacherDao = new TeacherDao();
-		GuardianDao guardianDao = new GuardianDao();
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // ローカル変数の宣言
+        String id = req.getParameter("admin_id"); // 管理者ID
+        String password = req.getParameter("password"); // パスワード
+        AdminDao adminDao = new AdminDao();
+        Admin admin = null;
 
-		//リクエストパラメータ―の取得 2
-		id = req.getParameter("admin_id");// 管理者ID
-		password = req.getParameter("password");//パスワード
+        // 未入力チェック
+        List<String> errors = new ArrayList<>();
+        if (id == null || id.trim().isEmpty()) {
+            errors.add("管理者IDを入力してください。");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            errors.add("パスワードを入力してください。");
+        }
 
-		//DBからデータ取得 3
-		admin = adminDao.login(id, password);//管理者データ取得
-		List<Teacher>teacher = teacherDao.getAllActiveTeachers();//教職員データ取得
-		List<Guardian>guardian = guardianDao.getAllGuardians();//保護者データ取得
+        // エラーがある場合はログイン画面に戻す
+        if (!errors.isEmpty()) {
+            req.setAttribute("errors", errors);
+            req.setAttribute("adminId", id); // 入力されたIDを保持
+            req.getRequestDispatcher("../scoremanager/login_admin.jsp").forward(req, res);
+            return;
+        }
 
-		//ビジネスロジック 4
-		//DBへデータ保存 5
-		//レスポンス値をセット 6
-		//フォワード 7
-		//条件で手順4~7の内容が分岐
-		if (admin != null) {// 認証成功の場合
-			// セッション情報を取得
-			HttpSession session = req.getSession(true);
-			// 認証済みフラグを立てる
-			//admin.setAuthenticated(true);
-			// セッションにログイン情報を保存
-			session.setAttribute("user", admin);
-			req.setAttribute("teacher", teacher);
-			req.setAttribute("guardian", guardian);
+        // DBからデータ取得
+        admin = adminDao.login(id, password); // 管理者データ取得
 
-			req.getRequestDispatcher("/admin/login-out.jsp")
-				.forward(req, res);
-		} else {
-			// 認証失敗の場合
-			// エラーメッセージをセット
-			List<String> errors = new ArrayList<>();
-			errors.add("IDまたはパスワードが確認できませんでした");
-			req.setAttribute("errors", errors);
-			// 入力された教員IDをセット
-			req.setAttribute("adminId", id);
-			//フォワード
-			url = "admin/login-error.jsp";
-			req.getRequestDispatcher(url).forward(req, res);
-		}
+        // 認証ロジック
+        if (admin != null) { // 認証成功の場合
+            // セッション情報を取得
+            HttpSession session = req.getSession(true);
+            session.setAttribute("user", admin);
 
-//		req.getRequestDispatcher(url).forward(req, res);
-	}
+            // 次の画面に必要なデータをセット
+            TeacherDao teacherDao = new TeacherDao();
+            GuardianDao guardianDao = new GuardianDao();
+            List<Teacher> teacher = teacherDao.getAllActiveTeachers();
+            List<Guardian> guardian = guardianDao.getAllGuardians();
 
+            req.setAttribute("teacher", teacher);
+            req.setAttribute("guardian", guardian);
+
+            // 認証成功画面にフォワード
+            req.getRequestDispatcher("/admin/login-out.jsp").forward(req, res);
+        } else { // 認証失敗の場合
+            // エラーメッセージをセット
+            errors.add("IDまたはパスワードが確認できませんでした。");
+            req.setAttribute("errors", errors);
+
+            // 入力されたIDを保持
+            req.setAttribute("adminId", id);
+
+            // 新規登録リンクを表示
+            req.setAttribute("signupLink", "AdminSignup.action");
+
+            // 認証失敗画面にフォワード
+            req.getRequestDispatcher("../scoremanager/login_admin.jsp").forward(req, res);
+        }
+    }
 }
