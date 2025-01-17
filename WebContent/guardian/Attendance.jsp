@@ -106,7 +106,7 @@
 
 	</main>
 
-	<h2 id="selectedSymptom"></h2>
+</body>
 
 	<style>
 
