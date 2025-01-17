@@ -1,16 +1,61 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>教職員ログアウト</title>
-</head>
+<%@page contentType="text/html; charset=UTF-8" %>
+
+
 <body>
-    <h2>ログアウトしますか？</h2>
-    <form action="../scoremanager/LogoutExecute.action" method="post">
-        <button type="submit">はい</button>
-    </form>
-    <form action="../teacher/StudentListExecuteAction" method="get">
-        <button type="submit">いいえ</button>
-    </form>
+	<header class="header">
+	    <div class="navtext-container">
+	        <p class="navtext">ログアウト</p>
+	    </div>
+
+	    <%@include file="../common/T_header.jsp" %>
+	</header>
+
+  <main>
+    <div class="logout">
+    <h3 name="conf_message">本当にログアウトしますか？</h3>
+    </div>
+
+    <div class="button">
+        <form action="Logout.action">
+            <div><button class="a" name="yes_btn">はい</button></div>
+        </form>
+
+        <div><button class="b" name="no_btn" onclick="history.back()">いいえ</button></div>
+    </div>
+  </main>
 </body>
-</html>
+
+
+
+
+<style>
+main{
+    margin-top: 52px;
+    margin-left:  auto;
+    margin-right: auto;
+  }
+
+  .logout{
+    text-align: center;
+  }
+
+
+  .button{
+    display: flex;
+    justify-content: center;
+  }
+
+.a{
+    margin: 10px;
+    padding: 5px;
+    width: 60px;
+}
+
+
+.b{
+    margin: 10px;
+    padding: 5px;
+    width: 60px;
+}
+
+</style>

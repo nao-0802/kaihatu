@@ -11,19 +11,35 @@ body {
     margin: 0;
 }
 
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--background-navbar);
+  position: fixed;
+  width: 100%;
+  height: 52px;
+  background-color: #757575;
+}
+
 main{
-    /* margin-top: 10px; */
+	margin-top: 60px;
     margin-left:  auto;
     margin-right: auto;
 }
 
 
-.rn{
-  padding: 10px;
+button {
+  background-color: #757575;
+  height: 50px;
+  border: none;
+  width: 60px;
+  border-right: 1px solid #ddd;
 }
 
-button{
-  height: 30px;
+.back{
+  font-size: 30px;
+  color: #ddd;
 }
 
 .ren{
@@ -105,12 +121,16 @@ input[type="submit"]{
 
 <body>
 
-<main>
-    <div class="main">
-    <div class="rn">
-        <button class="a" name=Arrow_btn  onclick="history.back()">←</button>
+<header class="header">
+    <div class="navivon">
+        <button class="back" name=Arrow_btn  onclick="history.back()">←</button>
     </div>
+</header>
 
+
+<main>
+
+<div class="main">
     <div class="ren">
         <form>
             <table id="table01">
@@ -148,7 +168,7 @@ input[type="submit"]{
             <input type="submit">
         </form>
     </div>
-    </div>
+</div>
 </main>
 </body>
 

@@ -82,9 +82,6 @@
                 <button class="kiroku" name="medicine_btn">記録</button>
             </form>
         </div>
-
-
-
     </div>
 
    </main>
@@ -94,25 +91,11 @@
 
 <style>
 main{
-    margin-top: 52px;
+    margin-top: 62px;
     margin-left:  auto;
     margin-right: auto;
-    /* width: 100vw;   */
+    width: 100vw;
 }
-
-.bb{
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: right;
-  width: 100vw;
-}
-
-.button{
-  /* display: inline; */
-  padding: 5px;
-  margin-right: 10px;
-}
-
 
 .title1, #body1 {
     border: 2px solid rgb(0, 128, 0);
@@ -127,13 +110,9 @@ main{
   border: 2px solid rgb(15, 104, 200);
 }
 
-.test{
-  display: none;
-}
 
 .tab-title {
   width: 20%;
-    /* width: 87px; */
     padding: 5px 5px;
     text-align: center;
     display: table;
@@ -163,10 +142,6 @@ main{
     content: "";
     width: 100%;
 }
-
-/* .container .tab-title {
-    position: relative;
-} */
 
 .container .tab-body {
     order: 1;
@@ -205,21 +180,18 @@ main{
 }
 
 form{
-    text-align: center;
+  text-align: center;
 }
-
-
 
 .kiroku{
   width: 100px;
   margin-top: 10px;
+  height: 35px;
 }
-
-
 
 @media screen and (max-width: 426px) {
   .tab-title{
-    width: 35%;
+    width: 40%;
   }
 }
 </style>
@@ -230,6 +202,9 @@ form{
 function showSuccessAlert() {
     alert("記録が正常に保存されました！");
 }
+
+
+
     function onlyOne(checkbox) {
         var checkboxes = document.getElementsByName('tab');
         checkboxes.forEach((item) => {
