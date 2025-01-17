@@ -1,53 +1,53 @@
 package teacher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Attendance;
-import bean.Student;
 import dao.AttendanceDao;
+import tool.Action;
 
-public class AttendanceExecuteAction {
+public class AttendanceExecuteAction extends Action {
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String resultPage = "attendancelist.jsp"; // 遷移先のページ
-        try {
-            // リクエストから教師IDまたは学生リストを取得
-            String teacherId = request.getParameter("teacherId");
-            String[] studentIds = request.getParameterValues("studentIds");
+    private AttendanceDao dao = new AttendanceDao(); // DAOのインスタンスをフィールドで管理
 
-            // AttendanceDao を初期化
-            AttendanceDao attendanceDao = new AttendanceDao();
-            List<Attendance> attendanceList = new ArrayList<>();
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-            // 教師IDが提供されている場合
-            if (teacherId != null && !teacherId.isEmpty()) {
-                attendanceList = attendanceDao.getAttendancesByTeacherId(teacherId);
-            }
-            // 学生リストが提供されている場合
-            else if (studentIds != null && studentIds.length > 0) {
-                List<Student> students = new ArrayList<>();
-                for (String studentId : studentIds) {
-                    Student student = new Student();
-                    student.setStudentId(studentId);
-                    students.add(student);
-                }
-                attendanceList = attendanceDao.getAttendancesByStudents(students);
-            }
+        // セッションから教師ID（userId）を取得
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("userId");  // セッションから取得した教師ID
 
-            // 出席情報をリクエストスコープに設定
-            request.setAttribute("attendanceList", attendanceList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            // エラーページを設定
-            resultPage = "error.jsp";
-            request.setAttribute("errorMessage", "出席情報の取得中にエラーが発生しました。");
+        // userIdがnullの場合、ログイン画面にリダイレクト
+        if (userId == null) {
+            res.sendRedirect("login.jsp");  // ログインしていない場合はリダイレクト
+            return;
         }
 
-        return resultPage; // 結果ページを返す
+        List<Attendance> attendanceList = null;
+
+        try {
+            // 出席情報を取得
+            attendanceList = dao.getAttendancesByTeacherId(userId);  // userIdを使用して出席情報を取得
+        } catch (Exception e) {
+            // 出席情報の取得に失敗した場合
+            req.setAttribute("errorMessage", "出席情報の取得に失敗しました。");
+            req.getRequestDispatcher("error.jsp").forward(req, res);
+            return;
+        }
+
+        // 出席情報が空の場合
+        if (attendanceList == null || attendanceList.isEmpty()) {
+            req.setAttribute("message", "現在、出席情報はありません。");
+        } else {
+            // 出席情報がある場合
+            req.setAttribute("attendanceList", attendanceList);
+        }
+
+        // attendancelist.jspにフォワード
+        req.getRequestDispatcher("attendancelist.jsp").forward(req, res);
     }
 }

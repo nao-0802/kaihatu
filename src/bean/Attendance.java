@@ -8,8 +8,8 @@ public class Attendance implements java.io.Serializable {
     private String attendance_id;
     private String student_id;
     private Date day;
-    private int type;
-    private int reason;
+    private String type;  // int型からString型に変更
+    private String reason;
     private String notes;
     private String student_name;
     private Time time;
@@ -27,7 +27,7 @@ public class Attendance implements java.io.Serializable {
         return day;
     }
 
-    public int getType() {
+    public String getType() {  // 返り値をintからStringに変更
         return type;
     }
 
@@ -43,14 +43,13 @@ public class Attendance implements java.io.Serializable {
         return time;
     }
 
-
     public String getSymptom() {
         return symptom;
     }
-    public int getReason() {
+
+    public String getReason() {
         return reason;
     }
-
 
     public void setAttendanceId(String attendance_id) {
         this.attendance_id = attendance_id;
@@ -64,7 +63,7 @@ public class Attendance implements java.io.Serializable {
         this.day = day;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {  // 引数の型をStringに変更
         this.type = type;
     }
 
@@ -80,11 +79,11 @@ public class Attendance implements java.io.Serializable {
         this.time = time;
     }
 
-
     public void setSymptom(String symptom) {
         this.symptom = symptom;
     }
-    public void setReason(int reason) {
+
+    public void setReason(String reason) {
         this.reason = reason;
     }
 

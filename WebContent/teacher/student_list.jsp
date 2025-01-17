@@ -8,7 +8,7 @@
 <header class="header">
     <div class="navtext-container">
         <div><a class="here">クラス</a></div>
-        <div><a class="navtext" href="attendancelist.jsp">出欠席状況</a></div>
+        <div><a class="navtext" href="AttendanceExecute.action">出欠席状況</a></div>
     </div>
     <%@ include file="../common/T_header.jsp" %>
 </header>

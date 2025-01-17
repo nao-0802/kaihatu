@@ -37,9 +37,9 @@ public class AttendanceCreateExecuteAction extends Action {
         }
 
         // 出席状況(type)取得
-        Integer type = parseInteger(req.getParameter("type"));
-        if (type == null) {
-            setErrorAndForward(req, res, "出席状況が指定されていません。または無効な値です。");
+        String type = req.getParameter("type"); // 文字列で取得
+        if (type == null || type.isEmpty()) {
+            setErrorAndForward(req, res, "出席状況が指定されていません。");
             return;
         }
         System.out.println(type);
@@ -49,16 +49,14 @@ public class AttendanceCreateExecuteAction extends Action {
 
         // 遅刻時間と早退時間を取得
         Time time = null;
-        if (type == 1 || type == 2) { // 遅刻または早退の場合
+        if ("遅刻".equals(type) || "早退".equals(type)) { // 出席状況が遅刻または早退の場合
         	String timeParam = req.getParameter("time");
         	System.out.println(timeParam);
             if (timeParam != null) {
                 time = parseTime(timeParam);
             }
-            System.out.println("Received time for type " + type + ": " + timeParam); // 追加: 受け取ったtimeの値をログに出力
-
+            System.out.println("Received time for type " + type + ": " + timeParam); // 受け取ったtimeの値をログに出力
         }
-
 
         // 症状取得 (複数選択対応)
         String[] symptomsArray = req.getParameterValues("symptoms");
@@ -67,11 +65,10 @@ public class AttendanceCreateExecuteAction extends Action {
         // 備考取得
         String notes = req.getParameter("notes");
 
-        // 理由(reason)取得 (int型に変更)
-        Integer reason = parseInteger(req.getParameter("reason"));
-
-        if (reason == null) {
-            setErrorAndForward(req, res, "理由が指定されていません。または無効な値です。");
+        // 理由(reason)取得 (文字列に変更)
+        String reason = req.getParameter("reason");
+        if (reason == null || reason.isEmpty()) {
+            setErrorAndForward(req, res, "理由が指定されていません。");
             return;
         }
 
@@ -79,11 +76,11 @@ public class AttendanceCreateExecuteAction extends Action {
         Attendance record = new Attendance();
         record.setStudentId(student_id);
         record.setDay(sqlDate);
-        record.setType(type);
+        record.setType(type); // 文字列で設定
         record.setTime(time); // 早退時間を設定（遅刻または早退の場合のみ）
         record.setSymptom(symptom);
         record.setNotes(notes);
-        record.setReason(reason); // 理由をセット
+        record.setReason(reason); // 理由を文字列としてセット
 
         // データ保存
         try {
@@ -104,18 +101,6 @@ public class AttendanceCreateExecuteAction extends Action {
             try {
                 return Time.valueOf(timeParam + ":00");
             } catch (IllegalArgumentException e) {
-                return null;
-            }
-        }
-        return null;
-    }
-
-    // 整数のパース処理 (共通化)
-    private Integer parseInteger(String intParam) {
-        if (intParam != null && !intParam.isEmpty()) {
-            try {
-                return Integer.parseInt(intParam);
-            } catch (NumberFormatException e) {
                 return null;
             }
         }

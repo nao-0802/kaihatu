@@ -24,11 +24,11 @@ public class AttendanceDao extends Dao {
                 attendance.setAttendanceId(rSet.getString("attendance_id"));
                 attendance.setStudentId(rSet.getString("student_id"));
                 attendance.setDay(rSet.getDate("day"));
-                attendance.setType(rSet.getInt("type"));
+                attendance.setType(rSet.getString("type"));
                 attendance.setNotes(rSet.getString("notes"));
                 attendance.setTime(rSet.getTime("time"));
                 attendance.setSymptom(rSet.getString("symptom"));
-                attendance.setReason(rSet.getInt("reason"));
+                attendance.setReason(rSet.getString("reason"));
                 list.add(attendance);
             }
         } catch (Exception e) {
@@ -95,10 +95,10 @@ public class AttendanceDao extends Dao {
                 statement.setString(1, attendance.getAttendanceId());
                 statement.setString(2, attendance.getStudentId());
                 statement.setDate(3, attendance.getDay());
-                statement.setInt(4, attendance.getType());
+                statement.setString(4, attendance.getType());
                 statement.setTime(5, attendance.getTime());
                 statement.setString(6, attendance.getSymptom());
-                statement.setInt(7, attendance.getReason());
+                statement.setString(7, attendance.getReason());
                 statement.setString(8, attendance.getNotes());
 
             } else {
@@ -109,9 +109,9 @@ public class AttendanceDao extends Dao {
                 );
                 statement.setString(1, attendance.getStudentId());
                 statement.setDate(2, attendance.getDay());
-                statement.setInt(3, attendance.getType());
+                statement.setString(3, attendance.getType());
                 statement.setTime(4, attendance.getTime());
-                statement.setInt(5, attendance.getReason());
+                statement.setString(5, attendance.getReason());
                 statement.setString(6, attendance.getSymptom());
                 statement.setString(7, attendance.getNotes());
                 statement.setString(8, attendance.getAttendanceId());
@@ -156,9 +156,9 @@ public class AttendanceDao extends Dao {
                 attendance.setAttendanceId(rSet.getString("attendance_id"));
                 attendance.setStudentId(rSet.getString("student_id"));
                 attendance.setDay(rSet.getDate("day"));
-                attendance.setType(rSet.getInt("type"));
+                attendance.setType(rSet.getString("type"));
                 attendance.setTime(rSet.getTime("time"));
-                attendance.setReason(rSet.getInt("reason"));
+                attendance.setReason(rSet.getString("reason"));
                 attendance.setSymptom(rSet.getString("symptom"));
                 attendance.setNotes(rSet.getString("notes"));
             }
@@ -220,8 +220,7 @@ public class AttendanceDao extends Dao {
 
 
 
-
-    public List<Attendance> getAttendancesByTeacherId(String teacherId) throws Exception {
+    public List<Attendance> getAttendancesByTeacherId(String userId) throws Exception {
         List<Attendance> attendanceList = new ArrayList<>();
 
         // まず、教師のclass_idを取得するSQLクエリ
@@ -232,7 +231,7 @@ public class AttendanceDao extends Dao {
         try (Connection connection = getConnection();
              PreparedStatement psClassId = connection.prepareStatement(classIdSql)) {
 
-            psClassId.setString(1, teacherId);
+            psClassId.setString(1, userId);
 
             try (ResultSet rsClassId = psClassId.executeQuery()) {
                 if (rsClassId.next()) {
@@ -243,11 +242,11 @@ public class AttendanceDao extends Dao {
 
         // classIdがnullでない場合に、出席情報を取得するSQLクエリを実行
         if (classId != null) {
-            String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.time, a.notes, s.student_name " +
-                                   "FROM t_attendance a " +
-                                   "JOIN t_student s ON a.student_id = s.student_id " +
-                                   "JOIN t_teacher ts ON a.student_id = ts.student_id " +
-                                   "WHERE ts.class_id = ? ORDER BY a.day DESC";
+            String attendanceSql = "SELECT a.attendance_id, a.student_id, a.day, a.type, a.time, a.notes, a.reason, a.symptom, s.student_name " +
+                    "FROM t_attendance a " +
+                    "JOIN t_student s ON a.student_id = s.student_id " +
+                    "WHERE s.class_id = ? " +
+                    "ORDER BY a.day DESC";
 
             try (Connection connection = getConnection();
                  PreparedStatement psAttendance = connection.prepareStatement(attendanceSql)) {
@@ -263,10 +262,29 @@ public class AttendanceDao extends Dao {
                         attendance.setAttendanceId(rs.getString("attendance_id"));
                         attendance.setStudentId(rs.getString("student_id"));
                         attendance.setDay(rs.getDate("day"));
-                        attendance.setType(rs.getInt("type"));
+
+                        // 出席状況（type）の文字列をそのまま取得
+                        String attendanceStatus = rs.getString("type");
+                        if (attendanceStatus == null || attendanceStatus.isEmpty()) {
+                            attendanceStatus = "不明";  // 空やnullの場合にデフォルトで「不明」に設定
+                        }
+                        attendance.setType(attendanceStatus);  // 文字列として設定
+
+                        // 理由（reason）の文字列をそのまま取得
+                        String reason = rs.getString("reason");
+                        if (reason == null || reason.isEmpty()) {
+                            reason = "不明";  // 空やnullの場合にデフォルトで「不明」に設定
+                        }
+                        attendance.setReason(reason);
+
+                        // 症状（symptom）の文字列をそのまま取得
+                        String symptom = rs.getString("symptom");
+                        if (symptom == null || symptom.isEmpty()) {
+                            symptom = "なし";  // 空やnullの場合にデフォルトで「不明」に設定
+                        }
+                        attendance.setSymptom(symptom);
+
                         attendance.setTime(rs.getTime("time"));
-                        attendance.setReason(rs.getInt("reason"));
-                        attendance.setSymptom(rs.getString("symptom"));
                         attendance.setNotes(rs.getString("notes"));
                         attendance.setStudentName(rs.getString("student_name")); // 生徒名を設定
 
@@ -279,7 +297,6 @@ public class AttendanceDao extends Dao {
 
         return attendanceList;
     }
-
 
 
 
@@ -319,9 +336,9 @@ public class AttendanceDao extends Dao {
                     attendance.setAttendanceId(rs.getString("attendance_id"));
                     attendance.setStudentId(rs.getString("student_id"));
                     attendance.setDay(rs.getDate("day"));
-                    attendance.setType(rs.getInt("type"));
+                    attendance.setType(rs.getString("type"));
                     attendance.setTime(rs.getTime("time"));
-                    attendance.setReason(rs.getInt("reason"));
+                    attendance.setReason(rs.getString("reason"));
                     attendance.setSymptom(rs.getString("symptom"));
                     attendance.setNotes(rs.getString("notes"));
                     attendance.setStudentName(rs.getString("student_name"));
