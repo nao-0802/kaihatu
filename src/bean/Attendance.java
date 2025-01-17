@@ -15,6 +15,12 @@ public class Attendance implements java.io.Serializable {
     private Time time;
     private String symptom;
 
+    // 新しく追加したフィールド
+    private String lateTime;  // 遅刻時間
+    private String earlyLeaveTime;  // 早退時間
+
+    // 既存のgetterとsetterメソッド
+
     public String getAttendanceId() {
         return attendance_id;
     }
@@ -51,6 +57,26 @@ public class Attendance implements java.io.Serializable {
         return reason;
     }
 
+    // 新たに追加したgetterとsetter
+
+    public String getLateTime() {
+        return lateTime;
+    }
+
+    public void setLateTime(String lateTime) {
+        this.lateTime = lateTime;
+    }
+
+    public String getEarlyLeaveTime() {
+        return earlyLeaveTime;
+    }
+
+    public void setEarlyLeaveTime(String earlyLeaveTime) {
+        this.earlyLeaveTime = earlyLeaveTime;
+    }
+
+    // 既存のsetterメソッド
+
     public void setAttendanceId(String attendance_id) {
         this.attendance_id = attendance_id;
     }
@@ -86,5 +112,4 @@ public class Attendance implements java.io.Serializable {
     public void setReason(String reason) {
         this.reason = reason;
     }
-
 }

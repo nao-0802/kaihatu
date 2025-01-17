@@ -24,6 +24,16 @@
             <p>症状: ${attendance.symptom}</p> <!-- symptomのプロパティ -->
             <p>理由: ${attendance.reason}</p> <!-- reasonのプロパティ -->
             <p>備考: ${attendance.notes}</p> <!-- notesのプロパティ -->
+
+            <!-- 遅刻または早退の場合、時間を表示 -->
+            <c:choose>
+                <c:when test="${attendance.type == '遅刻'}">
+                    <p>遅刻時間: ${attendance.lateTime}</p> <!-- 遅刻時間 -->
+                </c:when>
+                <c:when test="${attendance.type == '早退'}">
+                    <p>早退時間: ${attendance.earlyLeaveTime}</p> <!-- 早退時間 -->
+                </c:when>
+            </c:choose>
         </div>
         <hr />
     </c:forEach>

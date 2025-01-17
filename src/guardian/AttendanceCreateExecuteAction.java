@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Attendance; // AttendanceRecord Beanクラス
+import bean.Attendance;
 import dao.AttendanceDao;
 import dao.GuardianDao;
 import tool.Action;
@@ -19,7 +19,6 @@ public class AttendanceCreateExecuteAction extends Action {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         AttendanceDao dao = new AttendanceDao();
 
-        // セッションから保護者IDを取得
         HttpSession session = req.getSession();
         String guardianId = (String) session.getAttribute("guardian_id");
 
@@ -28,61 +27,50 @@ public class AttendanceCreateExecuteAction extends Action {
             return;
         }
 
-        // 保護者IDから生徒IDを取得
         GuardianDao guardianDao = new GuardianDao();
-        String student_id = guardianDao.getStudentIdByGuardianId(guardianId);
-        if (student_id == null || student_id.isEmpty()) {
+        String studentId = guardianDao.getStudentIdByGuardianId(guardianId);
+        if (studentId == null || studentId.isEmpty()) {
             setErrorAndForward(req, res, "指定された保護者IDに対応する生徒IDが見つかりません。");
             return;
         }
 
-        // 出席状況(type)取得
-        String type = req.getParameter("type"); // 文字列で取得
+        String type = req.getParameter("type");
         if (type == null || type.isEmpty()) {
             setErrorAndForward(req, res, "出席状況が指定されていません。");
             return;
         }
-        System.out.println(type);
 
-        // 日付取得
         Date sqlDate = Date.valueOf(LocalDate.now());
 
-        // 遅刻時間と早退時間を取得
         Time time = null;
-        if ("遅刻".equals(type) || "早退".equals(type)) { // 出席状況が遅刻または早退の場合
-        	String timeParam = req.getParameter("time");
-        	System.out.println(timeParam);
-            if (timeParam != null) {
-                time = parseTime(timeParam);
+        if ("遅刻".equals(type) || "早退".equals(type)) {
+            String timeParam = req.getParameter("time");
+            time = parseTime(timeParam);
+            if (time == null) {
+                setErrorAndForward(req, res, "正しい時間を入力してください。(例: 08:30)");
+                return;
             }
-            System.out.println("Received time for type " + type + ": " + timeParam); // 受け取ったtimeの値をログに出力
         }
 
-        // 症状取得 (複数選択対応)
         String[] symptomsArray = req.getParameterValues("symptoms");
         String symptom = (symptomsArray != null) ? String.join(",", symptomsArray) : null;
 
-        // 備考取得
         String notes = req.getParameter("notes");
-
-        // 理由(reason)取得 (文字列に変更)
         String reason = req.getParameter("reason");
         if (reason == null || reason.isEmpty()) {
             setErrorAndForward(req, res, "理由が指定されていません。");
             return;
         }
 
-        // Attendanceオブジェクト作成
         Attendance record = new Attendance();
-        record.setStudentId(student_id);
+        record.setStudentId(studentId);
         record.setDay(sqlDate);
-        record.setType(type); // 文字列で設定
-        record.setTime(time); // 早退時間を設定（遅刻または早退の場合のみ）
+        record.setType(type);
+        record.setTime(time);
         record.setSymptom(symptom);
         record.setNotes(notes);
-        record.setReason(reason); // 理由を文字列としてセット
+        record.setReason(reason);
 
-        // データ保存
         try {
             boolean isSaved = dao.save(record);
             if (isSaved) {
@@ -95,19 +83,18 @@ public class AttendanceCreateExecuteAction extends Action {
         }
     }
 
-    // 時間のパース処理 (共通化)
     private Time parseTime(String timeParam) {
         if (timeParam != null && !timeParam.isEmpty()) {
             try {
                 return Time.valueOf(timeParam + ":00");
             } catch (IllegalArgumentException e) {
+                System.err.println("Invalid time format: " + timeParam);
                 return null;
             }
         }
         return null;
     }
 
-    // エラーメッセージを設定してエラーページに遷移
     private void setErrorAndForward(HttpServletRequest req, HttpServletResponse res, String errorMessage) throws Exception {
         req.setAttribute("errorMessage", errorMessage);
         RequestDispatcher dispatcher = req.getRequestDispatcher("error.jsp");

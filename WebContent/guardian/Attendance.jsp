@@ -35,19 +35,10 @@
         </table>
 
         <div class="renraku_remarks">
-            <div id="1" style="display:none;">
+            <div id="timeInputContainer" style="display:none;">
                 <table>
                     <tr>
-                        <th class="a">登校する時間</th>
-                        <td><input type="time" name="time"></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div id="2" style="display:none;">
-                <table>
-                    <tr>
-                        <th class="a">早退する時間</th>
+                        <th class="a"><span id="timeLabel">時間</span></th>
                         <td><input type="time" name="time"></td>
                     </tr>
                 </table>
@@ -232,34 +223,21 @@ form {
 
     function aviewChange() {
         const typeSelect = document.getElementById('type');
+        const timeInputContainer = document.getElementById('timeInputContainer'); // 統一された入力フィールド
+        const timeLabel = document.getElementById('timeLabel'); // ラベル部分
         const timeInput = document.querySelector('input[name="time"]'); // 時間入力フィールド
 
         if (typeSelect) {
             const id = typeSelect.value;
 
-            // 遅刻の場合
-            if (id === '遅刻') {
-                document.getElementById('1').style.display = ""; // 登校する時間を表示
-                document.getElementById('2').style.display = "none"; // 早退の時間は非表示
+            // 遅刻または早退の場合
+            if (id === '遅刻' || id === '早退') {
+                timeInputContainer.style.display = ""; // フィールドを表示
+                timeLabel.textContent = id === '遅刻' ? "登校する時間" : "早退する時間"; // ラベルを切り替え
                 timeInput.value = ''; // 時間をリセット
-            }
-            // 早退の場合
-            else if (id === '早退') {
-                document.getElementById('1').style.display = "none"; // 登校する時間は非表示
-                document.getElementById('2').style.display = ""; // 早退する時間を表示
-                console.log("Early leave time input is visible.");
-                console.log("Initial time input value:", timeInput.value); // 初期値を確認
-
-                if (!timeInput.value) {
-                    console.error("Error: Time input for early leave is empty.");
-                }
-                timeInput.value = ''; // 時間をリセットしない
-            }
-
-            // それ以外（欠席）の場合
-            else {
-                document.getElementById('1').style.display = "none"; // 登校する時間を非表示
-                document.getElementById('2').style.display = "none"; // 早退の時間を非表示
+            } else {
+                // それ以外（欠席）の場合
+                timeInputContainer.style.display = "none"; // フィールドを非表示
                 timeInput.value = ''; // 時間をリセット
             }
         }

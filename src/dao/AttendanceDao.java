@@ -12,6 +12,12 @@ import bean.Attendance;
 import bean.Student;
 
 public class AttendanceDao extends Dao {
+    private Connection connection;
+
+    public AttendanceDao(Connection connection) {
+        this.connection = connection;
+    }
+
     // SQLクエリ: student_idに基づいてレコードを取得
     private String baseSql = "SELECT attendance_id, student_id, day, type,time,reason,symptom, notes FROM t_attendance WHERE student_id = ?";
 
@@ -350,4 +356,19 @@ public class AttendanceDao extends Dao {
 
         return attendanceList;
     }
-}
+
+//// 生徒の遅刻時間を取得するメソッド
+//public Time getLateTime(String studentId) throws SQLException {
+//    String query = "SELECT late_time FROM attendance WHERE student_id = ?";
+//    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//        stmt.setString(1, studentId);  // 生徒IDを設定
+//        try (ResultSet rs = stmt.executeQuery()) {
+//            if (rs.next()) {
+//                return rs.getTime("late_time");  // 遅刻時間を取得
+//            } else {
+//                return null;  // 遅刻時間が見つからなかった場合
+//            }
+//        }
+//    }
+//    }
+//}
