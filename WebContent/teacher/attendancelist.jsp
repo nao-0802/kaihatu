@@ -3,42 +3,92 @@
 
 <head>
     <style>
-        /* ボタンスタイル */
-        .toggle-button {
+        body {
+            overflow: hidden;
+        }
+
+        main {
+            margin-top: 52px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .here {
+            font-size: 25px;
+            width: 100px;
+            color: aliceblue;
+            padding: 2px;
+        }
+
+        #attendancelist {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        #attendancelist .student {
+            margin: 10px;
+        }
+
+        #attendancelist button {
+            width: 200px;
+            height: 80px;
+        }
+
+        #attendancelist div {
+            width: 200px;
+            height: 80px;
+            border: solid 1px red;
+        }
+
+        #attendancelist div a {
+            text-align: center;
+        }
+
+        a.navtext {
+            display: inline-block;
+            padding: 1px 10px;
+            text-decoration: none;
+            background-color: rgb(67, 161, 164);
+            border-radius: 3px;
+            font-size: 15px;
+        }
+
+        #content2 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            height: 100%;
+        }
+
+        #content2 .stu {
+            margin: 10px;
+            width: 200px;
+            height: 80px;
+            border: solid 1px red;
+        }
+
+        .title {
+            background-color: rgb(122, 227, 227);
+        }
+
+        .more-btn {
             cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            width: 100%;
-            text-align: left;
-            border-radius: 5px;
         }
 
-        /* 詳細のスタイル */
-        .attendance-details {
+        .title-more {
+            overflow: hidden;
+            height: 20px;
+        }
+
+        .more-check {
             display: none;
-            padding: 10px;
-            background-color: #f4f4f4;
-            margin-top: 10px;
-            border-radius: 5px;
         }
 
-        /* 詳細表示時のスタイル */
-        .attendance-details.show {
-            display: block;
-        }
-
-        .attendance-summary {
-            margin-bottom: 10px;
+        .more-check:checked ~ .title-more {
+            height: auto;
         }
     </style>
-    <script>
-        function toggleDetails(id) {
-            var details = document.getElementById(id);
-            details.classList.toggle('show');
-        }
-    </script>
 </head>
 
 <body>
@@ -55,20 +105,13 @@
     </c:if>
 
     <!-- 出席情報がある場合、繰り返し表示 -->
-    <c:forEach var="attendance" items="${attendanceList}">
-        <div class="attendance-summary">
-            <p>生徒名: ${attendance.studentName}</p> <!-- studentNameのプロパティ -->
-            <p>出席状況: ${attendance.type}</p> <!-- typeのプロパティ -->
-
-            <!-- 詳細をトグルするボタン -->
-            <button class="toggle-button" onclick="toggleDetails('details-${attendance.studentId}')">
-                詳細を表示
-            </button>
-
-            <!-- 詳細情報 -->
-            <div id="details-${attendance.studentId}" class="attendance-details">
+    <div id="attendancelist">
+        <c:forEach var="attendance" items="${attendanceList}">
+            <div class="student">
                 <p>生徒ID: ${attendance.studentId}</p> <!-- studentIdのプロパティ -->
+                <p>生徒名: ${attendance.studentName}</p> <!-- studentNameのプロパティ -->
                 <p>日付: ${attendance.day}</p> <!-- dayのプロパティ -->
+                <p>出席状況: ${attendance.type}</p> <!-- typeのプロパティ -->
                 <p>症状: ${attendance.symptom}</p> <!-- symptomのプロパティ -->
                 <p>理由: ${attendance.reason}</p> <!-- reasonのプロパティ -->
                 <p>備考: ${attendance.notes}</p> <!-- notesのプロパティ -->
@@ -83,8 +126,7 @@
                     </c:when>
                 </c:choose>
             </div>
-        </div>
-        <hr />
-    </c:forEach>
+        </c:forEach>
+    </div>
 </main>
 </body>
