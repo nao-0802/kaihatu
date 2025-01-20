@@ -34,19 +34,41 @@ public class StudentRecordDao extends Dao {
         return list;
     }
 
-    public void createStudentRecord(String studentId, String birthdate, String allergy, String guardianId) throws Exception {
-        try (Connection con = getConnection()) {
-            String sql = "INSERT INTO t_student_record (student_record_id, class_id, guardian_id, birthdate, allergy, features, student_id) " +
-                         "SELECT ?, class_id, ?, ?, ?, NULL, student_id FROM t_student WHERE student_id = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, generateStudentRecordId());
-            ps.setString(2, guardianId);
-            ps.setString(3, birthdate);
-            ps.setString(4, allergy.isEmpty() ? null : allergy);
-            ps.setString(5, studentId);
+    public void createStudentRecord(String studentId, String birthdate, String guardianId, String features) throws Exception {
+        String sql = "INSERT INTO t_student_record (student_record_id, class_id, guardian_id, birthdate, features, student_id) " +
+                     "SELECT ?, class_id, ?, ?, ?, student_id FROM t_student WHERE student_id = ?";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            // パラメータの設定
+            ps.setString(1, generateStudentRecordId()); // student_record_id
+            ps.setString(2, guardianId);               // guardian_id
+            ps.setString(3, birthdate);                // birthdate
+            ps.setString(4, features);                 // features
+            ps.setString(5, studentId);                // student_id
+
+            // SQL 実行
             ps.executeUpdate();
         }
     }
+
+    public void save(StudentRecord record) throws Exception {
+        String sql = "INSERT INTO t_student_record (student_record_id, class_id, guardian_id, birthdate, features, student_id) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, record.getStudentRecordId());
+            stmt.setString(2, record.getClassId());
+            stmt.setString(3, record.getGuardianId());
+            stmt.setDate(4, record.getBirthdate());
+            stmt.setString(5, record.getFeatures());
+            stmt.setString(6, record.getStudentId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private String generateStudentRecordId() {
         // 現在のミリ秒を取得
@@ -192,7 +214,7 @@ public class StudentRecordDao extends Dao {
 
 
     // 学生記録を保存または更新するメソッド
-    public boolean save(StudentRecord studentRecord) throws Exception {
+    public boolean tsave(StudentRecord studentRecord) throws Exception {
         Connection connection = getConnection();
         PreparedStatement statement = null;
         int count = 0;

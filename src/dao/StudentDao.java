@@ -64,6 +64,27 @@ public class StudentDao extends Dao {
         return list;
     }
 
+    public Student findStudentByName(String studentName) {
+        String sql = "SELECT student_id, class_id FROM t_student WHERE student_name = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Student student = new Student();
+                student.setStudentId(rs.getString("student_id"));
+                student.setClassId(rs.getString("class_id"));
+                return student;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+        return null;
+    }
+
  // すべての生徒を取得
     public List<Student> getAllStudents() throws Exception {
         List<Student> list = new ArrayList<>();

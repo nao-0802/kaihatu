@@ -16,7 +16,7 @@
     </div>
 
     <div class="button">
-        <form action="Logout.action">
+        <form action="../scoremanager/LogoutExecute.action">
             <div><button class="a" name="yes_btn">はい</button></div>
         </form>
 
