@@ -2,98 +2,128 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <head>
-    <style>
-        body {
-            overflow: hidden;
-        }
+<style type="text/css">
+/* 全体のレイアウト */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
 
-        main {
-            margin-top: 52px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+header {
+  background-color: #43a1a4;
+  color: white;
 
-        .here {
-            font-size: 25px;
-            width: 100px;
-            color: aliceblue;
-            padding: 2px;
-        }
+  text-align: center;
+}
 
-        #attendancelist {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
+main {
+  margin: 52px auto;
+  width: 90%;
+  max-width: 1200px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-        #attendancelist .student {
-            margin: 10px;
-        }
+h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
 
-        #attendancelist button {
-            width: 200px;
-            height: 80px;
-        }
+/* 出席リストのコンテナ */
+#attendance-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  overflow-y: auto;
+}
 
-        #attendancelist div {
-            width: 200px;
-            height: 80px;
-            border: solid 1px red;
-        }
+/* 出席情報のカード */
+.attendance-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 220px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-        #attendancelist div a {
-            text-align: center;
-        }
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-        a.navtext {
-            display: inline-block;
-            padding: 1px 10px;
-            text-decoration: none;
-            background-color: rgb(67, 161, 164);
-            border-radius: 3px;
-            font-size: 15px;
-        }
+.attendance-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
 
-        #content2 {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            height: 100%;
-        }
+/* 詳細ボタン */
+.details-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+  display: block;
+}
 
-        #content2 .stu {
-            margin: 10px;
-            width: 200px;
-            height: 80px;
-            border: solid 1px red;
-        }
+.details-btn:hover {
+  background-color: #0056b3;
+}
 
-        .title {
-            background-color: rgb(122, 227, 227);
-        }
+/* 詳細の内容 */
+.details-content {
+  display: none;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
 
-        .more-btn {
-            cursor: pointer;
-        }
+.details-content p {
+  margin: 5px 0;
+}
 
-        .title-more {
-            overflow: hidden;
-            height: 20px;
-        }
+/* スマートフォン向け */
+@media screen and (max-width: 426px) {
+  #attendance-list {
+    flex-direction: column;
+    align-items: center; /* カードを中央揃え */
+  }
 
-        .more-check {
-            display: none;
-        }
-
-        .more-check:checked ~ .title-more {
-            height: auto;
-        }
-    </style>
+  .attendance-item {
+    width: 100%; /* 幅を100%に変更 */
+    max-width: 400px; /* 最大幅を設定 */
+  }
+}
+</style>
+<script type="text/javascript">
+/* 詳細を表示/非表示に切り替える関数 */
+function toggleDetails(button) {
+  const content = button.nextElementSibling;
+  if (content.style.display === "none" || content.style.display === "") {
+    content.style.display = "block";
+    button.textContent = "詳細を隠す";
+  } else {
+    content.style.display = "none";
+    button.textContent = "詳細を見る";
+  }
+}
+</script>
 </head>
 
 <body>
 <header class="header">
-    <h1>出席状況</h1>
+    <div class="navtext-container">
+      <p class="navtext">出欠席状況</p>
+    </div>
+<%@include file="../common/G_header.jsp" %>
 </header>
 
 <main>
@@ -105,26 +135,30 @@
     </c:if>
 
     <!-- 出席情報がある場合、繰り返し表示 -->
-    <div id="attendancelist">
+    <div id="attendance-list">
         <c:forEach var="attendance" items="${attendanceList}">
-            <div class="student">
-                <p>生徒ID: ${attendance.studentId}</p> <!-- studentIdのプロパティ -->
-                <p>生徒名: ${attendance.studentName}</p> <!-- studentNameのプロパティ -->
-                <p>日付: ${attendance.day}</p> <!-- dayのプロパティ -->
-                <p>出席状況: ${attendance.type}</p> <!-- typeのプロパティ -->
-                <p>症状: ${attendance.symptom}</p> <!-- symptomのプロパティ -->
-                <p>理由: ${attendance.reason}</p> <!-- reasonのプロパティ -->
-                <p>備考: ${attendance.notes}</p> <!-- notesのプロパティ -->
+            <div class="attendance-item">
+                <!-- 生徒名と出席状況 -->
+                <p><strong>生徒名:</strong> ${attendance.studentName}</p>
+                <p><strong>出席状況:</strong> ${attendance.type}
+                    <c:choose>
+                        <c:when test="${attendance.type == '遅刻' || attendance.type == '早退'}">
+                            (${attendance.time})
+                        </c:when>
+                    </c:choose>
+                </p>
 
-                <!-- 遅刻または早退の場合、時間を表示 -->
-                <c:choose>
-                    <c:when test="${attendance.type == '遅刻'}">
-                        <p>遅刻時間: ${attendance.time}</p> <!-- 遅刻時間 -->
-                    </c:when>
-                    <c:when test="${attendance.type == '早退'}">
-                        <p>早退時間: ${attendance.time}</p> <!-- 早退時間 -->
-                    </c:when>
-                </c:choose>
+                <!-- 詳細ボタン -->
+                <button class="details-btn" onclick="toggleDetails(this)">詳細を見る</button>
+
+                <!-- 詳細情報 -->
+                <div class="details-content">
+                    <p><strong>生徒ID:</strong> ${attendance.studentId}</p>
+                    <p><strong>日付:</strong> ${attendance.day}</p>
+                    <p><strong>症状:</strong> ${attendance.symptom}</p>
+                    <p><strong>理由:</strong> ${attendance.reason}</p>
+                    <p><strong>備考:</strong> ${attendance.notes}</p>
+                </div>
             </div>
         </c:forEach>
     </div>
