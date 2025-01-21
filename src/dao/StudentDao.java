@@ -297,6 +297,31 @@ public class StudentDao extends Dao {
         }
     }
 
+    public List<Student> getStudentsByFlag(String flag) throws Exception {
+        List<Student> students = new ArrayList<>();
+        String sql = "SELECT * FROM t_student WHERE flag = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, flag);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Student student = new Student();
+                student.setStudentId(rs.getString("student_id"));
+                student.setStudentName(rs.getString("student_name"));
+                student.setFlag(rs.getInt("flag"));
+                student.setClassId(rs.getString("class_id"));
+
+             // classIdに対応するクラス名を取得
+                String className = classDao.getClassNameById(student.getClassId());
+                student.setClassName(className);
+                students.add(student);
+            }
+        }
+        return students;
+    }
+
  // 有効な生徒のみ取得するメソッド
     public List<Student> getAllActiveStudents() throws Exception {
         List<Student> list = new ArrayList<>();

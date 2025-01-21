@@ -86,6 +86,31 @@ public class TeacherDao extends Dao {
         }
         return list;
     }
+
+    public List<Teacher> getTeachersByFlag(String flag) throws Exception {
+        List<Teacher> teachers = new ArrayList<>();
+        String sql = "SELECT * FROM t_teacher WHERE flag = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, flag);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Teacher teacher = new Teacher();
+                teacher.setTeacherId(rs.getString("teacher_id"));
+                teacher.setTeacherName(rs.getString("teacher_name"));
+                teacher.setPassword(rs.getString("password"));
+                teacher.setClassId(rs.getString("class_id"));
+                teacher.setFlag(rs.getInt("flag"));
+             // classIdに対応するクラス名を取得
+                String className = classDao.getClassNameById(teacher.getClassId());
+                teacher.setClassName(className);
+                teachers.add(teacher);
+            }
+        }
+        return teachers;
+    }
     public String findTeacherIdByClassId(String classId) throws Exception {
         String teacherId = null;
 

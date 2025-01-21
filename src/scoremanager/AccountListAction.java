@@ -21,17 +21,35 @@ public class AccountListAction extends Action {
         GuardianDao gDao = new GuardianDao();
         StudentDao sDao = new StudentDao();
 
+     // フラグの取得 (デフォルトは 0)
+        String teacherFlag = req.getParameter("teacherFlag");
+        if (teacherFlag == null) {
+            teacherFlag = "0"; // デフォルトで「有効」
+        }
+        List<Teacher> teacherList = tDao.getTeachersByFlag(teacherFlag);
 
-        // 教職員データ、保護者データ、管理者データを取得
-        List<Teacher> teacher = tDao.getAllActiveTeachers();
+     // フラグの取得 (デフォルトは 0)
+        String studentFlag = req.getParameter("studentFlag");
+        if (studentFlag == null) {
+            studentFlag = "0"; // デフォルトで「有効」
+        }
+        List<Student> studentList = sDao.getStudentsByFlag(studentFlag);
+
+        // 取得した教師情報をリクエストスコープにセット
+        req.setAttribute("teacher", teacherList);
+
+        // 取得した教師情報をリクエストスコープにセット
+        req.setAttribute("student", studentList);
+
+
+
         List<Guardian> guardian = gDao.getAllGuardians();
-        List<Student> student = sDao.getAllActiveStudents();
+
 
 
         // リクエストスコープにデータをセット
-        req.setAttribute("teacher", teacher);
         req.setAttribute("guardian", guardian);
-        req.setAttribute("student", student);
+
 
         // 画面遷移
         try {
