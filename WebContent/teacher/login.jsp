@@ -3,33 +3,41 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
+<body>
 <header class="header">
 <div class="navtext-container">
     <p name="title" class="navtext">すてっぷのーと</p>
 </div>
 </header>
 
+<main>
 <form class="a" action="Login.action" method="post">
     <table>
         <tr>
-            <th></th>
-            <td>
-                <input type="text" name="teacherID" placeholder="教職員ID(10桁)" required>
-            </td>
+            <th>
+	            <td>
+	                <input type="text" name="teacherID" placeholder="教職員ID(10桁)" required>
+	            </td>
+            </th>
+
         </tr>
 
         <tr>
-            <th></th>
-            <td>
-                <input type="password" id="password" name="password" placeholder="パスワード" required>
-                <i id="toggleIcon" class="fa-solid fa-eye fa-fw"></i>
-            </td>
+            <th>
+	            <td>
+	                <input type="password" id="password" name="password" placeholder="パスワード" required>
+	                <i id="toggleIcon" class="fa-solid fa-eye fa-fw"></i>
+	            </td>
+            </th>
+
         </tr>
 
     </table>
     <br>
     <button name="login_btn">ログイン</button>
 </form>
+</main>
+</body>
 
 
     <script>
@@ -128,7 +136,7 @@ input[type="password"]{
     letter-spacing: 4px;
     font-size: 25px;
     text-align: center;
-    color: #E9E9E9;
+    color: aliceblue;
 }
 
 </style>
