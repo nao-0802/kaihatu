@@ -4,38 +4,65 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.Student;
+import dao.ClassDao;
 import dao.StudentDao;
 import tool.Action;
 
 public class StudentUpdateExecuteAction extends Action {
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        String studentId = req.getParameter("student_id");
-        String studentName = req.getParameter("student_name");
-        String password = req.getParameter("password");
-        String classId = req.getParameter("class_id");
-        String flagStr = req.getParameter("flag");
+   @Override
+	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-        if (studentId == null || studentId.isEmpty() || studentName == null || studentName.isEmpty()) {
-            req.setAttribute("error", "学生IDまたは名前が入力されていません。");
-            req.getRequestDispatcher("error.jsp").forward(req, res);
+       StudentDao sDao = new StudentDao();
+       ClassDao cDao = new ClassDao(); // ClassDaoのインスタンスを作成
+
+
+       // フォームから送信されたデータを取得
+       String studentId = req.getParameter("studentId");  // 教職員ID
+        String studentName = req.getParameter("studentName");  // 氏名
+        String className = req.getParameter("className");  // クラス名
+        String flagStr = req.getParameter("flag");  // 有効/無効
+
+        int flag = 0;
+        if (flagStr != null && flagStr.equals("0")) {
+            flag = 0;  // 有効
+        } else if (flagStr != null && flagStr.equals("1")) {
+            flag = 1;  // 無効
+        }
+
+     // クラス名からClass_idを取得
+        String classId = cDao.findClassIdByClassName(className);
+        if (classId == null) {
+            // 該当クラスが見つからない場合のエラーハンドリング
+            req.setAttribute("errorMessage", "指定されたクラス名に対応するクラスが見つかりません。");
+            req.getRequestDispatcher("../admin/student_update.jsp").forward(req, res);
             return;
         }
 
-        int flag = (flagStr != null && !flagStr.isEmpty()) ? Integer.parseInt(flagStr) : 0;
+     // デバッグ情報
+        System.out.println("クラス名: " + className);
+        System.out.println("取得されたクラスID: " + classId);
 
-        Student student = new Student();
-        student.setStudentId(studentId);
-        student.setStudentName(studentName);
-        student.setPassword(password);
-        student.setClassId(classId);
-        student.setFlag(flag);
 
-        StudentDao sDao = new StudentDao();
-        if (sDao.save(student)) {
-            req.getRequestDispatcher("student_update_done.jsp").forward(req, res);
+        // Teacherオブジェクトにデータをセット
+        Student updatedStudent = new Student();
+        updatedStudent.setStudentId(studentId);
+        updatedStudent.setStudentName(studentName);
+        updatedStudent.setClassId(classId); // クラスIDをセット
+        updatedStudent.setFlag(flag);
+
+
+        System.out.println("更新される生徒情報: " + updatedStudent);
+
+        // 教職員情報の更新
+        boolean success = sDao.save(updatedStudent);  // 更新メソッドを呼び出す
+
+        if (success) {
+            // 更新成功時
+            req.getRequestDispatcher("../admin/student_update_done.jsp").forward(req, res);
         } else {
-            req.setAttribute("error", "学生情報の更新に失敗しました。");
-            req.getRequestDispatcher("error.jsp").forward(req, res);
+            // 更新失敗時（任意でエラーメッセージを表示する場合）
+            req.setAttribute("errorMessage", "情報の更新に失敗しました。再度試してください。");
+            req.getRequestDispatcher("../admin/student_update.jsp").forward(req, res);
         }
-    }
+   }
 }

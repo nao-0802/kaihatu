@@ -9,9 +9,11 @@ import javax.servlet.http.HttpSession;
 
 import bean.Admin;
 import bean.Guardian;
+import bean.Student;
 import bean.Teacher;
 import dao.AdminDao;
 import dao.GuardianDao;
+import dao.StudentDao;
 import dao.TeacherDao;
 import tool.Action;
 
@@ -54,11 +56,14 @@ public class LoginAdminExecuteAction extends Action {
             // 次の画面に必要なデータをセット
             TeacherDao teacherDao = new TeacherDao();
             GuardianDao guardianDao = new GuardianDao();
+            StudentDao studentDao = new StudentDao();
             List<Teacher> teacher = teacherDao.getAllActiveTeachers();
             List<Guardian> guardian = guardianDao.getAllGuardians();
+            List<Student> student = studentDao.getAllStudents();
 
             req.setAttribute("teacher", teacher);
             req.setAttribute("guardian", guardian);
+            req.setAttribute("student", student);
 
             // 認証成功画面にフォワード
             req.getRequestDispatcher("/admin/login-out.jsp").forward(req, res);

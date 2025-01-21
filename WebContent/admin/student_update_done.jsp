@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生徒情報変更完了</title>
+    <title>教職員情報変更完了</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,7 +60,7 @@
         <p>変更内容をご確認ください。</p>
         <div class="btn-container">
             <!-- 戻るボタンを中央に配置 -->
-            <a href="Student_update.jsp" class="btn">戻る</a>
+            <a href="../scoremanager/AccountList.action" class="btn">戻る</a>
         </div>
     </div>
 </body>

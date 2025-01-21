@@ -9,6 +9,7 @@ public class Student implements java.io.Serializable{
 	private String guardian_id;
 	private int flag;
 	private String student_record_id;
+	private String class_name;
 
 	public String getStudentId(){
 		return student_id;
@@ -31,6 +32,9 @@ public class Student implements java.io.Serializable{
 	public String getStudentRecordId(){
 		return student_record_id;
 	}
+	public String getClassName(){
+		return class_name;
+	}
 	public void setStudentId(String student_id){
 		this.student_id=student_id;
 	}
@@ -51,5 +55,8 @@ public class Student implements java.io.Serializable{
 	}
 	public void setStudentRecordId(String student_record_id){
 		this.student_record_id=student_record_id;
+	}
+	public void setClassName(String class_name){
+		this.class_name=class_name;
 	}
 }

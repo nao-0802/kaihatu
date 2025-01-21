@@ -11,12 +11,20 @@ import bean.Student;
 
 public class StudentDao extends Dao {
 
+	private ClassDao classDao = new ClassDao();
+
+
     // SQLクエリ: 学生の情報を取得するための基本SQL
     private String baseSql = "SELECT * FROM t_student WHERE class_id = ?";
 
     private static final String SELECT_ALL_STUDENTS_SQL =
             "SELECT student_id, student_name, class_id, flag " +
             "FROM t_student";
+
+    // 修正されたSQLクエリ（MERGE文）
+    private static final String SAVE_Student_SQL =
+        "MERGE INTO t_student KEY(student_id) " +
+        "VALUES (?, ?, ?, ?)";
 
  // guardian_idから生徒名を取得するメソッド
     public String getStudentNameByGuardianId(String guardianId) {
@@ -98,6 +106,11 @@ public class StudentDao extends Dao {
                 student.setStudentName(resultSet.getString("student_name"));
                 student.setClassId(resultSet.getString("class_id"));
                 student.setFlag(resultSet.getInt("flag"));
+
+             // classIdに対応するクラス名を取得
+                String className = classDao.getClassNameById(student.getClassId());
+                student.setClassName(className);
+
                 list.add(student);
             }
         }
@@ -260,43 +273,22 @@ public class StudentDao extends Dao {
     }
 
 
-    // 学生を保存または更新するメソッド
+ // 生徒を保存または更新
     public boolean save(Student student) throws Exception {
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        int count = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SAVE_Student_SQL)) {
 
-        try {
-            // 新しい学生の場合は挿入、既存の学生の場合は更新
-            statement = connection.prepareStatement(
-                    "INSERT INTO t_student (student_id, student_name, class_id, flag) VALUES (?, ?, ?, ?)"
-            );
             statement.setString(1, student.getStudentId());
             statement.setString(2, student.getStudentName());
-            statement.setString(3, student.getClassId());
-            statement.setInt(4, student.getFlag());
+            statement.setString(4, student.getClassId());
+            statement.setInt(3, student.getFlag());
 
-            count = statement.executeUpdate();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException sqle) {
-                    throw sqle;
-                }
-            }
+            System.out.println("実行する SQL: " + SAVE_Student_SQL);
+            System.out.println("パラメータ: " + student.getStudentId() + ", " + student.getStudentName() + ", " + student.getClassId() + ", " + student.getFlag());
+
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
         }
-
-        return count > 0;
     }
 
     // 指定されたstudent_idの学生を削除するメソッド

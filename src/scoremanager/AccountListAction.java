@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.Guardian;
+import bean.Student;
 import bean.Teacher;
 import dao.GuardianDao;
+import dao.StudentDao;
 import dao.TeacherDao;
 import tool.Action;
 
@@ -17,16 +19,19 @@ public class AccountListAction extends Action {
         // DAOインスタンス作成
         TeacherDao tDao = new TeacherDao();
         GuardianDao gDao = new GuardianDao();
+        StudentDao sDao = new StudentDao();
 
 
         // 教職員データ、保護者データ、管理者データを取得
         List<Teacher> teacher = tDao.getAllActiveTeachers();
         List<Guardian> guardian = gDao.getAllGuardians();
+        List<Student> student = sDao.getAllStudents();
 
 
         // リクエストスコープにデータをセット
         req.setAttribute("teacher", teacher);
         req.setAttribute("guardian", guardian);
+        req.setAttribute("student", student);
 
         // 画面遷移
         try {

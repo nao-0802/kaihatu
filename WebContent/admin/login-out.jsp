@@ -36,6 +36,24 @@
     </c:forEach>
 </table>
 
+<h2>生徒一覧</h2>
+<a href ="../admin/StudentSignup.action">新規登録</a>
+<table>
+    <tr>
+        <td>ID</td>
+        <td>名前</td>
+        <td>クラス</td>
+    </tr>
+    <c:forEach var="t_student" items="${student}">
+        <tr>
+            <td>${t_student.studentId}</td>
+            <td>${t_student.studentName}</td>
+            <td>${t_student.className}</td>
+            <td><a href="../admin/StudentUpdate.action?studentId=${t_student.studentId}">詳細・変更</a></td>
+        </tr>
+    </c:forEach>
+</table>
+
 <form action="../admin/logout_admin.jsp">
         	<button>ログアウト</button>
         </form>
