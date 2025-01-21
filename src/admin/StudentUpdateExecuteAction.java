@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import bean.Student;
 import dao.ClassDao;
 import dao.StudentDao;
+import dao.StudentRecordDao;
 import tool.Action;
 
 public class StudentUpdateExecuteAction extends Action {
@@ -14,6 +15,7 @@ public class StudentUpdateExecuteAction extends Action {
 
        StudentDao sDao = new StudentDao();
        ClassDao cDao = new ClassDao(); // ClassDaoのインスタンスを作成
+       StudentRecordDao srDao = new StudentRecordDao();
 
 
        // フォームから送信されたデータを取得
@@ -55,6 +57,9 @@ public class StudentUpdateExecuteAction extends Action {
 
         // 教職員情報の更新
         boolean success = sDao.save(updatedStudent);  // 更新メソッドを呼び出す
+
+        srDao.updateClassId(studentId, classId);
+
 
         if (success) {
             // 更新成功時

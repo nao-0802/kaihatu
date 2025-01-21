@@ -34,6 +34,8 @@ public class StudentRecordDao extends Dao {
         return list;
     }
 
+
+
     public void createStudentRecord(String studentId, String birthdate, String guardianId, String features) throws Exception {
         String sql = "INSERT INTO t_student_record (student_record_id, class_id, guardian_id, birthdate, features, student_id) " +
                      "SELECT ?, class_id, ?, ?, ?, student_id FROM t_student WHERE student_id = ?";
@@ -50,6 +52,28 @@ public class StudentRecordDao extends Dao {
 
             // SQL 実行
             ps.executeUpdate();
+        }
+    }
+
+ // t_student_record の class_id を更新するメソッド
+    public boolean updateClassId(String studentId, String newClassId) throws Exception {
+        String sql = "UPDATE t_student_record SET class_id = ? WHERE student_id = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            // パラメータを設定
+            statement.setString(1, newClassId); // 新しいクラスID
+            statement.setString(2, studentId); // 更新対象の student_record_id
+
+            // 実行
+            int affectedRows = statement.executeUpdate();
+
+            // 更新が成功したかを返す
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("t_student_record の class_id 更新に失敗しました: " + e.getMessage());
         }
     }
 
