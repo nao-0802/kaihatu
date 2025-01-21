@@ -16,7 +16,10 @@ header {
   background-color: #43a1a4;
   color: white;
   text-align: center;
+  position: relative; /* positionをrelativeに設定 */
+  z-index: 10; /* 他の要素より前面に表示 */
 }
+
 
 main {
   margin: 50px auto;
