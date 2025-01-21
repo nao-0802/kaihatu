@@ -208,4 +208,31 @@ public class TeacherDao extends Dao {
         return teacher;
     }
 
+
+
+	public List<String> getStudentIdsByTeacherId(String teacherId) throws Exception {
+	    List<String> studentIds = new ArrayList<>();
+	    String query = "SELECT s.student_id " +
+	                   "FROM t_teacher t " +
+	                   "JOIN t_class c ON t.class_id = c.class_id " +
+	                   "JOIN t_student s ON c.class_id = s.class_id " +
+	                   "WHERE t.teacher_id = ?";
+
+	    // コネクションを取得してクエリを実行
+	    try (Connection connection = getConnection();
+	         PreparedStatement stmt = connection.prepareStatement(query)) {
+
+	        stmt.setString(1, teacherId);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                studentIds.add(rs.getString("student_id"));
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        // 例外が発生した場合、適切なエラーハンドリングを行う
+	    }
+
+	    return studentIds;
+	}
 }
