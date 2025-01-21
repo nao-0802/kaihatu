@@ -8,51 +8,57 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: #f9f9f9;
+  overflow-x: hidden; /* 横スクロールを無効化 */
 }
 
 header {
   background-color: #43a1a4;
   color: white;
-
   text-align: center;
 }
 
 main {
-  margin: 52px auto;
+  margin: 50px auto;
   width: 90%;
   max-width: 1200px;
-  background-color: white;
-  padding: 20px;
+  padding: 50px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  position: absolute; /* 絶対位置に設定 */
+  bottom: -1; /* 画面の一番下に配置 */
+  left: 50%; /* 水平方向に中央に配置 */
+  transform: translateX(-50%); /* 中央揃えのために調整 */
+
+  max-height: calc(100vh - 200px); /* 画面サイズに応じて高さ制限 */
 }
 
-h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
-}
 
 /* 出席リストのコンテナ */
 #attendance-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  overflow-y: auto;
+  margin-top: 20px;
+  padding-right: 10px;
+  overflow-y: auto; /* 縦スクロール */
+  max-height: 400px; /* 出席リストの最大高さ */
 }
 
 /* 出席情報のカード */
 .attendance-item {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; /* 枠線の色は維持 */
   border-radius: 8px;
   width: 220px;
   padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
   transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background-color: transparent; /* 背景を透明に設定 */
 }
 
 .attendance-item:hover {
@@ -94,15 +100,16 @@ h2 {
 @media screen and (max-width: 426px) {
   #attendance-list {
     flex-direction: column;
-    align-items: center; /* カードを中央揃え */
+    align-items: center;
   }
 
   .attendance-item {
-    width: 100%; /* 幅を100%に変更 */
-    max-width: 400px; /* 最大幅を設定 */
+    width: 100%;
+    max-width: 400px;
   }
 }
 </style>
+
 <script type="text/javascript">
 /* 詳細を表示/非表示に切り替える関数 */
 function toggleDetails(button) {
@@ -116,6 +123,7 @@ function toggleDetails(button) {
   }
 }
 </script>
+
 </head>
 
 <body>
