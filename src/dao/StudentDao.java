@@ -26,6 +26,12 @@ public class StudentDao extends Dao {
         "MERGE INTO t_student KEY(student_id) " +
         "VALUES (?, ?, ?, ?)";
 
+    private static final String SELECT_ALL_ACTIVE_STUDENTS_SQL =
+    	    "SELECT student_id, student_name, flag, class_id " +
+    	    "FROM t_student " +
+    	    "WHERE flag = 0"; // 在籍フラグが0の生徒のみを取得
+
+
  // guardian_idから生徒名を取得するメソッド
     public String getStudentNameByGuardianId(String guardianId) {
         String studentName = null;
@@ -289,6 +295,32 @@ public class StudentDao extends Dao {
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
         }
+    }
+
+ // 有効な生徒のみ取得するメソッド
+    public List<Student> getAllActiveStudents() throws Exception {
+        List<Student> list = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_ACTIVE_STUDENTS_SQL);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Student student = new Student();
+                student.setStudentId(resultSet.getString("student_id"));
+                student.setStudentName(resultSet.getString("student_name"));
+                student.setFlag(resultSet.getInt("flag"));
+                student.setClassId(resultSet.getString("class_id"));
+
+
+             // classIdに対応するクラス名を取得
+                String className = classDao.getClassNameById(student.getClassId());
+                student.setClassName(className);
+
+
+                list.add(student);
+            }
+        }
+        return list;
     }
 
     // 指定されたstudent_idの学生を削除するメソッド

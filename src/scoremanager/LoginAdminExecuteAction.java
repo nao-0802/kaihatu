@@ -8,13 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Admin;
-import bean.Guardian;
-import bean.Student;
-import bean.Teacher;
 import dao.AdminDao;
-import dao.GuardianDao;
-import dao.StudentDao;
-import dao.TeacherDao;
 import tool.Action;
 
 public class LoginAdminExecuteAction extends Action {
@@ -53,20 +47,9 @@ public class LoginAdminExecuteAction extends Action {
             HttpSession session = req.getSession(true);
             session.setAttribute("user", admin);
 
-            // 次の画面に必要なデータをセット
-            TeacherDao teacherDao = new TeacherDao();
-            GuardianDao guardianDao = new GuardianDao();
-            StudentDao studentDao = new StudentDao();
-            List<Teacher> teacher = teacherDao.getAllActiveTeachers();
-            List<Guardian> guardian = guardianDao.getAllGuardians();
-            List<Student> student = studentDao.getAllStudents();
-
-            req.setAttribute("teacher", teacher);
-            req.setAttribute("guardian", guardian);
-            req.setAttribute("student", student);
 
             // 認証成功画面にフォワード
-            req.getRequestDispatcher("/admin/login-out.jsp").forward(req, res);
+            req.getRequestDispatcher("../scoremanager/AccountList.action").forward(req, res);
         } else { // 認証失敗の場合
             // エラーメッセージをセット
             errors.add("IDまたはパスワードが確認できませんでした。");
