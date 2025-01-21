@@ -100,6 +100,10 @@
 <h2 id="selectedSymptom"></h2>
 
 <style>
+body{
+  overflow-y: scroll;
+}
+
 main {
     margin-top: 52px;
     margin-left: auto;
