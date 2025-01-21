@@ -3,7 +3,6 @@
 
 
 <style>
-@media only screen and (max-width: 769px){
 body{
     margin: 0;
 }
@@ -79,9 +78,9 @@ input[type="password"]{
     letter-spacing: 4px;
     font-size: 25px;
     text-align: center;
-    color: #E9E9E9;
+    color: aliceblue;
 }
-}
+
 </style>
 
 <body>
@@ -97,18 +96,20 @@ input[type="password"]{
 <form class="a" action="Login.action" method="post">
     <table>
         <tr>
-            <th></th>
-            <td>
-                <input type="text" name="teacherID" placeholder="保護者ID" required>
-            </td>
+            <th>
+	            <td>
+	                <input type="text" name="teacherID" placeholder="保護者ID" required>
+	            </td>
+	        </th>
         </tr>
 
         <tr>
-            <th></th>
-            <td>
-                <input type="password" id="password" name="password" placeholder="パスワード" required>
-                <i id="toggleIcon" class="fa-solid fa-eye fa-fw"></i>
-            </td>
+            <th>
+	            <td>
+	                <input type="password" id="password" name="password" placeholder="パスワード" required>
+	                <i id="toggleIcon" class="fa-solid fa-eye fa-fw"></i>
+	            </td>
+	        </th>
         </tr>
 
     </table>
