@@ -76,6 +76,23 @@ public class StudentRecordDao extends Dao {
             throw new Exception("t_student_record の class_id 更新に失敗しました: " + e.getMessage());
         }
     }
+    public StudentRecord getStudentRecord(String studentId) throws Exception {
+        String sql = "SELECT class_id, birthdate, features FROM t_student_record WHERE student_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    StudentRecord record = new StudentRecord();
+                    record.setClassId(rs.getString("class_id"));
+                    record.setBirthdate(rs.getDate("birthdate"));
+                    record.setFeatures(rs.getString("features"));
+                    return record;
+                }
+            }
+        }
+        return null;
+    }
 
     public void save(StudentRecord record) throws Exception {
         String sql = "INSERT INTO t_student_record (student_record_id, class_id, guardian_id, birthdate, features, student_id) VALUES (?, ?, ?, ?, ?, ?)";

@@ -406,6 +406,19 @@ public class GuardianDao extends Dao {
 
         return guardian;
     }
+    public String getGuardianName(String guardianId) throws Exception {
+        String sql = "SELECT guardian_name FROM t_guardian WHERE guardian_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, guardianId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("guardian_name");
+                }
+            }
+        }
+        return null;
+    }
 }
 
 
