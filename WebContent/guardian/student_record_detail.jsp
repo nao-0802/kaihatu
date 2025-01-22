@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@include file="../common/G_header.jsp" %>
     <title>生徒カルテ詳細</title>
     <style>
         body {
