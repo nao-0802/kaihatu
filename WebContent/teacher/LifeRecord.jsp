@@ -25,14 +25,6 @@
         <!-- 学生情報 -->
         <p>名前: ${list.studentName} (${list.studentId})</p>
 
-        <!-- 詳細 -->
-        <div class="box">
-            <select>
-                <option value="詳細1">詳細1</option>
-                <option value="詳細2">詳細2</option>
-                <option value="詳細3">詳細3</option>
-            </select>
-        </div>
 
         <!-- メモ -->
         <div class="box">メモ</div>
@@ -95,5 +87,22 @@
             </form>
         </details>
     </div>
+
+            <!-- 連絡帳ボタン -->
+        <div class="box">
+            <form action="../teacher/ContactBookWrite.action" method="get">
+                <input type="hidden" name="student_id" value="${list.studentId}">
+                <button type="submit">連絡帳を表示</button>
+            </form>
+        </div>
+
+        <!-- カルテボタン -->
+        <div class="box">
+            <form action="../teacher/StudentRecord.action" method="get">
+                <input type="hidden" name="student_id" value="${list.studentId}">
+                <button type="submit">カルテを表示</button>
+            </form>
+        </div>
+
 </body>
 </html>

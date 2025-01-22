@@ -83,7 +83,7 @@ public class StudentRecord implements java.io.Serializable{
 	}
 	public void setExcretionId(String excretion_id){
 		this.excretion_id=excretion_id;
-	}
+	
 	public void setAttendanceId(String attendance_id){
 		this.attendance_id=attendance_id;
 	}
