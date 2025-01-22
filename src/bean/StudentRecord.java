@@ -9,7 +9,7 @@ public class StudentRecord implements java.io.Serializable{
 	private String class_id;
 	private String guardian_id;
 	private Date birthdate;
-	private String allergy;
+	private String  allergy;
 	private String features;
 	private String meal_id;
 	private String sleep_id;
@@ -33,7 +33,7 @@ public class StudentRecord implements java.io.Serializable{
 	public Date getBirthdate(){
 		return birthdate;
 	}
-	public String getAllergy(){
+	public String  getAllergy(){
 		return allergy;
 	}
 	public String getFeatures(){
@@ -69,7 +69,7 @@ public class StudentRecord implements java.io.Serializable{
 	public void setBirthdate(Date birthdate){
 		this.birthdate=birthdate;
 	}
-	public void setAllergy(String allergy){
+	public void setString(String allergy){
 		this.allergy=allergy;
 	}
 	public void setFeatures(String features){
@@ -83,7 +83,7 @@ public class StudentRecord implements java.io.Serializable{
 	}
 	public void setExcretionId(String excretion_id){
 		this.excretion_id=excretion_id;
-	}
+	
 	public void setAttendanceId(String attendance_id){
 		this.attendance_id=attendance_id;
 	}
@@ -97,3 +97,9 @@ public class StudentRecord implements java.io.Serializable{
 		this.student_id = student_id;
 	}
 }
+
+
+
+
+
+

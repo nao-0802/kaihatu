@@ -23,7 +23,7 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setClassId(rSet.getString("class_Id"));
                 studentRecord.setGuardianId(rSet.getString("guardian_id"));
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
-                studentRecord.setAllergy(rSet.getString("allergy"));
+                studentRecord.setString(rSet.getString("allergy"));
                 studentRecord.setFeatures(rSet.getString("features"));
                 list.add(studentRecord);
             }
@@ -245,7 +245,7 @@ public class StudentRecordDao extends Dao {
                     record.setStudentRecordId(rs.getString("student_record_id"));
                     record.setStudentId(rs.getString("student_id"));
                     record.setFeatures(rs.getString("features"));
-                    record.setAllergy(rs.getString("allergy"));
+
                     // 他のプロパティをセット
                 }
             }
@@ -350,7 +350,7 @@ public class StudentRecordDao extends Dao {
                 studentRecord.setClassId(rSet.getString("classId"));
                 studentRecord.setGuardianId(rSet.getString("guardian_id"));
                 studentRecord.setBirthdate(rSet.getDate("birthdate"));
-                studentRecord.setAllergy(rSet.getString("allergy"));
+                studentRecord.setString(rSet.getString("allergy"));
                 studentRecord.setFeatures(rSet.getString("features"));
             }
         } catch (Exception e) {
