@@ -156,9 +156,15 @@
 
     <div class="button-container">
     <form action="../teacher/ContactBookWrite.action" method="get">
-    <input type="hidden" name="student_id" value="${list.studentId}">
-    <button type="submit" class="button">連絡帳を書く</button>
-</form>
+    	<input type="hidden" name="student_id" value="${list.studentId}">
+    	<button type="submit" class="button">連絡帳を書く</button>
+	</form>
+
+	<div class="button-container">
+	<form action="../teacher/ContactBookList.action" method="get">
+		<input type="hidden" name="student_id" value="${list.studentId}">
+		<button type="submit" class="button">連絡帳閲覧</button>
+	</form>
 
 
     <!-- カルテ閲覧ボタン -->

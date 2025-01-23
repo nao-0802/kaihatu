@@ -13,7 +13,7 @@ import dao.GuardianDao;
 import dao.StudentDao;
 import tool.Action;
 
-public class ContactBookListAction extends Action {
+public class ContactBookListReturnAction extends Action {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -27,14 +27,16 @@ public class ContactBookListAction extends Action {
         }
 
      // リクエストから student_id を取得
-        String studentId = req.getParameter("student_id");
-        if (studentId == null || studentId.isEmpty()) {
-            throw new IllegalArgumentException("Student ID is missing.");
+        String guardianId = req.getParameter("guardian_id");
+        if (guardianId == null || guardianId.isEmpty()) {
+            throw new IllegalArgumentException("Guardian ID is missing.");
         }
 
         GuardianDao guardianDao = new GuardianDao();
 
-        String guardianId = guardianDao.getGuardianIdbyStudentId(studentId);
+        String studentId = guardianDao.getStudentIdByGuardianId(guardianId);
+
+
 
         // ContactBookDaoを使用して、teacherIdに基づく連絡帳情報を取得
         ContactBookDao contactBookDao = new ContactBookDao();

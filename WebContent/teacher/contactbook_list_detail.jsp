@@ -12,8 +12,8 @@
         ContactBook contactBook = (ContactBook) request.getAttribute("contactBook");
         if (contactBook != null) {
     %>
-        
-        <p><strong>生徒氏名:</strong> <%= contactBook.getTeacherId() %></p>
+
+        <p><strong>生徒氏名:</strong> <%= contactBook.getStudentName() %></p>
         <p><strong>日付:</strong> <%= contactBook.getDay() %></p>
         <p><strong>連絡内容:</strong> <%= contactBook.getContactDetails() %></p>
     <%
@@ -24,6 +24,10 @@
         }
     %>
 
-    <a href="../teacher/ContactBookList.action">戻る</a>
+    <form action="../teacher/ContactBookListReturn.action" method="get">
+        <!-- サーバーサイドの値を直接埋め込む -->
+        <input type="hidden" name="guardian_id" value="<%= contactBook.getGuardianId() %>">
+        <button type="submit" class="button">連絡帳閲覧</button>
+    </form>
 </body>
 </html>
