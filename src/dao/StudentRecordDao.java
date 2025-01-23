@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.Allergy;
 import bean.StudentRecord;
 
 public class StudentRecordDao extends Dao {
@@ -32,6 +33,103 @@ public class StudentRecordDao extends Dao {
             list = null;
         }
         return list;
+    }
+
+    public StudentRecord getStudentRecordByStudentId(String studentId) throws Exception {
+        String sql = "SELECT sr.*, g.guardian_name, s.student_name, c.class_name " +
+                     "FROM t_student_record sr " +
+                     "JOIN t_student s ON sr.student_id = s.student_id " +
+                     "JOIN t_guardian g ON sr.guardian_id = g.guardian_id " +
+                     "JOIN t_class c ON sr.class_id = c.class_id " +
+                     "WHERE sr.student_id = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                StudentRecord record = new StudentRecord();
+                record.setStudentId(rs.getString("student_id"));
+                record.setStudentName(rs.getString("student_name"));
+                record.setGuardianName(rs.getString("guardian_name"));
+                record.setBirthdate(rs.getDate("birthdate"));
+                record.setClassName(rs.getString("class_name"));
+                record.setFeatures(rs.getString("features"));
+                return record;
+            }
+            return null;
+        }
+    }
+
+    public List<Allergy> getAllergiesByStudentId(String studentId) throws Exception {
+        String sql = "SELECT am.allergy_id, am.allergy_name " +
+                     "FROM t_student_allergy sa " +
+                     "JOIN t_allergy_master am ON sa.allergy_id = am.allergy_id " +
+                     "WHERE sa.student_id = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            ResultSet rs = stmt.executeQuery();
+            List<Allergy> allergies = new ArrayList<>();
+            while (rs.next()) {
+                Allergy allergy = new Allergy();
+                allergy.setAllergyId(rs.getInt("allergy_id"));
+                allergy.setAllergyName(rs.getString("allergy_name"));
+                allergies.add(allergy);
+            }
+            return allergies;
+        }
+    }
+
+    public List<String> getAllClasses() throws Exception {
+        String sql = "SELECT class_id, class_name FROM t_class";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            List<String> classes = new ArrayList<>();
+            while (rs.next()) {
+                classes.add(rs.getString("class_name"));
+            }
+            return classes;
+        }
+    }
+
+    public void updateStudentRecord(StudentRecord record) throws Exception {
+        String sql = "UPDATE t_student_record SET class_id = ?, features = ? WHERE student_id = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, record.getClassId());
+            stmt.setString(2, record.getFeatures());
+            stmt.setString(3, record.getStudentId());
+            stmt.executeUpdate();
+        }
+    }
+
+    public void updateAllergies(String studentId, List<Integer> allergyIds) throws Exception {
+        String deleteSql = "DELETE FROM t_student_allergy WHERE student_id = ?";
+        String insertSql = "INSERT INTO t_student_allergy (student_allergy_id, student_id, allergy_id) VALUES (?, ?, ?)";
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setString(1, studentId);
+                deleteStmt.executeUpdate();
+            }
+
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                for (int allergyId : allergyIds) {
+                    insertStmt.setString(1, generateRandomId(10));
+                    insertStmt.setString(2, studentId);
+                    insertStmt.setInt(3, allergyId);
+                    insertStmt.addBatch();
+                }
+                insertStmt.executeBatch();
+            }
+            conn.commit();
+        }
+    }
+
+    private String generateRandomId(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder id = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            id.append(chars.charAt((int) (Math.random() * chars.length())));
+        }
+        return id.toString();
     }
 
 

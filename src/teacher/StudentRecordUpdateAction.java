@@ -1,29 +1,29 @@
-package admin;
+package teacher;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import bean.Student;
-import bean.Teacher;
-import dao.StudentDao;
+import bean.Allergy;
+import bean.StudentRecord;
+import dao.StudentRecordDao;
 import tool.Action;
 
 public class StudentRecordUpdateAction extends Action {
-
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        HttpSession session = req.getSession(); // セッションを取得
-        Teacher teacher = (Teacher) session.getAttribute("user"); // セッションからログイン中の教師情報を取得
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String studentId = request.getParameter("studentId");
 
-        String studentRecordId = req.getParameter("student_record_id"); // 選択した生徒カルテIDを取得
-        StudentDao studentDao = new StudentDao(); // StudentDaoのインスタンス
-        Student studentRecord = studentDao.getStudentRecord(studentRecordId, teacher.getSchool()); // 生徒カルテ情報を取得
+        StudentRecordDao dao = new StudentRecordDao();
+        StudentRecord record = dao.getStudentRecordByStudentId(studentId);
+        List<Allergy> allergies = dao.getAllergiesByStudentId(studentId);
+        List<String> classList = dao.getAllClasses();
 
-        // 取得した生徒カルテ情報をリクエスト属性にセット
-        req.setAttribute("studentRecord", studentRecord);
+        request.setAttribute("studentRecord", record);
+        request.setAttribute("allergyList", allergies);
+        request.setAttribute("classList", classList);
 
-        // 生徒カルテ更新画面へフォワード
-        req.getRequestDispatcher("Student_record_update.jsp").forward(req, res);
+        request.getRequestDispatcher("../teacher/student_record_update.jsp").forward(request, response);
     }
 }
