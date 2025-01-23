@@ -1,6 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!-- 新規登録ボタン -->
+<div style="margin-bottom: 20px;">
+    <button onclick="location.href='../scoremanager/TeacherSignup.action'">教職員新規登録</button>
+    <button onclick="location.href='../scoremanager/GuardianSignup.action'">保護者新規登録</button>
+    <button onclick="location.href='../admin/StudentSignup.action'">生徒新規登録</button>
+</div>
+
 <h2>教職員一覧</h2>
 <form action="../scoremanager/AccountList.action" method="get">
     <label for="teacherFlag">表示対象:</label>

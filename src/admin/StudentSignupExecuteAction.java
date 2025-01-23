@@ -85,7 +85,7 @@ public class StudentSignupExecuteAction extends Action {
             List<bean.Class> classList = classDao.getAllClasses();
             req.setAttribute("class_list", classList);
 
-            req.getRequestDispatcher("/admin/teacher_create.jsp").forward(req, res);
+            req.getRequestDispatcher("/admin/student_create_done.jsp").forward(req, res);
         }
     }
 }
