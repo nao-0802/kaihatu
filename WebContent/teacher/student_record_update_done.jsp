@@ -1,67 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@include file="../common/T_header.jsp" %>
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生徒カルテ更新完了</title>
+    <title>更新完了</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .update-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            text-align: center; /* テキストを中央揃え */
+            text-align: center;
+            margin-top: 50px;
         }
         h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #28a745; /* 緑色 */
+            color: #333;
         }
-        p {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 16px;
+        a {
+            color: #4CAF50;
+            text-decoration: none;
         }
-        .btn-container {
-            text-align: center; /* ボタンを中央揃え */
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px;
-            background-color: #28a745; /* 緑色 */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none; /* リンクの下線を消す */
-            font-size: 16px;
-        }
-        .btn:hover {
-            background-color: #218838; /* 濃い緑 */
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="update-container">
-        <h2>生徒カルテが更新されました！</h2>
-        <p>生徒カルテの更新が正常に完了しました。</p>
-        <p>変更内容をご確認ください。</p>
-        <div class="btn-container">
-            <!-- 戻るボタンを中央に配置 -->
-            <a href="student_list.jsp" class="btn">戻る</a>
-        </div>
-    </div>
+    <h2>生徒カルテの更新が完了しました。</h2>
+    <p><a href="../teacher/StudentListExecuteAction">生徒一覧へ戻る</a></p>
 </body>
 </html>

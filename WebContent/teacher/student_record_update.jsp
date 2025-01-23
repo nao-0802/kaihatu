@@ -1,127 +1,107 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="../common/T_header.jsp" %>
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生徒カルテ更新</title>
     <style>
-        /* 基本のスタイル設定 */
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-        }
-
-        form {
-            width: 60%;
-            margin: 0 auto;
-            background-color: #fff;
+            margin: 20px;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
         }
-
-        table {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        label {
-            font-size: 16px;
-            font-weight: bold;
+        h2 {
             color: #333;
         }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+        form {
+            margin-top: 20px;
         }
-
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .checkbox-group {
+            margin-top: 10px;
+        }
         button {
-            padding: 12px 20px;
             background-color: #4CAF50;
             color: white;
-            font-size: 16px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            width: 100%;
         }
-
         button:hover {
             background-color: #45a049;
-        }
-
-        /* エラーメッセージ用スタイル */
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>生徒カルテ更新</h1>
+    <h2>生徒カルテ更新</h2>
+    <form action="../teacher/StudentRecordUpdateExecuteAction" method="post">
+        <input type="hidden" name="studentId" value="${studentRecord.studentId}">
 
-    <!-- エラーメッセージ表示 -->
-    <c:if test="${not empty errorMessage}">
-        <div class="error-message">${errorMessage}</div>
-    </c:if>
+        <div class="form-group">
+            <label>生徒氏名</label>
+            <input type="text" value="${studentRecord.studentName}" readonly>
+        </div>
 
-    <form action="StudentRecordUpdateExecuteAction" method="POST">
-        <table>
-            <tr>
-                <td><label for="student_record_id">生徒カルテID:</label></td>
-                <td><input type="text" id="student_record_id" name="student_record_id" value="${studentRecord.studentRecordId}" required maxlength="10" placeholder="srから始まるIDを入力してください。" /></td>
-            </tr>
-            <tr>
-                <td><label for="name">生徒氏名:</label></td>
-                <td><input type="text" id="name" name="name" value="${studentRecord.name}" required maxlength="100" /></td>
-            </tr>
-            <tr>
-                <td><label for="class_id">クラスID:</label></td>
-                <td><input type="text" id="class_id" name="class_id" value="${studentRecord.classId}" required maxlength="50" /></td>
-            </tr>
-            <tr>
-                <td><label for="guardian_id">保護者ID:</label></td>
-                <td><input type="text" id="guardian_id" name="guardian_id" value="${studentRecord.guardianId}" required maxlength="10" placeholder="gから始まるIDを入力してください。" /></td>
-            </tr>
-            <tr>
-                <td><label for="birthdate">生年月日:</label></td>
-                <td><input type="date" id="birthdate" name="birthdate" value="${studentRecord.birthdate}" required /></td>
-            </tr>
-            <tr>
-                <td><label for="allergy">アレルギー:</label></td>
-                <td><input type="text" id="allergy" name="allergy" value="${studentRecord.allergy}" maxlength="100" /></td>
-            </tr>
-            <tr>
-                <td><label for="features">特徴:</label></td>
-                <td><input type="text" id="features" name="features" value="${studentRecord.features}" maxlength="100" /></td>
-            </tr>
-            <tr>
-                <td><label for="annual_record">年次記録:</label></td>
-                <td><input type="text" id="annual_record" name="annual_record" value="${studentRecord.annualRecord}" maxlength="100" /></td>
-            </tr>
-        </table>
-        <button type="submit">更新</button>
+        <div class="form-group">
+            <label>保護者氏名</label>
+            <input type="text" value="${studentRecord.guardianName}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>生年月日</label>
+            <input type="text" value="${studentRecord.birthdate}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>クラス</label>
+            <select name="classId">
+                <c:forEach var="classItem" items="${classList}">
+                    <option value="${classItem.classId}" ${classItem.classId == studentRecord.classId ? 'selected' : ''}>
+                        ${classItem.className}
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>特徴</label>
+            <textarea name="features" rows="4">${studentRecord.features}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>アレルギー情報</label>
+            <div class="checkbox-group">
+                <c:forEach var="allergy" items="${allergyList}">
+                    <label>
+                        <input type="checkbox" name="allergy_id" value="${allergy.allergyId}"
+                        <c:if test="${allergy.isChecked}">checked</c:if>>
+                        ${allergy.allergyName}
+                    </label>
+                </c:forEach>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">更新する</button>
+        </div>
     </form>
 </body>
 </html>

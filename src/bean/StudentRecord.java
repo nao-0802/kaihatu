@@ -17,6 +17,9 @@ public class StudentRecord implements java.io.Serializable{
 	private String student_id;
 	private String attendance_id;
 	private String anual_record_id;
+	private String student_name;
+	private String guardian_name;
+	private String class_name;
 
 	public String getStudentRecordId(){
 		return student_record_id;
@@ -54,6 +57,15 @@ public class StudentRecord implements java.io.Serializable{
 	public String getAnualRecordId(){
 		return anual_record_id;
 	}
+	public String getStudentName(){
+		return student_name;
+	}
+	public String getGuardianName(){
+		return guardian_name;
+	}
+	public String getClassName(){
+		return class_name;
+	}
 	public void setStudentRecordId(String student_record_id){
 		this.student_record_id=student_record_id;
 	}
@@ -89,6 +101,15 @@ public class StudentRecord implements java.io.Serializable{
 	}
 	public void setAnualRecordId(String anual_record_id){
 		this.anual_record_id=anual_record_id;
+	}
+	public void setStudentName(String student_name){
+		this.student_name=student_name;
+	}
+	public void setGuardianName(String guardian_name){
+		this.guardian_name=guardian_name;
+	}
+	public void setClassName(String class_name){
+		this.class_name=class_name;
 	}
 	public String getStudentId() {
 		return student_id;

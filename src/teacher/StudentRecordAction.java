@@ -1,70 +1,62 @@
 package teacher;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.Allergy;
-import bean.Guardian;
-import bean.Student;
 import bean.StudentRecord;
+import dao.AllergyDao;
 import dao.ClassDao;
 import dao.GuardianDao;
-import dao.StudentAllergyDao;
 import dao.StudentDao;
 import dao.StudentRecordDao;
 import tool.Action;
 
 public class StudentRecordAction extends Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         // リクエストパラメータから生徒IDを取得
-        String studentid = request.getParameter("student_id");
+        String studentId = req.getParameter("student_id");
 
-        try {
-            // 生徒情報の取得
-            StudentDao sdao = new StudentDao();
-            Student student = sdao.get(studentid);
-            // 生徒情報をリクエスト属性に設定
-            request.setAttribute("student", student);
 
-            // 保護者情報の取得
-            GuardianDao gdao = new GuardianDao();
-            List<Guardian> glist = gdao.getGuardianIdByStudentId(studentid);
-            request.setAttribute("glist", glist);
 
-            // 生徒カルテ情報をデータベースから取得
-            StudentRecordDao srdao = new StudentRecordDao();
-            List<StudentRecord> recordList = srdao.search(studentid);
-            request.setAttribute("recordList", recordList);
+     // 必要な情報を取得するDAOを準備
+        StudentDao sDao = new StudentDao();
+        GuardianDao gDao = new GuardianDao();
+        StudentRecordDao studentRecordDao = new StudentRecordDao();
+        ClassDao cDao = new ClassDao();
+        AllergyDao allergyDao = new AllergyDao();
 
-            // アレルギー情報を取得
-            StudentAllergyDao allergyDao = new StudentAllergyDao();
-            List<Allergy> allergyList = allergyDao.getAllergiesByStudentId(studentid);
-            request.setAttribute("allergyList", allergyList);
+        //student_idからguardian_idを取得
+        String guardianId = gDao.getGuardianIdbyStudentId(studentId);
 
-            // クラス情報を取得
-            ClassDao cdao = new ClassDao();
-            List<String> classList = new ArrayList<>();
-            for (StudentRecord record : recordList) {
-                String classId = record.getClassId();
-                String className = cdao.getClassNameById(classId);
-                classList.add(className);
-            }
-            // クラス情報をリクエスト属性に設定
-            request.setAttribute("classList", classList);
+        // student_idからstudent_nameを取得
+        String studentName = sDao.getStudentNameByGuardianId(guardianId);
 
-            // 生徒カルテ詳細画面にフォワード
-            request.getRequestDispatcher("student_record_detail.jsp").forward(request, response);
+        // guardian_idからguardian_nameを取得
+        String guardianName = gDao.getGuardianName(guardianId);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "データの取得に失敗しました");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
+        // student_idからstudent_record情報を取得
+        StudentRecord studentRecord = studentRecordDao.getStudentRecord(studentId);
+
+        // student_idからallergy_idを取得し、allergy_nameを取得
+        List<String> allergyNames = allergyDao.getAllergyNamesByStudentId(studentId);
+
+        String classId = studentRecord.getClassId();
+        String className = cDao.getClassNameById(classId);
+
+
+        // リクエストスコープにデータをセット
+        req.setAttribute("studentName", studentName);
+        req.setAttribute("guardianName", guardianName);
+        req.setAttribute("studentRecord", studentRecord);
+        req.setAttribute("allergyNames", allergyNames);
+        req.setAttribute("className", className);
+        req.setAttribute("studentId", studentId);
+
+     // JSPへフォワード
+        req.getRequestDispatcher("../teacher/student_record_detail.jsp").forward(req, res);
+
     }
 }
