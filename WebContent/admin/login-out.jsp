@@ -6,6 +6,7 @@
     <button onclick="location.href='../scoremanager/TeacherSignup.action'">教職員新規登録</button>
     <button onclick="location.href='../scoremanager/GuardianSignup.action'">保護者新規登録</button>
     <button onclick="location.href='../admin/StudentSignup.action'">生徒新規登録</button>
+    <button onclick="location.href='../admin/ClassCreate.action'">クラス新規作成</button>
 </div>
 
 <h2>教職員一覧</h2>

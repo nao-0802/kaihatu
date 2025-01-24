@@ -17,6 +17,20 @@ public class ClassDao extends Dao {
     private static final String SELECT_CLASS_NAME_SQL =
         "SELECT class_name FROM t_class WHERE class_id = ?";
 
+    public void save(Class newClass) throws Exception {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "INSERT INTO t_class (class_id, class_name) VALUES (?, ?)")) {
+
+            statement.setString(1, newClass.getClassId());
+            statement.setString(2, newClass.getClassName());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // 全クラスを取得するメソッド
     public List<Class> getAllClasses() throws Exception {

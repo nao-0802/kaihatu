@@ -24,6 +24,9 @@
 </head>
 <body>
     <h2>生徒カルテの更新が完了しました。</h2>
-    <p><a href="../teacher/StudentListExecuteAction">生徒一覧へ戻る</a></p>
+    <form action="../teacher/StudentRecord.action" method="post">
+                    <!-- 生徒名をボタンに表示 -->
+                    <button name="student_id" value="${studentId}">生徒カルテへ</button>
+                </form>
 </body>
 </html>

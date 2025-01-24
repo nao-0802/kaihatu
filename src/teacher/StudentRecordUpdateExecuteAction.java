@@ -34,6 +34,8 @@ public class StudentRecordUpdateExecuteAction extends Action {
         }
         dao.updateAllergies(studentId, allergyIdList);
 
+        request.setAttribute("studentId", studentId);
+
         request.getRequestDispatcher("../teacher/student_record_update_done.jsp").forward(request, response);
     }
 }
