@@ -70,7 +70,7 @@
 
     <div class="button-container">
     <form action="../teacher/StudentRecordUpdate.action" method="get">
-        <input type="hidden" name="studentId" value="${studentRecord.studentId}">
+        <input type="hidden" name="studentId" value="${studentId}">
         <button type="submit">生徒カルテを更新</button>
     </form>
 </div>

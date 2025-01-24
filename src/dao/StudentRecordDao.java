@@ -35,6 +35,84 @@ public class StudentRecordDao extends Dao {
         return list;
     }
 
+    public StudentRecord GetStudentRecord(String studentRecordId) throws Exception {
+        StudentRecord studentRecord = null;
+        String sql = "SELECT r.student_record_id, r.class_id, r.guardian_id, r.birthdate, r.features, "
+                   + "r.student_id, s.student_name, g.guardian_name "
+                   + "FROM t_student_record r "
+                   + "JOIN t_student s ON r.student_id = s.student_id "
+                   + "JOIN t_guardian g ON r.guardian_id = g.guardian_id "
+                   + "WHERE r.student_record_id = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+            pstmt.setString(1, studentRecordId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    studentRecord = new StudentRecord();
+                    studentRecord.setStudentRecordId(rs.getString("student_record_id"));
+                    studentRecord.setClassId(rs.getString("class_id"));
+                    studentRecord.setGuardianId(rs.getString("guardian_id"));
+                    studentRecord.setBirthdate(rs.getDate("birthdate"));
+                    studentRecord.setFeatures(rs.getString("features"));
+                    studentRecord.setStudentId(rs.getString("student_id"));
+                    studentRecord.setStudentName(rs.getString("student_name"));
+                    studentRecord.setGuardianName(rs.getString("guardian_name"));
+                }
+            }
+        }
+        return studentRecord;
+    }
+
+    // アレルギー情報を取得
+    public List<Allergy> getAllergiesForStudent(String studentId) throws Exception {
+        List<Allergy> allergies = new ArrayList<>();
+        String sql = "SELECT am.allergy_id, am.allergy_name, "
+                   + "CASE WHEN sa.student_allergy_id IS NOT NULL THEN true ELSE false END AS is_checked "
+                   + "FROM t_allergy_master am "
+                   + "LEFT JOIN t_student_allergy sa ON am.allergy_id = sa.allergy_id AND sa.student_id = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+            pstmt.setString(1, studentId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Allergy allergy = new Allergy();
+                    allergy.setAllergyId(rs.getInt("allergy_id"));
+                    allergy.setAllergyName(rs.getString("allergy_name"));
+                    allergy.setChecked(rs.getBoolean("is_checked"));
+                    allergies.add(allergy);
+                }
+            }
+        }
+        return allergies;
+    }
+
+    // 生徒のアレルギー情報を更新
+    public void updateStudentAllergies(String studentId, List<Integer> allergyIds) throws Exception {
+        String deleteSql = "DELETE FROM t_student_allergy WHERE student_id = ?";
+        String insertSql = "INSERT INTO t_student_allergy (allergy_id, student_id) VALUES (?, ?)";
+
+        try (PreparedStatement deletePstmt = getConnection().prepareStatement(deleteSql)) {
+            deletePstmt.setString(1, studentId);
+            deletePstmt.executeUpdate();
+        }
+
+        try (PreparedStatement insertPstmt = getConnection().prepareStatement(insertSql)) {
+            for (Integer allergyId : allergyIds) {
+                insertPstmt.setInt(1, allergyId);
+                insertPstmt.setString(2, studentId);
+                insertPstmt.executeUpdate();
+            }
+        }
+    }
+
+    // 生徒レコードの特徴を更新
+    public void updateStudentFeatures(String studentRecordId, String features) throws Exception {
+        String sql = "UPDATE t_student_record SET features = ? WHERE student_record_id = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+            pstmt.setString(1, features);
+            pstmt.setString(2, studentRecordId);
+            pstmt.executeUpdate();
+        }
+    }
+
     public StudentRecord getStudentRecordByStudentId(String studentId) throws Exception {
         String sql = "SELECT sr.*, g.guardian_name, s.student_name, c.class_name " +
                      "FROM t_student_record sr " +

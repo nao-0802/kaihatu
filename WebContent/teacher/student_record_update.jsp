@@ -52,7 +52,7 @@
 </head>
 <body>
     <h2>生徒カルテ更新</h2>
-    <form action="../teacher/StudentRecordUpdateExecuteAction" method="post">
+    <form action="../teacher/StudentRecordUpdateExecute.action" method="post">
         <input type="hidden" name="studentId" value="${studentRecord.studentId}">
 
         <div class="form-group">

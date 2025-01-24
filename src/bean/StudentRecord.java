@@ -1,6 +1,7 @@
 package bean;
 
 import java.sql.Date;
+import java.util.List;
 
 public class StudentRecord implements java.io.Serializable{
 
@@ -20,6 +21,7 @@ public class StudentRecord implements java.io.Serializable{
 	private String student_name;
 	private String guardian_name;
 	private String class_name;
+	private List<Allergy> allergyList;
 
 	public String getStudentRecordId(){
 		return student_record_id;
@@ -117,6 +119,13 @@ public class StudentRecord implements java.io.Serializable{
 	public void setStudentId(String student_id) {
 		this.student_id = student_id;
 	}
+	public List<Allergy> getAllergyList() {
+        return allergyList;
+    }
+
+    public void setAllergyList(List<Allergy> allergyList) {
+        this.allergyList = allergyList;
+    }
 }
 
 
