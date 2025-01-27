@@ -21,13 +21,25 @@
         .button-container {
             margin-top: 10px;
             margin-bottom: 10px;
-            text-align: right;
-            width: 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
         }
 
         .button {
-            padding: 5px;
-            margin-right: 10px;
+            padding: 10px 20px;
+            margin: 0;
+            background-color: #f0f0f0; /* 色を緩くする */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #e0e0e0;
         }
 
         .title1, #body1 {
@@ -155,26 +167,23 @@
     </div>
 
     <div class="button-container">
-    <form action="../teacher/ContactBookWrite.action" method="get">
-    	<input type="hidden" name="student_id" value="${list.studentId}">
-    	<button type="submit" class="button">連絡帳を書く</button>
-	</form>
+        <!-- 連絡帳書くボタン -->
+        <form action="../teacher/ContactBookWrite.action" method="get">
+            <input type="hidden" name="student_id" value="${list.studentId}">
+            <button type="submit" class="button">連絡帳を書く</button>
+        </form>
 
-	<div class="button-container">
-	<form action="../teacher/ContactBookList.action" method="get">
-		<input type="hidden" name="student_id" value="${list.studentId}">
-		<button type="submit" class="button">連絡帳閲覧</button>
-	</form>
+        <!-- 連絡帳閲覧ボタン -->
+        <form action="../teacher/ContactBookList.action" method="get">
+            <input type="hidden" name="student_id" value="${list.studentId}">
+            <button type="submit" class="button">連絡帳閲覧</button>
+        </form>
 
-
-    <!-- カルテ閲覧ボタン -->
-    <form action="../teacher/StudentRecord.action" method="get">
-        <input type="hidden" name="student_id" value="${list.studentId}">
-        <button type="submit" class="button">カルテ閲覧</button>
-    </form>
-
-
-
+        <!-- カルテ閲覧ボタン -->
+        <form action="../teacher/StudentRecord.action" method="get">
+            <input type="hidden" name="student_id" value="${list.studentId}">
+            <button type="submit" class="button">カルテ閲覧</button>
+        </form>
     </div>
 
     <div class="container add-control">
@@ -187,66 +196,60 @@
         <input type="checkbox" id="tab4" class="radio" name="tab" onclick="onlyOne(this)">
         <label class="tab-title title4" id="title4" for="tab4">服薬</label>
 
+        <!-- 睡眠 -->
         <div class="tab-body" id="body1">
-            <details name="life" id="a">
-                <form action="../teacher/SleepRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
-                    <input type="hidden" name="student_id" value="${list.studentId}">
-                    <table>
-                        <tr>
-                            <td><label><input type="radio" name="sleep" value="0" required>寝た</label></td>
-                        </tr>
-                        <tr>
-                            <td><label><input type="radio" name="sleep" value="1" required>起きた</label></td>
-                        </tr>
-                    </table>
+            <form action="../teacher/SleepRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
+                <input type="hidden" name="student_id" value="${list.studentId}">
+                <table>
+                    <tr>
+                        <td><label><input type="radio" name="sleep" value="0" required>寝た</label></td>
+                    </tr>
+                    <tr>
+                        <td><label><input type="radio" name="sleep" value="1" required>起きた</label></td>
+                    </tr>
+                </table>
+                <button type="submit">記録</button>
+            </form>
+        </div>
+
+        <!-- ごはん -->
+        <div class="tab-body" id="body2">
+            <form action="../teacher/MealRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
+                <input type="hidden" name="student_id" value="${list.studentId}">
+                <div>
+                    <label><input type="radio" name="meal_amount" value="0">全量</label><br>
+                    <label><input type="radio" name="meal_amount" value="1">半量</label><br>
+                    <label><input type="radio" name="meal_amount" value="2">少量</label><br>
                     <button type="submit">記録</button>
-                </form>
-            </details>
+                </div>
+            </form>
         </div>
 
-        <div class='tab-body' id="body2">
-            <details name="life" id="b">
-                <form action="../teacher/MealRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
-                    <input type="hidden" name="student_id" value="${list.studentId}">
-                    <div>
-                        <label><input type="radio" name="meal_amount" value="0">全量</label><br>
-                        <label><input type="radio" name="meal_amount" value="1">半量</label><br>
-                        <label><input type="radio" name="meal_amount" value="2">少量</label><br>
-                        <button type="submit">記録</button>
-                    </div>
-                </form>
-            </details>
-        </div>
-
+        <!-- 排泄 -->
         <div class="tab-body" id="body3">
-            <details name="life" id="c">
-                <form action="../teacher/ExcretionRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
-                    <input type="hidden" name="student_id" value="${list.studentId}">
-                    <div>
-                        <label><input type="radio" name="type" value="0">かたい</label><br>
-                        <label><input type="radio" name="type" value="1">やわらかい</label><br>
-                        <label>その他:</label>
-                        <input type="text" name="excretion_detail" placeholder="詳細を記入"><br>
-                    </div>
-                    <button type="submit">記録</button>
-                </form>
-            </details>
+            <form action="../teacher/ExcretionRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
+                <input type="hidden" name="student_id" value="${list.studentId}">
+                <div>
+                    <label><input type="radio" name="type" value="0">かたい</label><br>
+                    <label><input type="radio" name="type" value="1">やわらかい</label><br>
+                    <label>その他:</label>
+                    <input type="text" name="excretion_detail" placeholder="詳細を記入"><br>
+                </div>
+                <button type="submit">記録</button>
+            </form>
         </div>
 
+        <!-- 服薬 -->
         <div class="tab-body" id="body4">
-            <details name="life" id="medicine">
-                <form action="../teacher/MedicineRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
-                    <input type="hidden" name="student_id" value="${list.studentId}">
-                    <div>
-                        <label><input type="radio" name="medicine" value="0" required>服薬済み</label><br>
-                        <button type="submit">記録</button>
-                    </div>
-                </form>
-            </details>
+            <form action="../teacher/MedicineRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
+                <input type="hidden" name="student_id" value="${list.studentId}">
+                <div>
+                    <label><input type="radio" name="medicine" value="0" required>服薬済み</label><br>
+                    <button type="submit">記録</button>
+                </div>
+            </form>
         </div>
     </div>
 </main>
-
-
 
 </body>
