@@ -11,7 +11,7 @@
     <main>
         <p>送信完了</p>
 
-        <button onclick="location.href='seikatukiroku.jsp'">生活記録画面に戻る</button>
+        <button onclick="location.href='seikatukiroku.jsp'">生活記録に戻る</button>
     </main>
 
 </body>
