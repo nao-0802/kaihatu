@@ -19,7 +19,6 @@
 
 
 <style>
-@media only screen and (max-width: 769px){
 body{
   overflow: hidden;
 }
@@ -90,7 +89,7 @@ text-align: center;
 a{
   color: black;
   text-decoration: none;
-}
+
 }
 </style>
 
