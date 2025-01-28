@@ -28,7 +28,7 @@
 
 <style>
 body{
-  margin: 0;
+    margin: 0;
 }
 
 .header {
@@ -57,22 +57,17 @@ body{
 
 
 main{
-  text-align: center;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
+    /* margin-top: px; */
+    text-align: center;
 }
 
 
 .error-message {
-  text-align: center;
     background-color: #f8d7da; /* 背景色は薄い赤 */
     border: 1px solid #f5c6cb; /* 境界線の色 */
+    margin: 15px;
     margin-bottom: 20px;
     font-size: 18px;
     color: #721c24; /* 文字色を赤に設定 */
-    width: 100%;
-    word-break: break-all;
 }
 </style>
