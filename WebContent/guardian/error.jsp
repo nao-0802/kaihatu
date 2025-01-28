@@ -1,31 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-
+<head>
+    <meta name="viewport" content="width=device-width, initial-sccle=1">
+</head>
 
 <body>
     <header class="header">
-        <div class="navtext-container">
-            <p name="title" class="navtext">すてっぷのーと</p>
-        </div>
-    </header>
-<main>
-
-    <div class="error-message">
-        <h2>エラーが発生しました</h2>
-        <p>
-            <%-- リクエストスコープからエラーメッセージを取得 --%>
-            <%= request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : "予期しないエラーが発生しました。" %>
-        </p>
+    <div class="navtext-container">
+        <p name="title" class="navtext">すてっぷのーと</p>
     </div>
+    </header>
+    <main>
+
+        <div class="error-message">
+            <h2>エラーが発生しました</h2>
+            <p>
+                <%-- リクエストスコープからエラーメッセージを取得 --%>
+                <%= request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : "予期しないエラーが発生しました。" %>
+            </p>
+        </div>
 
 
-        <button onclick="location.href='LifeRecord.action'" class="back-link">生活記録に戻る</button>
-</main>
+            <button onclick="location.href='LifeRecord.action'" class="back-link">生活記録に戻る</button>
+    </main>
 </body>
+
 
 <style>
 body{
-    margin: 0;
+  margin: 0;
 }
 
 .header {
@@ -54,17 +57,22 @@ body{
 
 
 main{
-    /* margin-top: px; */
-    text-align: center;
+  text-align: center;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
 }
 
 
 .error-message {
+  text-align: center;
     background-color: #f8d7da; /* 背景色は薄い赤 */
     border: 1px solid #f5c6cb; /* 境界線の色 */
-    margin: 10px;
     margin-bottom: 20px;
     font-size: 18px;
     color: #721c24; /* 文字色を赤に設定 */
+    width: 100%;
+    word-break: break-all;
 }
 </style>
