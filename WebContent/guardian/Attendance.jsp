@@ -16,7 +16,7 @@
         <table id="table0">
             <tr>
                 <th class="a">日付</th>
-                <td><input type="date" name="day" id="day" value=""></td>
+                <td><input type="date" id="today"></td>
             </tr>
         </table>
 
@@ -214,16 +214,6 @@ form {
 </style>
 
 <script>
-    function displayDateTime() {
-        const now = new Date();
-        const date = new Date();
-        const yyyy = date.getFullYear();
-        const mm = ('0' + (date.getMonth() + 1)).slice(-2);
-        const dd = ('0' + date.getDate()).slice(-2);
-        document.getElementById("day").value = `${yyyy}-${mm}-${dd}`;
-    }
-
-    displayDateTime();
 
     function aviewChange() {
         const typeSelect = document.getElementById('type');
@@ -290,6 +280,30 @@ form {
     document.querySelectorAll('#Box1 input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', updateSymptoms);
     });
+
+  //今日の日時を表示
+    window.onload = function () {
+        //今日の日時を表示
+        var date = new Date()
+        var year = date.getFullYear()
+        var month = date.getMonth() + 1
+        var day = date.getDate()
+
+        var toTwoDigits = function (num, digit) {
+          num += ''
+          if (num.length < digit) {
+            num = '0' + num
+          }
+          return num
+        }
+
+        var yyyy = toTwoDigits(year, 4)
+        var mm = toTwoDigits(month, 2)
+        var dd = toTwoDigits(day, 2)
+        var ymd = yyyy + "-" + mm + "-" + dd;
+
+        document.getElementById("today").value = ymd;
+    }
 </script>
 
 </body>
