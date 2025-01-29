@@ -1,21 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-
+<head>
+    <meta name="viewport" content="width=device-width, initial-sccle=1">
+</head>
 
 
 <body>
 <header class="header">
-    <div class="navtext-container">
-      <p class="navtext">全体掲示板</p>
+    <div class="navivon">
+        <button class="back" name=Arrow_btn  onclick="location.href'../teacher/BulletionBoardList.action'">←</button>
     </div>
-<%@include file="../common/T_header.jsp" %>
-
 </header>
 
 <main>
-  <div>
-    <button class="a" name=Arrow_btn  onclick="history.back()">←</button>
-  </div>
 
   <div>
   <div class="c">
@@ -36,6 +33,35 @@
 
 
 <style>
+body{
+    height: 100vh;
+    display: flex;
+    margin: 0;
+    overflow: hidden;
+ }
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--background-navbar);
+  position: fixed;
+  width: 100%;
+  height: 52px;
+  background-color: #757575;
+}
+
+.back{
+  background-color: #757575;
+  height: 50px;
+  border: none;
+  width: 60px;
+  border-right: 1px solid #ddd;
+  font-size: 30px;
+  color: #ddd;
+}
+
+
 main{
     margin-top: 52px;
     margin-left:  auto;
@@ -62,19 +88,15 @@ input{
   margin-bottom: 5px;
 }
 
-button{
-  padding: 5px;
-  font-size: 12px;
-  margin-left: 10px;
-}
-
-
 .a{
   margin-top: 15px;
   font-size: 15px;
 }
 
 .b{
+  padding: 5px;
+  font-size: 12px;
+  margin-left: 10px;
   margin: 5px;
 }
 </style>

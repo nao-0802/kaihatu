@@ -13,7 +13,6 @@
   <div class="div">
     <div class="b">
       <button name="Newer_Posts_btn" onclick="location.href='BullietinBoardPost.jsp'">お知らせを追加</button>
-      <div class="aa"><p class="a" name=Notice>お知らせ一覧</p></div>
     </div>
 
     <div class="news">
@@ -53,10 +52,6 @@ body{
     margin-left: 10px;
   }
 
-  .aa{
-    height: 30px;
-    border-bottom: 3px solid #757575;
-  }
 
   button{
     display: inline-block;
