@@ -116,7 +116,7 @@ a{
     </div>
 
     <div>
-      <input type="month" id="searchTable" min="2020-04" value="">
+      <input type="month" id="today">
     </div>
     <div class="m">
 
@@ -191,40 +191,29 @@ a{
 <script>
 
 
-    //月自動入力
-    function displayDateTime() {
-      const now = new Date();
-      const date = new Date();
-      const yyyy = date.getFullYear();
-      const mm = ('0' + (date.getMonth() + 1)).slice(-2);
-      const datetimeString = now.toLocaleString();
-      return document.getElementById("searchTable").value = `${yyyy}-${mm}`;
-  }
-  displayDateTime();
+		//今日の日時を表示
+		window.onload = function () {
+	    //今日の日時を表示
+	    var date = new Date()
+	    var year = date.getFullYear()
+	    var month = date.getMonth() + 1
+	    var day = date.getDate()
 
-  //検索.テーブル表示
-  function filterTable() {
-      const input = document.getElementById("searchTable").value;
-      const table = document.getElementById("dataTable");
-      const tr = table.getElementsByTagName("tr");
+	    var toTwoDigits = function (num, digit) {
+	      num += ''
+	      if (num.length < digit) {
+	        num = '0' + num
+	      }
+	      return num
+	    }
 
-      for (let i = 1; i < tr.length; i++) {
-          const td = tr[i].getElementsByTagName("td")[0];
-          if (td) {
-              const txtValue = td.textContent || td.innerText;
-              if (txtValue.indexOf(input) > -1) {
-                  tr[i].style.display = "";
-              } else {
-                  tr[i].style.display = "none";
-              }
-          }
-      }
-  }
+	    var yyyy = toTwoDigits(year, 4)
+	    var mm = toTwoDigits(month, 2)
+	    var dd = toTwoDigits(day, 2)
+	    var ymd = yyyy + "-" + mm;
 
-
-
-  document.getElementById('searchTable').addEventListener('input', function() {
-      filterTable()},);
+	    document.getElementById("today").value = ymd;
+	}
 
 
 </script>
