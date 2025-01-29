@@ -116,7 +116,7 @@ a{
     </div>
 
     <div>
-      <input type="month" id="today">
+      <input type="month" id="today" min="2020-04" value="">
     </div>
     <div class="m">
 
@@ -191,8 +191,8 @@ a{
 <script>
 
 
-		//今日の日時を表示
-		window.onload = function () {
+	//今日の日時を表示
+	window.onload = function () {
 	    //今日の日時を表示
 	    var date = new Date()
 	    var year = date.getFullYear()
@@ -214,6 +214,30 @@ a{
 
 	    document.getElementById("today").value = ymd;
 	}
+
+  //検索.テーブル表示
+  function filterTable() {
+      const input = document.getElementById("today").value;
+      const table = document.getElementById("dataTable");
+      const tr = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < tr.length; i++) {
+          const td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+              const txtValue = td.textContent || td.innerText;
+              if (txtValue.indexOf(input) > -1) {
+                  tr[i].style.display = "";
+              } else {
+                  tr[i].style.display = "none";
+              }
+          }
+      }
+  }
+
+
+
+  document.getElementById('today').addEventListener('input', function() {
+      filterTable()},);
 
 
 </script>

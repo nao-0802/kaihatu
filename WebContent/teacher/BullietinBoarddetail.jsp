@@ -1,22 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-sccle=1">
+</head>
+
+
 <body>
 <header class="header">
-    <div class="navtext-container">
-      <p class="navtext">全体掲示板</p>
+    <div class="navivon">
+        <button class="back" name=Arrow_btn  onclick="location.href'../teacher/BulletionBoardList.action'">←</button>
     </div>
-<%@include file="../common/T_header.jsp" %>
-  </header>
+</header>
 
 
 <main>
   <div  class="bulletin_board">
-    <div class="back">
-      <div class="back_left">
-        <button class="a" name=Arrow_btn  onclick="history.back()">←</button>
-      </div>
-    </div>
+
 
     <div class="title">
       <label class="more-btn">
@@ -53,22 +53,41 @@
 
 <style>
 body{
+    height: 100vh;
+    display: flex;
+    margin: 0;
     overflow: hidden;
  }
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--background-navbar);
+  position: fixed;
+  width: 100%;
+  height: 52px;
+  background-color: #757575;
+}
+
   main{
     margin-top: 52px;
     margin-left:  auto;
     margin-right: auto;
    }
 
-   .back{
-    padding: 5px;
-  }
+button {
+  background-color: #757575;
+  height: 50px;
+  border: none;
+  width: 60px;
+  border-right: 1px solid #ddd;
+}
 
-  button{
-    height: 30px;
-  }
-
+.back{
+  font-size: 30px;
+  color: #ddd;
+}
 
 .title{
   text-align: left;
