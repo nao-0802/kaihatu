@@ -9,7 +9,7 @@
 <body>
 <header class="header">
     <div class="navivon">
-        <button class="back" name=Arrow_btn  onclick="history.back()">←</button>
+        <button class="back" name=Arrow_btn  onclick="location.href'../teacher/BulletionBoardList.action'">←</button>
     </div>
 </header>
 
