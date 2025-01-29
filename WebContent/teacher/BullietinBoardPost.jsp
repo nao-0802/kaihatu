@@ -94,6 +94,7 @@ input{
 }
 
 .b{
+width:60px;
   padding: 5px;
   font-size: 12px;
   margin-left: 10px;
