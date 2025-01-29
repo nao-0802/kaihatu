@@ -1,17 +1,64 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <title>連絡帳作成成功</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-sccle=1">
 </head>
+
+
 <body>
-    <h2>連絡帳が正常に保存されました。</h2>
+    <header class="header">
+<div class="navtext-container">
+    <p name="title" class="navtext">すてっぷのーと</p>
+</div>
 
-    <p>連絡帳が正常に送信されました。</p>
+</header>
+    <main>
+        <p>送信完了</p>
 
-    <a href="./StudentListExecute.action">生徒一覧に戻る</a>
+    <button onclick="location.href='./StudentListExecute.action'">生徒一覧に戻る</button>
+    </main>
+
 </body>
-</html>
+
+<style>
+body{
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background: #757575;
+  }
+
+
+ .navtext-container {
+    width: 100%;
+    height: 52px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navtext {
+    letter-spacing: 4px;
+    font-size: 25px;
+    text-align: center;
+    color: aliceblue;
+}
+    main{
+        margin-top: 60px;
+        text-align: center;
+    }
+
+    p{
+        font-size: 20px;
+    }
+</style>
+
+
+

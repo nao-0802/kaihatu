@@ -3,7 +3,7 @@
 <%@ page import="bean.BulletionBoard" %>
 <html>
 <head>
-    <title>全体掲示板</title>
+    <title>お知らせ</title>
 </head>
 <body>
     <h2>全体掲示板</h2>

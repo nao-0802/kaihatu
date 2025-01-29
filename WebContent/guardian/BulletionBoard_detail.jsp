@@ -68,7 +68,7 @@ body{
 <body>
 <header class="header">
     <div class="navtext-container">
-      <p class="navtext">全体掲示板</p>
+      <p class="navtext">お知らせ</p>
     </div>
 <%@include file="../common/G_header.jsp" %>
 </header>
