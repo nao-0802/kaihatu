@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-sccle=1">
+</head>
+
 <body>
     <header class="header">
 <div class="navtext-container">
