@@ -10,7 +10,7 @@
         <div class="navtext-container">
             <p class="navtext">連絡帳</p>
     </div>
-<%@include file="../common/G_header.jsp" %>
+<%@include file="../common/T_header.jsp" %>
 </header>
 
 

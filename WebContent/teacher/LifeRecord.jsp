@@ -132,6 +132,7 @@
             margin-bottom: 10px;
             text-align: center; /* 中央に表示 */
         }
+
     </style>
 </head>
 
@@ -190,7 +191,7 @@
         <input type="checkbox" id="tab1" class="radio" name="tab" onclick="onlyOne(this)">
         <label class="tab-title title1" id="title1" for="tab1">睡眠</label>
         <input type="checkbox" id="tab2" class="radio" name="tab" onclick="onlyOne(this)">
-        <label class="tab-title title2" id="title2" for="tab2">ごはん</label>
+        <label class="tab-title title2" id="title2" for="tab2">給食</label>
         <input type="checkbox" id="tab3" class="radio" name="tab" onclick="onlyOne(this)">
         <label class="tab-title title3" id="title3" for="tab3">排泄</label>
         <input type="checkbox" id="tab4" class="radio" name="tab" onclick="onlyOne(this)">
@@ -208,7 +209,7 @@
                         <td><label><input type="radio" name="sleep" value="1" required>起きた</label></td>
                     </tr>
                 </table>
-                <button type="submit">記録</button>
+                <button type="submit" class="kiroku">記録</button>
             </form>
         </div>
 
@@ -220,7 +221,7 @@
                     <label><input type="radio" name="meal_amount" value="0">全量</label><br>
                     <label><input type="radio" name="meal_amount" value="1">半量</label><br>
                     <label><input type="radio" name="meal_amount" value="2">少量</label><br>
-                    <button type="submit">記録</button>
+                    <button type="submit" class="kiroku">記録</button>
                 </div>
             </form>
         </div>
@@ -230,12 +231,20 @@
             <form action="../teacher/ExcretionRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <input type="hidden" name="student_id" value="${list.studentId}">
                 <div>
-                    <label><input type="radio" name="type" value="0">かたい</label><br>
-                    <label><input type="radio" name="type" value="1">やわらかい</label><br>
-                    <label>その他:</label>
+                <table>
+                    <tr>
+                        <td><label><input type="radio" name="type" value="0">かたい</label></td>
+                    </tr>
+                    <tr>
+                        <td><label><input type="radio" name="type" value="1">やわらかい</label></td>
+                    </tr>
+                    <tr>
+                        <td><label>その他：</label></td>
+                    </tr>
+                </table>
                     <input type="text" name="excretion_detail" placeholder="詳細を記入"><br>
                 </div>
-                <button type="submit">記録</button>
+                <button type="submit" class="kiroku">記録</button>
             </form>
         </div>
 
@@ -244,8 +253,8 @@
             <form action="../teacher/MedicineRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
                 <input type="hidden" name="student_id" value="${list.studentId}">
                 <div>
-                    <label><input type="radio" name="medicine" value="0" required>服薬済み</label><br>
-                    <button type="submit">記録</button>
+                    <label><input type="radio" name="medicine" value="0" checked>服薬済み</label><br>
+                    <button type="submit" class="kiroku">記録</button>
                 </div>
             </form>
         </div>
