@@ -1,17 +1,31 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../common/T_header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>生徒カルテ更新</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
+		    header {
+		    position: fixed;  /* 画面上部に固定 */
+		    top: 0;  /* 上端に配置 */
+		    left: 0;  /* 左端に配置 */
+		    width: 100%;  /* 幅を100%に設定 */
+		    background-color: #fff;  /* 背景色を白に設定 */
+		    z-index: 1000;  /* ヘッダーが他の要素の上に表示されるように */
+		    padding: 0.5px;  /* ヘッダー内の余白を調整 */
+		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* ヘッダーに影をつけて浮き上がらせる */
+		}
+		body {
+		    font-family: Arial, sans-serif;
+		    background-color: #f9f9f9;
+		    display: flex;
+		    justify-content: center;  /* 横方向に中央寄せ */
+		    align-items: center;  /* 縦方向に中央寄せ */
+		    height: 100vh;  /* ビューポートの高さに合わせる */
+		    margin: 0;  /* bodyの余白をなくす */
+		}
+
         h2 {
             color: #333;
         }
@@ -50,8 +64,19 @@
         }
     </style>
 </head>
+
+<header class="header">
+    <div class="navtext-container">
+        <p class="navtext">生徒カルテ更新</p>
+    </div>
+    <%@include file="../common/T_header.jsp" %>
+</header>
+
+
+
+
 <body>
-    <h2>生徒カルテ更新</h2>
+
     <form action="../teacher/StudentRecordUpdateExecute.action" method="post">
         <input type="hidden" name="studentId" value="${studentRecord.studentId}">
 
