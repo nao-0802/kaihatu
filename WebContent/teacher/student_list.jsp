@@ -8,15 +8,13 @@
 <header class="header">
     <div class="navtext-container">
         <div><a class="here">クラス</a></div>
+        <div><a class="navtext" href="test.html">記録確認</a></div>
     </div>
     <%@ include file="../common/T_header.jsp" %>
 </header>
 
 <main>
-    <!-- 出欠席状況ボタンを生徒リストの前に配置し、中央寄せ -->
-    <div class="attendance-button-container">
-        <a class="navtext" href="AttendanceExecute.action">出欠席状況</a>
-    </div>
+
 
     <div id="studentlist">
         <!-- 生徒リストから動的にボタンを生成 -->
@@ -49,6 +47,18 @@ main {
     color: aliceblue;
     padding: 2px;
 }
+
+a.navtext{
+display: inline-block;
+padding: 1px 10px;
+text-decoration: none;
+background-color: rgb(67, 161, 164);
+border-radius: 3px;
+font-size: 15px;
+top: 5;
+right: 0;
+}
+
 
 /* 出欠席状況ボタンの中央寄せ */
 .attendance-button-container {
