@@ -70,4 +70,9 @@ main{
     font-size: 18px;
     color: #721c24; /* 文字色を赤に設定 */
 }
+
+button{
+padding:5px;
+font-size:15px;
+}
 </style>

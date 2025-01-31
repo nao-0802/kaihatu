@@ -12,13 +12,6 @@ body {
   overflow-x: hidden; /* 横スクロールを無効化 */
 }
 
-header {
-  background-color: #43a1a4;
-  color: white;
-  text-align: center;
-  position: relative; /* positionをrelativeに設定 */
-  z-index: 10; /* 他の要素より前面に表示 */
-}
 
 
 main {
@@ -134,7 +127,7 @@ function toggleDetails(button) {
     <div class="navtext-container">
       <p class="navtext">出欠席状況</p>
     </div>
-<%@include file="../common/G_header.jsp" %>
+<%@include file="../common/T_header.jsp" %>
 </header>
 
 <main>
