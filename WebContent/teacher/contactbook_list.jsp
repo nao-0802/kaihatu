@@ -2,10 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="bean.ContactBook" %>
 
-<html>
-<head>
-    <title>連絡帳一覧</title>
-</head>
+
 <body>
     <h2>連絡帳一覧</h2>
 
@@ -44,4 +41,3 @@
         </tbody>
     </table>
 </body>
-</html>
