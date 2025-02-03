@@ -40,8 +40,8 @@
       <constraint>
         <height>-1</height>
         <width>-1</width>
-        <x>28</x>
-        <y>183</y>
+        <x>56</x>
+        <y>206</y>
       </constraint>
       <sourceConnections>
         <net.java.amateras.uml.classdiagram.model.AssociationModel>
@@ -73,8 +73,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>30</x>
-              <y>337</y>
+              <x>58</x>
+              <y>329</y>
             </constraint>
             <sourceConnections/>
             <targetConnections>
@@ -106,8 +106,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>56</x>
-                    <y>521</y>
+                    <x>24</x>
+                    <y>496</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.uml.classdiagram.model.GeneralizationModel reference="../../.."/>
@@ -193,11 +193,11 @@
                       <type>void</type>
                       <params>
                         <net.java.amateras.uml.classdiagram.model.Argument>
-                          <name>request</name>
+                          <name>req</name>
                           <type>HttpServletRequest</type>
                         </net.java.amateras.uml.classdiagram.model.Argument>
                         <net.java.amateras.uml.classdiagram.model.Argument>
-                          <name>response</name>
+                          <name>res</name>
                           <type>HttpServletResponse</type>
                         </net.java.amateras.uml.classdiagram.model.Argument>
                       </params>
@@ -244,7 +244,7 @@
                     </net.java.amateras.uml.properties.BooleanPropertyDescriptor>
                   </propertyDescriptors>
                   <stereoType></stereoType>
-                  <name>guardian.ContactBookWriteAction</name>
+                  <name>teacher.BulletionBoardAction</name>
                   <isAbstract>false</isAbstract>
                 </source>
                 <target class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
@@ -278,8 +278,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>744</x>
-                    <y>528</y>
+                    <x>651</x>
+                    <y>487</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.uml.classdiagram.model.GeneralizationModel reference="../../.."/>
@@ -357,8 +357,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>941</x>
-                          <y>801</y>
+                          <x>1009</x>
+                          <y>715</y>
                         </constraint>
                         <sourceConnections>
                           <net.java.amateras.uml.classdiagram.model.AssociationModel>
@@ -390,8 +390,8 @@
                               <constraint>
                                 <height>-1</height>
                                 <width>-1</width>
-                                <x>342</x>
-                                <y>807</y>
+                                <x>427</x>
+                                <y>740</y>
                               </constraint>
                               <sourceConnections>
                                 <net.java.amateras.uml.classdiagram.model.GeneralizationModel>
@@ -423,27 +423,12 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>42</x>
-                                      <y>885</y>
+                                      <x>53</x>
+                                      <y>847</y>
                                     </constraint>
                                     <sourceConnections/>
                                     <targetConnections>
                                       <net.java.amateras.uml.classdiagram.model.GeneralizationModel reference="../../.."/>
-                                      <net.java.amateras.uml.classdiagram.model.GeneralizationModel>
-                                        <showIcon>true</showIcon>
-                                        <listeners serialization="custom">
-                                          <java.beans.PropertyChangeSupport>
-                                            <default>
-                                              <source class="net.java.amateras.uml.classdiagram.model.GeneralizationModel" reference="../../../.."/>
-                                              <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
-                                            </default>
-                                            <null/>
-                                          </java.beans.PropertyChangeSupport>
-                                        </listeners>
-                                        <source class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../../../../.."/>
-                                        <target class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
-                                        <bendpoints/>
-                                      </net.java.amateras.uml.classdiagram.model.GeneralizationModel>
                                     </targetConnections>
                                     <children>
                                       <net.java.amateras.uml.classdiagram.model.AttributeModel>
@@ -531,7 +516,6 @@
                                   </target>
                                   <bendpoints/>
                                 </net.java.amateras.uml.classdiagram.model.GeneralizationModel>
-                                <net.java.amateras.uml.classdiagram.model.GeneralizationModel reference="../net.java.amateras.uml.classdiagram.model.GeneralizationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[2]"/>
                               </sourceConnections>
                               <targetConnections>
                                 <net.java.amateras.uml.classdiagram.model.AssociationModel reference="../../.."/>
@@ -572,7 +556,7 @@
                                   </listeners>
                                   <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
                                   <name>postfilter</name>
-                                  <type>List&lt;Guardian&gt;</type>
+                                  <type>List&lt;BulletionBoard&gt;</type>
                                   <params>
                                     <net.java.amateras.uml.classdiagram.model.Argument>
                                       <name>rSet</name>
@@ -597,11 +581,11 @@
                                     </java.beans.PropertyChangeSupport>
                                   </listeners>
                                   <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>search</name>
-                                  <type>List&lt;Guardian&gt;</type>
+                                  <name>findById</name>
+                                  <type>BulletionBoard</type>
                                   <params>
                                     <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>keyword</name>
+                                      <name>postId</name>
                                       <type>String</type>
                                     </net.java.amateras.uml.classdiagram.model.Argument>
                                   </params>
@@ -624,10 +608,10 @@
                                   </listeners>
                                   <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
                                   <name>filter</name>
-                                  <type>List&lt;Guardian&gt;</type>
+                                  <type>List&lt;BulletionBoard&gt;</type>
                                   <params>
                                     <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardianId</name>
+                                      <name>teacherId</name>
                                       <type>String</type>
                                     </net.java.amateras.uml.classdiagram.model.Argument>
                                   </params>
@@ -649,9 +633,14 @@
                                     </java.beans.PropertyChangeSupport>
                                   </listeners>
                                   <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>getAllGuardians</name>
-                                  <type>List&lt;Guardian&gt;</type>
-                                  <params/>
+                                  <name>create</name>
+                                  <type>boolean</type>
+                                  <params>
+                                    <net.java.amateras.uml.classdiagram.model.Argument>
+                                      <name>bulletinBoard</name>
+                                      <type>BulletionBoard</type>
+                                    </net.java.amateras.uml.classdiagram.model.Argument>
+                                  </params>
                                   <isAbstract>false</isAbstract>
                                   <isStatic>false</isStatic>
                                 </net.java.amateras.uml.classdiagram.model.OperationModel>
@@ -674,8 +663,16 @@
                                   <type>boolean</type>
                                   <params>
                                     <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardian</name>
-                                      <type>Guardian</type>
+                                      <name>title</name>
+                                      <type>String</type>
+                                    </net.java.amateras.uml.classdiagram.model.Argument>
+                                    <net.java.amateras.uml.classdiagram.model.Argument>
+                                      <name>content</name>
+                                      <type>String</type>
+                                    </net.java.amateras.uml.classdiagram.model.Argument>
+                                    <net.java.amateras.uml.classdiagram.model.Argument>
+                                      <name>classId</name>
+                                      <type>String</type>
                                     </net.java.amateras.uml.classdiagram.model.Argument>
                                   </params>
                                   <isAbstract>false</isAbstract>
@@ -696,11 +693,58 @@
                                     </java.beans.PropertyChangeSupport>
                                   </listeners>
                                   <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
-                                  <name>getGuardian</name>
-                                  <type>Guardian</type>
+                                  <name>generateRandomId</name>
+                                  <type>String</type>
+                                  <params/>
+                                  <isAbstract>false</isAbstract>
+                                  <isStatic>false</isStatic>
+                                </net.java.amateras.uml.classdiagram.model.OperationModel>
+                                <net.java.amateras.uml.classdiagram.model.OperationModel>
+                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
+                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
+                                  <showIcon>true</showIcon>
+                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
+                                  <listeners serialization="custom">
+                                    <java.beans.PropertyChangeSupport>
+                                      <default>
+                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
+                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                      </default>
+                                      <null/>
+                                    </java.beans.PropertyChangeSupport>
+                                  </listeners>
+                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
+                                  <name>findByClassId</name>
+                                  <type>List&lt;BulletionBoard&gt;</type>
                                   <params>
                                     <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardianId</name>
+                                      <name>classId</name>
+                                      <type>String</type>
+                                    </net.java.amateras.uml.classdiagram.model.Argument>
+                                  </params>
+                                  <isAbstract>false</isAbstract>
+                                  <isStatic>false</isStatic>
+                                </net.java.amateras.uml.classdiagram.model.OperationModel>
+                                <net.java.amateras.uml.classdiagram.model.OperationModel>
+                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
+                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
+                                  <showIcon>true</showIcon>
+                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
+                                  <listeners serialization="custom">
+                                    <java.beans.PropertyChangeSupport>
+                                      <default>
+                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
+                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+                                      </default>
+                                      <null/>
+                                    </java.beans.PropertyChangeSupport>
+                                  </listeners>
+                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
+                                  <name>getBulletinBoard</name>
+                                  <type>BulletionBoard</type>
+                                  <params>
+                                    <net.java.amateras.uml.classdiagram.model.Argument>
+                                      <name>postId</name>
                                       <type>String</type>
                                     </net.java.amateras.uml.classdiagram.model.Argument>
                                   </params>
@@ -726,193 +770,7 @@
                                   <type>boolean</type>
                                   <params>
                                     <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardianId</name>
-                                      <type>String</type>
-                                    </net.java.amateras.uml.classdiagram.model.Argument>
-                                  </params>
-                                  <isAbstract>false</isAbstract>
-                                  <isStatic>false</isStatic>
-                                </net.java.amateras.uml.classdiagram.model.OperationModel>
-                                <net.java.amateras.uml.classdiagram.model.OperationModel>
-                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
-                                  <showIcon>true</showIcon>
-                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
-                                  <listeners serialization="custom">
-                                    <java.beans.PropertyChangeSupport>
-                                      <default>
-                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
-                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
-                                      </default>
-                                      <null/>
-                                    </java.beans.PropertyChangeSupport>
-                                  </listeners>
-                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>get</name>
-                                  <type>Guardian</type>
-                                  <params>
-                                    <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardian_id</name>
-                                      <type>String</type>
-                                    </net.java.amateras.uml.classdiagram.model.Argument>
-                                  </params>
-                                  <isAbstract>false</isAbstract>
-                                  <isStatic>false</isStatic>
-                                </net.java.amateras.uml.classdiagram.model.OperationModel>
-                                <net.java.amateras.uml.classdiagram.model.OperationModel>
-                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
-                                  <showIcon>true</showIcon>
-                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
-                                  <listeners serialization="custom">
-                                    <java.beans.PropertyChangeSupport>
-                                      <default>
-                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
-                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
-                                      </default>
-                                      <null/>
-                                    </java.beans.PropertyChangeSupport>
-                                  </listeners>
-                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>login</name>
-                                  <type>Guardian</type>
-                                  <params>
-                                    <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardian_id</name>
-                                      <type>String</type>
-                                    </net.java.amateras.uml.classdiagram.model.Argument>
-                                    <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>password</name>
-                                      <type>String</type>
-                                    </net.java.amateras.uml.classdiagram.model.Argument>
-                                  </params>
-                                  <isAbstract>false</isAbstract>
-                                  <isStatic>false</isStatic>
-                                </net.java.amateras.uml.classdiagram.model.OperationModel>
-                                <net.java.amateras.uml.classdiagram.model.OperationModel>
-                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
-                                  <showIcon>true</showIcon>
-                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
-                                  <listeners serialization="custom">
-                                    <java.beans.PropertyChangeSupport>
-                                      <default>
-                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
-                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
-                                      </default>
-                                      <null/>
-                                    </java.beans.PropertyChangeSupport>
-                                  </listeners>
-                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>getStudentIdByGuardianId</name>
-                                  <type>String</type>
-                                  <params>
-                                    <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardianId</name>
-                                      <type>String</type>
-                                    </net.java.amateras.uml.classdiagram.model.Argument>
-                                  </params>
-                                  <isAbstract>false</isAbstract>
-                                  <isStatic>false</isStatic>
-                                </net.java.amateras.uml.classdiagram.model.OperationModel>
-                                <net.java.amateras.uml.classdiagram.model.OperationModel>
-                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
-                                  <showIcon>true</showIcon>
-                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
-                                  <listeners serialization="custom">
-                                    <java.beans.PropertyChangeSupport>
-                                      <default>
-                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
-                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
-                                      </default>
-                                      <null/>
-                                    </java.beans.PropertyChangeSupport>
-                                  </listeners>
-                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>getGuardianIdbyStudentId</name>
-                                  <type>String</type>
-                                  <params>
-                                    <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>studentId</name>
-                                      <type>String</type>
-                                    </net.java.amateras.uml.classdiagram.model.Argument>
-                                  </params>
-                                  <isAbstract>false</isAbstract>
-                                  <isStatic>false</isStatic>
-                                </net.java.amateras.uml.classdiagram.model.OperationModel>
-                                <net.java.amateras.uml.classdiagram.model.OperationModel>
-                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
-                                  <showIcon>true</showIcon>
-                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
-                                  <listeners serialization="custom">
-                                    <java.beans.PropertyChangeSupport>
-                                      <default>
-                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
-                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
-                                      </default>
-                                      <null/>
-                                    </java.beans.PropertyChangeSupport>
-                                  </listeners>
-                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>getGuardianIdByStudentId</name>
-                                  <type>List&lt;Guardian&gt;</type>
-                                  <params>
-                                    <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>student_id</name>
-                                      <type>String</type>
-                                    </net.java.amateras.uml.classdiagram.model.Argument>
-                                  </params>
-                                  <isAbstract>false</isAbstract>
-                                  <isStatic>false</isStatic>
-                                </net.java.amateras.uml.classdiagram.model.OperationModel>
-                                <net.java.amateras.uml.classdiagram.model.OperationModel>
-                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
-                                  <showIcon>true</showIcon>
-                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
-                                  <listeners serialization="custom">
-                                    <java.beans.PropertyChangeSupport>
-                                      <default>
-                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
-                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
-                                      </default>
-                                      <null/>
-                                    </java.beans.PropertyChangeSupport>
-                                  </listeners>
-                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>findByGuardianId</name>
-                                  <type>Guardian</type>
-                                  <params>
-                                    <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardianId</name>
-                                      <type>String</type>
-                                    </net.java.amateras.uml.classdiagram.model.Argument>
-                                  </params>
-                                  <isAbstract>false</isAbstract>
-                                  <isStatic>false</isStatic>
-                                </net.java.amateras.uml.classdiagram.model.OperationModel>
-                                <net.java.amateras.uml.classdiagram.model.OperationModel>
-                                  <backgroundColor reference="../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                  <foregroundColor reference="../../../../../../../../../../../../../../../../../foregroundColor"/>
-                                  <showIcon>true</showIcon>
-                                  <parent class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
-                                  <listeners serialization="custom">
-                                    <java.beans.PropertyChangeSupport>
-                                      <default>
-                                        <source class="net.java.amateras.uml.classdiagram.model.OperationModel" reference="../../../.."/>
-                                        <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
-                                      </default>
-                                      <null/>
-                                    </java.beans.PropertyChangeSupport>
-                                  </listeners>
-                                  <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                                  <name>getGuardianName</name>
-                                  <type>String</type>
-                                  <params>
-                                    <net.java.amateras.uml.classdiagram.model.Argument>
-                                      <name>guardianId</name>
+                                      <name>postId</name>
                                       <type>String</type>
                                     </net.java.amateras.uml.classdiagram.model.Argument>
                                   </params>
@@ -959,7 +817,7 @@
                                 </net.java.amateras.uml.properties.BooleanPropertyDescriptor>
                               </propertyDescriptors>
                               <stereoType></stereoType>
-                              <name>dao.GuardianDao</name>
+                              <name>dao.BulletionBoardDao</name>
                               <isAbstract>false</isAbstract>
                             </target>
                             <bendpoints/>
@@ -987,7 +845,7 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../../sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/children/net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
-                            <name>guardian_id</name>
+                            <name>post_id</name>
                             <type>String</type>
                             <isStatic>false</isStatic>
                           </net.java.amateras.uml.classdiagram.model.AttributeModel>
@@ -1006,7 +864,7 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../../sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/children/net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
-                            <name>guardian_name</name>
+                            <name>title</name>
                             <type>String</type>
                             <isStatic>false</isStatic>
                           </net.java.amateras.uml.classdiagram.model.AttributeModel>
@@ -1025,7 +883,7 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../../sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/children/net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
-                            <name>password</name>
+                            <name>content</name>
                             <type>String</type>
                             <isStatic>false</isStatic>
                           </net.java.amateras.uml.classdiagram.model.AttributeModel>
@@ -1044,7 +902,7 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../../sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/children/net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
-                            <name>student_id</name>
+                            <name>teacher_id</name>
                             <type>String</type>
                             <isStatic>false</isStatic>
                           </net.java.amateras.uml.classdiagram.model.AttributeModel>
@@ -1063,8 +921,8 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$2" reference="../../../sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/children/net.java.amateras.uml.classdiagram.model.AttributeModel/visibility"/>
-                            <name>student_name</name>
-                            <type>String</type>
+                            <name>day</name>
+                            <type>Date</type>
                             <isStatic>false</isStatic>
                           </net.java.amateras.uml.classdiagram.model.AttributeModel>
                           <net.java.amateras.uml.classdiagram.model.OperationModel>
@@ -1082,7 +940,7 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>getGuardianId</name>
+                            <name>getPostId</name>
                             <type>String</type>
                             <params/>
                             <isAbstract>false</isAbstract>
@@ -1103,7 +961,7 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>getGuardianName</name>
+                            <name>getTitle</name>
                             <type>String</type>
                             <params/>
                             <isAbstract>false</isAbstract>
@@ -1124,7 +982,7 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>getPassword</name>
+                            <name>getContent</name>
                             <type>String</type>
                             <params/>
                             <isAbstract>false</isAbstract>
@@ -1145,7 +1003,7 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>getStudentId</name>
+                            <name>getTeacherId</name>
                             <type>String</type>
                             <params/>
                             <isAbstract>false</isAbstract>
@@ -1166,8 +1024,8 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>getStudentName</name>
-                            <type>String</type>
+                            <name>getDay</name>
+                            <type>Date</type>
                             <params/>
                             <isAbstract>false</isAbstract>
                             <isStatic>false</isStatic>
@@ -1187,11 +1045,11 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>setGuardianId</name>
+                            <name>setPostId</name>
                             <type>void</type>
                             <params>
                               <net.java.amateras.uml.classdiagram.model.Argument>
-                                <name>guardian_id</name>
+                                <name>post_id</name>
                                 <type>String</type>
                               </net.java.amateras.uml.classdiagram.model.Argument>
                             </params>
@@ -1213,11 +1071,11 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>setGuardianName</name>
+                            <name>setTitle</name>
                             <type>void</type>
                             <params>
                               <net.java.amateras.uml.classdiagram.model.Argument>
-                                <name>guardian_name</name>
+                                <name>title</name>
                                 <type>String</type>
                               </net.java.amateras.uml.classdiagram.model.Argument>
                             </params>
@@ -1239,11 +1097,11 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>setPassword</name>
+                            <name>setContent</name>
                             <type>void</type>
                             <params>
                               <net.java.amateras.uml.classdiagram.model.Argument>
-                                <name>password</name>
+                                <name>content</name>
                                 <type>String</type>
                               </net.java.amateras.uml.classdiagram.model.Argument>
                             </params>
@@ -1265,11 +1123,11 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>setStudentId</name>
+                            <name>setTeacherId</name>
                             <type>void</type>
                             <params>
                               <net.java.amateras.uml.classdiagram.model.Argument>
-                                <name>student_id</name>
+                                <name>teacher_id</name>
                                 <type>String</type>
                               </net.java.amateras.uml.classdiagram.model.Argument>
                             </params>
@@ -1291,12 +1149,12 @@
                               </java.beans.PropertyChangeSupport>
                             </listeners>
                             <visibility class="net.java.amateras.uml.classdiagram.model.Visibility$1" reference="../../../../../../../../net.java.amateras.uml.classdiagram.model.GeneralizationModel/source/children/net.java.amateras.uml.classdiagram.model.OperationModel/visibility"/>
-                            <name>setStudentName</name>
+                            <name>setDay</name>
                             <type>void</type>
                             <params>
                               <net.java.amateras.uml.classdiagram.model.Argument>
-                                <name>student_name</name>
-                                <type>String</type>
+                                <name>day</name>
+                                <type>Date</type>
                               </net.java.amateras.uml.classdiagram.model.Argument>
                             </params>
                             <isAbstract>false</isAbstract>
@@ -1342,7 +1200,7 @@
                           </net.java.amateras.uml.properties.BooleanPropertyDescriptor>
                         </propertyDescriptors>
                         <stereoType></stereoType>
-                        <name>bean.Guardian</name>
+                        <name>bean.BulletionBoard</name>
                         <isAbstract>false</isAbstract>
                       </target>
                       <bendpoints/>
@@ -1423,7 +1281,7 @@
                     </net.java.amateras.uml.properties.BooleanPropertyDescriptor>
                   </propertyDescriptors>
                   <stereoType></stereoType>
-                  <name>guardian.ContactBookWriteExecuteAction</name>
+                  <name>teacher.BulletionBoardExecuteAction</name>
                   <isAbstract>false</isAbstract>
                 </source>
                 <target class="net.java.amateras.uml.classdiagram.model.ClassModel" reference="../../.."/>
@@ -1640,8 +1498,8 @@
       <constraint>
         <height>-1</height>
         <width>-1</width>
-        <x>27</x>
-        <y>35</y>
+        <x>56</x>
+        <y>56</y>
       </constraint>
       <sourceConnections/>
       <targetConnections/>
@@ -1773,9 +1631,9 @@
     <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target"/>
     <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel/source"/>
     <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[2]/source"/>
-    <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[2]/source/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target"/>
-    <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[2]/source/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/sourceConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel/target"/>
     <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[2]/source/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target"/>
+    <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[2]/source/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/sourceConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel/target"/>
+    <net.java.amateras.uml.classdiagram.model.ClassModel reference="../net.java.amateras.uml.classdiagram.model.ClassModel/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/targetConnections/net.java.amateras.uml.classdiagram.model.GeneralizationModel[2]/source/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target/sourceConnections/net.java.amateras.uml.classdiagram.model.AssociationModel/target"/>
   </children>
   <filterProperty/>
 </net.java.amateras.uml.model.RootModel>
