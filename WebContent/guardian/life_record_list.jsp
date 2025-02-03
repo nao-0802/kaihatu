@@ -32,11 +32,6 @@
                     <td>sleep</td>
                 </tr>
             </th>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
         </table>
     </div>
 
@@ -47,11 +42,6 @@
                     <td>meal</td>
                 </tr>
             </th>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
         </table>
     </div>
 
@@ -62,11 +52,6 @@
                     <td>excretion</td>
                 </tr>
             </th>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
         </table>
     </div>
 
@@ -77,11 +62,6 @@
                     <td>medcine</td>
                 </tr>
             </th>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
         </table>
     </div>
 
@@ -92,40 +72,6 @@
                     <td>life_record</td>
                 </tr>
             </th>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
-            <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr> <tr>
-                <td>2025-01-17</td>
-                <td>14:54:40</td>
-                <td>起床</td>
-            </tr>
         </table>
     </div>
 </div>

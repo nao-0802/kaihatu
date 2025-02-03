@@ -12,128 +12,140 @@
     </script>
     <style>
         main {
-            margin-top: 52px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 80%;
+        margin-top: 52px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .button-container {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .button {
+        background-color: #f0f0f0; /* 色を緩くする */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 6px;
+        margin: 3px;
+    }
+
+    .button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .title1, #body1 {
+        border: 2px solid rgb(0, 128, 0);
+    }
+    .title2, #body2 {
+        border: 2px solid rgb(230, 230, 0);
+    }
+    .title3, #body3 {
+        border: 2px solid rgb(200, 15, 15);
+    }
+    .title4, #body4 {
+        border: 2px solid rgb(15, 104, 200);
+    }
+
+    .tab-title {
+        width: 85px;
+        padding: 5px 5px;
+        text-align: center;
+        display: table;
+    }
+
+    .tab-body {
+        display: none;
+        width: 220px;
+        height: 150px;
+        padding: 10px;
+    }
+
+    .container .radio {
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* タブを中央に配置 */
+        align-items: center;     /* タブを垂直方向にも中央に配置 */
+        text-align: center;      /* テキストを中央揃えにする */
+    }
+
+    .container::after {
+        content: "";
+        width: 100%;
+    }
+
+    .container .tab-body {
+        order: 1;
+        margin-top: 10px;
+    }
+
+    .add-control .radio:checked + .tab-title {
+        color: #000000;
+    }
+
+    #tab1:checked ~ .title1 {
+        background: rgba(0, 128, 0, 0.5);
+    }
+
+    #tab2:checked ~ .title2 {
+        background: rgba(255, 255, 0, 0.5);
+    }
+
+    #tab3:checked ~ .title3 {
+        background: rgba(255, 0, 0, 0.5);
+    }
+
+    #tab4:checked ~ .title4 {
+        background: rgba(0, 140, 255, 0.5);
+    }
+
+    #tab1:checked ~ #body1,
+    #tab2:checked ~ #body2,
+    #tab3:checked ~ #body3,
+    #tab4:checked ~ #body4 {
+        display: block;
+    }
+
+    form {
+        text-align: center;
+    }
+
+    .kiroku {
+        width: 100px;
+        margin-top: 10px;
+    }
+
+    .student-info {
+        font-size: 18px;
+        margin-bottom: 10px;
+        text-align: center; /* 中央に表示 */
+    }
+    @media screen and (max-width: 376px) {
+        .tab-body{
+          width: 200px;
+        }
+      }
+
+      @media screen and (max-width: 426px) {
+        aside{
+          width: 35vw;
         }
 
-        .button-container {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
+      .side{
+        width: 100%;
+      }
 
-        .button {
-            padding: 10px 20px;
-            margin: 0;
-            background-color: #f0f0f0; /* 色を緩くする */
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .tab-title{
+          width: 40%;
         }
-
-        .button:hover {
-            background-color: #e0e0e0;
-        }
-
-        .title1, #body1 {
-            border: 2px solid rgb(0, 128, 0);
-        }
-        .title2, #body2 {
-            border: 2px solid rgb(230, 230, 0);
-        }
-        .title3, #body3 {
-            border: 2px solid rgb(200, 15, 15);
-        }
-        .title4, #body4 {
-            border: 2px solid rgb(15, 104, 200);
-        }
-
-        .tab-title {
-            width: 85px;
-            padding: 5px 5px;
-            text-align: center;
-            display: table;
-        }
-
-        .tab-body {
-            display: none;
-            width: 220px;
-            height: 150px;
-            padding: 10px;
-        }
-
-        .container .radio {
-            display: none;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center; /* タブを中央に配置 */
-            align-items: center;     /* タブを垂直方向にも中央に配置 */
-            text-align: center;      /* テキストを中央揃えにする */
-        }
-
-        .container::after {
-            content: "";
-            width: 100%;
-        }
-
-        .container .tab-body {
-            order: 1;
-            margin-top: 10px;
-        }
-
-        .add-control .radio:checked + .tab-title {
-            color: #000000;
-        }
-
-        #tab1:checked ~ .title1 {
-            background: rgba(0, 128, 0, 0.5);
-        }
-
-        #tab2:checked ~ .title2 {
-            background: rgba(255, 255, 0, 0.5);
-        }
-
-        #tab3:checked ~ .title3 {
-            background: rgba(255, 0, 0, 0.5);
-        }
-
-        #tab4:checked ~ .title4 {
-            background: rgba(0, 140, 255, 0.5);
-        }
-
-        #tab1:checked ~ #body1,
-        #tab2:checked ~ #body2,
-        #tab3:checked ~ #body3,
-        #tab4:checked ~ #body4 {
-            display: block;
-        }
-
-        form {
-            text-align: center;
-        }
-
-        .kiroku {
-            width: 100px;
-            margin-top: 10px;
-        }
-
-        .student-info {
-            font-size: 18px;
-            margin-bottom: 10px;
-            text-align: center; /* 中央に表示 */
-        }
-
-    </style>
+      }    </style>
 </head>
 
 <script>
@@ -184,6 +196,11 @@
         <form action="../teacher/StudentRecord.action" method="get">
             <input type="hidden" name="student_id" value="${list.studentId}">
             <button type="submit" class="button">カルテ閲覧</button>
+        </form>
+       <!-- 生活記録閲覧ボタン -->
+        <form action="../teacher/LifeRecordList.action" method="get">
+            <input type="hidden" name="student_id" value="${list.studentId}">
+            <button type="submit" class="button">生活記録閲覧</button>
         </form>
     </div>
 
@@ -262,3 +279,7 @@
 </main>
 
 </body>
+
+
+
+
