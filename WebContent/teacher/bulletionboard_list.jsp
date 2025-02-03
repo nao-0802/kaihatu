@@ -48,5 +48,8 @@
     <form action="../teacher/BulletionBoard.action" method="post">
         <button type="submit">新規作成</button>
     </form>
+    <form action="../teacher/StudentListExecute.action" method="post">
+        <button type="submit">生徒一覧</button>
+    </form>
 </body>
 </html>

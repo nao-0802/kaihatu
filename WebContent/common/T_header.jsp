@@ -9,8 +9,6 @@
     <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
     <ul class="menu">
       <li ><a href="../teacher/StudentListExecute.action">生徒一覧</a></li>
-      <li><a href="../teacher/ContactBookList.action">連絡帳を見る</a></li>
-      <li class="top"><a href="../teacher/StudentListExecute.action">生徒一覧</a></li>
       <li><a href="../teacher/BulletionBoardList.action">全体掲示板</a></li>
       <li><a href="../teacher/logout_teacher.jsp">ログアウト</a></li>
     </ul>
