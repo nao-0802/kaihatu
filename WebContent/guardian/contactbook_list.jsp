@@ -24,5 +24,9 @@
             </tr>
         </c:forEach>
     </table>
+
+    <form action="../guardian/seikatukiroku.jsp" method="post">
+        <button type="submit">戻る</button>
+    </form>
 </body>
 </html>
