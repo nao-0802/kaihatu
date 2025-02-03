@@ -43,15 +43,6 @@ main{
   margin-right: 10px;
 }
 
- a{
-   text-decoration: none;
- }
-
- .test{
-  /* width: 100vw; */
-  text-align: center;
-  /* display: flex; */
-}
 
 input{
   text-align: center;
@@ -60,6 +51,7 @@ input{
 }
 
 .test{
+  text-align: center;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -164,7 +156,7 @@ a{
 
         <tr>
             <th>
-                <td>2024-11-04</td>
+                <td>2025-01-04</td>
             </th>
         </tr>
         <tr>
@@ -177,7 +169,6 @@ a{
                 <td><a href="renrakutyou_e.html"><option value="">2024-12-25</option></a></td>
             </th>
         </tr>
-
     </table>
     </div>
 
@@ -191,29 +182,30 @@ a{
 <script>
 
 
-	//今日の日時を表示
-	window.onload = function () {
-	    //今日の日時を表示
-	    var date = new Date()
-	    var year = date.getFullYear()
-	    var month = date.getMonth() + 1
-	    var day = date.getDate()
+//今日の日時を表示
+function displayDataTime() {
+    //今日の日時を表示
+    var date = new Date()
+    var year = date.getFullYear()
+    var month = date.getMonth() + 1
 
-	    var toTwoDigits = function (num, digit) {
-	      num += ''
-	      if (num.length < digit) {
-	        num = '0' + num
-	      }
-	      return num
-	    }
 
-	    var yyyy = toTwoDigits(year, 4)
-	    var mm = toTwoDigits(month, 2)
-	    var dd = toTwoDigits(day, 2)
-	    var ymd = yyyy + "-" + mm;
+    var toTwoDigits = function (num, digit) {
+      num += ''
+      if (num.length < digit) {
+        num = '0' + num
+      }
+      return num
+    }
 
-	    document.getElementById("today").value = ymd;
-	}
+    var yyyy = toTwoDigits(year, 4)
+    var mm = toTwoDigits(month, 2)
+
+    var ymd = yyyy + "-" + mm;
+
+    return document.getElementById("today").value = ymd;
+}
+displayDataTime();
 
   //検索.テーブル表示
   function filterTable() {

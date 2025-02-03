@@ -29,15 +29,12 @@ main{
 }
 
 
-button {
-  background-color: #757575;
+.back{
+background-color: #757575;
   height: 50px;
   border: none;
   width: 60px;
   border-right: 1px solid #ddd;
-}
-
-.back{
   font-size: 30px;
   color: #ddd;
 }

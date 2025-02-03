@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-
+<head>
+    <meta name="viewport" content="width=device-width, initial-sccle=1">
+</head>
 
 
 <style>
 body{
+  height: 100vh;
+  display: flex;
+  margin: 0;
     overflow: hidden;
  }
   main{
@@ -14,13 +19,46 @@ body{
     margin-right: auto;
    }
 
-   .back{
-    padding: 5px;
-    /* background-color: yellowgreen; */
-  }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--background-navbar);
+  position: fixed;
+  width: 100%;
+  height: 52px;
+}
 
-  button{
-    height: 30px;
+
+.logo {
+  font-size: 24px;
+}
+
+
+/* Navbar & Navmenu color */
+:root {
+  --background-navbar: #757575;
+}
+
+
+.navicon {
+  display: block;
+  height: 50px;
+  width: 60px;
+  position: relative;
+}
+
+
+  .back{
+    position: absolute;
+    background-color: #757575;
+    height: 50px;
+    border: none;
+    width: 60px;
+    border-right: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ddd;
   }
 
 .title{
@@ -66,21 +104,15 @@ body{
 </style>
 
 <body>
-<header class="header">
-    <div class="navtext-container">
-      <p class="navtext">お知らせ</p>
+ <header class="header">
+    <div class="navicon">
+      <button class="back" name=Arrow_btn  onclick="location.href=''">←</button>
     </div>
-<%@include file="../common/G_header.jsp" %>
-</header>
+  </header>
 
 
 <main>
 <div  class="bulletin_board">
-    <div class="back">
-      <div class="back_left">
-        <button class="a" name=Arrow_btn  onclick="history.back()">←</button>
-      </div>
-    </div>
 
     <div class="title">
       <label class="more-btn">

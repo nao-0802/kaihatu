@@ -59,5 +59,10 @@ body{
     p{
         font-size: 20px;
     }
+
+    button{
+padding:5px;
+font-size:15px;
+}
 </style>
 
