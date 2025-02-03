@@ -185,6 +185,11 @@
             <input type="hidden" name="student_id" value="${list.studentId}">
             <button type="submit" class="button">カルテ閲覧</button>
         </form>
+       <!-- 生活記録閲覧ボタン -->
+        <form action="../teacher/LifeRecordList.action" method="get">
+            <input type="hidden" name="student_id" value="${list.studentId}">
+            <button type="submit" class="button">生活記録閲覧</button>
+        </form>
     </div>
 
     <div class="container add-control">
