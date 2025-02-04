@@ -41,6 +41,7 @@ public class StudentRecordAction extends Action {
         List<String> allergyNames = allergyDao.getAllergyNamesByStudentId(studentId);
 
         String classId = studentRecord.getClassId();
+        System.out.println(classId);
         String className = cDao.getClassNameById(classId);
 
 
