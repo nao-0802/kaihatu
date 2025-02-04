@@ -8,6 +8,7 @@
     <title>連絡帳作成</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
+        /* 既存のスタイル */
         body {
             margin: 0;
             padding-top: 80px;
@@ -97,8 +98,25 @@
             background: #ffe5e5;
             padding: 10px;
             border-radius: 6px;
+            display: none; /* 最初は非表示 */
         }
     </style>
+    <script>
+        function validateForm() {
+            // エラーメッセージを非表示にする
+            var errorMessage = document.getElementById("error-message");
+            errorMessage.style.display = "none";
+
+            var contactDetails = document.getElementById("contactDetails").value;
+            if (contactDetails.trim() === "") {
+                // 連絡内容が空の場合はエラーメッセージを表示
+                errorMessage.innerText = "連絡内容を入力してください";
+                errorMessage.style.display = "block"; // エラーメッセージを表示
+                return false; // フォーム送信を停止
+            }
+            return true; // フォーム送信を許可
+        }
+    </script>
 </head>
 <body>
     <header class="header">
@@ -109,16 +127,15 @@
     </header>
 
     <main class="main-content">
-        <c:if test="${not empty error}">
-            <div class="error">${error}</div>
-        </c:if>
+        <!-- エラーメッセージの表示 -->
+        <div id="error-message" class="error"></div>
 
-        <form action="ContactBookWriteExecute.action" method="post" class="contact-form">
+        <form action="ContactBookWriteExecute.action" method="post" class="contact-form" onsubmit="return validateForm()">
             <input type="hidden" name="guardianId" value="${guardianId}">
             <h3>保護者名: ${guardianName}</h3>
 
             <label for="contactDetails">連絡内容</label>
-            <textarea name="contactDetails" id="contactDetails" rows="10" cols="50" placeholder="連絡内容を記入してください">${contactDetails}</textarea>
+            <textarea name="contactDetails" id="contactDetails" rows="10" cols="50" placeholder="連絡内容を記入してください">${param.contactDetails}</textarea>
 
             <button type="submit">送信</button>
         </form>
@@ -129,3 +146,4 @@
     </main>
 </body>
 </html>
+	

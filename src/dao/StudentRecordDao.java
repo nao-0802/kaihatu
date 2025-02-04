@@ -664,5 +664,30 @@ public class StudentRecordDao extends Dao {
         return studentIds;
     }
 
+    public String getGuardianNameById(String guardianId) throws Exception {
+        String guardianName = null;
+
+        // JOINを使用して、t_guardianテーブルからguardian_nameを取得
+        String query = "SELECT g.guardian_name " +
+                       "FROM t_student_record s " +
+                       "JOIN t_guardian g ON s.guardian_id = g.guardian_id " +
+                       "WHERE s.guardian_id = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, guardianId);  // guardianIdをセット
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                guardianName = rs.getString("guardian_name");  // guardian_nameを取得
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // エラーハンドリング（例: ロギング）
+        }
+
+        return guardianName;
+    }
 
 }
