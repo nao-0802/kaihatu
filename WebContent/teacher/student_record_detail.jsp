@@ -38,7 +38,7 @@
           <th id="dai">アレルギー</th>
         </tr>
         <tr>
-            <td>${allergyName}</td>
+            <td>${allergyNames}</td>
         </tr>
           <tr>
               <th id="dai">特徴</th>
