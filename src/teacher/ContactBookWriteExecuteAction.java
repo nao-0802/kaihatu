@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.ContactBook;
 import dao.ContactBookDao;
+import dao.StudentRecordDao;  // 新しく追加
 import tool.Action;
 
 public class ContactBookWriteExecuteAction extends Action {
@@ -20,12 +21,18 @@ public class ContactBookWriteExecuteAction extends Action {
         String guardianId = req.getParameter("guardianId");
         String contactDetails = req.getParameter("contactDetails");
 
-        // 入力チェック
-        if (guardianId == null || guardianId.isEmpty() || contactDetails == null || contactDetails.isEmpty()) {
-            req.setAttribute("error", "必要な情報が不足しています。全ての項目を入力してください。");
-            req.getRequestDispatcher("/teacher/contactbook_create.jsp").forward(req, res);
-            return;
-        }
+	//        // 入力チェック
+	//        if (guardianId == null || guardianId.isEmpty() || contactDetails == null || contactDetails.isEmpty()) {
+	//            req.setAttribute("error", "必要な情報が不足しています。全ての項目を入力してください。");
+	//
+	//            // 保護者の名前を取得してリクエストスコープにセット
+	//            String guardianName = getGuardianNameById(guardianId);  // 保護者の名前を取得するメソッドを呼び出し
+	//            req.setAttribute("guardianName", guardianName);  // 名前をリクエストスコープにセット
+	//
+	//            // 同じJSPページにフォワード
+	//            req.getRequestDispatcher("/teacher/contactbook_create.jsp").forward(req, res);
+	//            return;
+	//        }
 
         // 連絡帳データの生成
         ContactBook notebook = new ContactBook();
@@ -46,5 +53,16 @@ public class ContactBookWriteExecuteAction extends Action {
             req.setAttribute("error", "連絡帳の保存中にエラーが発生しました。再試行してください。");
             req.getRequestDispatcher("/teacher/contactbook_create.jsp").forward(req, res);
         }
+    }
+
+    // 保護者の名前を取得するメソッド
+    private String getGuardianNameById(String guardianId) throws Exception {
+        String guardianName = null;
+
+        // StudentRecordDao を使用して guardianId から保護者の名前を取得
+        StudentRecordDao studentRecordDao = new StudentRecordDao();
+        guardianName = studentRecordDao.getGuardianNameById(guardianId);
+
+        return guardianName;
     }
 }
