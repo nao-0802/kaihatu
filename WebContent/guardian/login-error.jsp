@@ -18,7 +18,7 @@
         </div>
 
 
-            <button onclick="location.href=''" class="back-link">ログイン画面に戻る</button>
+            <button onclick="location.href='../scoremanager/LoginGuardian.action'">教職員新規登録</button>
     </main>
 </body>
 

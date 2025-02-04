@@ -1,61 +1,95 @@
-<%@page contentType="text/html; charset=UTF-8" %>
-
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <body>
-	<header class="header">
-	    <div class="navtext-container">
-	        <p class="navtext">ログアウト</p>
-	    </div>
 
-	    <%@include file="../common/G_header.jsp" %>
-	</header>
 
-  <main>
-    <div class="logout">
-    <h3 name="conf_message">本当にログアウトしますか？</h3>
-    </div>
+    <main>
+        <div class="logout">
+            <h3 class="conf_message">本当にログアウトしますか？</h3>
+        </div>
 
-    <div class="button">
-        <form action="../scoremanager/LogoutExecute.action">
-            <div><button class="a" name="yes_btn">はい</button></div>
-        </form>
+        <div class="button">
+            <form action="../scoremanager/LogoutExecute.action">
+                <div><button class="btn yes-btn" name="yes_btn">はい</button></div>
+            </form>
 
-        <div><button class="b" name="no_btn" onclick="history.back()">いいえ</button></div>
-    </div>
-  </main>
+            <div><button class="btn no-btn" name="no_btn" onclick="history.back()">いいえ</button></div>
+        </div>
+    </main>
 </body>
 
-
-
-
 <style>
-main{
-    margin-top: 52px;
-    margin-left:  auto;
-    margin-right: auto;
-  }
+    /* 全体のスタイル */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
 
-  .logout{
-    text-align: center;
-  }
+    header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+    }
 
+    .navtext-container {
+        display: inline-block;
+    }
 
-  .button{
-    display: flex;
-    justify-content: center;
-  }
+    .navtext {
+        font-size: 24px;
+        font-weight: bold;
+    }
 
-.a{
-    margin: 10px;
-    padding: 5px;
-    width: 60px;
-}
+    /* メインコンテンツ */
+    main {
+        margin-top: 60px;
+        padding: 20px;
+        text-align: center;
+    }
 
+    .logout h3 {
+        font-size: 22px;
+        color: #333;
+        margin-bottom: 30px;
+    }
 
-.b{
-    margin: 10px;
-    padding: 5px;
-    width: 60px;
-}
+    .button {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 15px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .yes-btn {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .yes-btn:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    .no-btn {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .no-btn:hover {
+        background-color: #e53935;
+        transform: scale(1.05);
+    }
 
 </style>

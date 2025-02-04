@@ -1,143 +1,108 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html; charset=UTF-8" %>
+<%@ page import="bean.ContactBook" %>
 
+<html>
+<head>
+    <title>連絡帳詳細</title>
+    <style>
+        /* 全体のスタイル */
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: #fafafa; /* 明るく柔らかな背景色 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 画面全体を使って中央揃え */
+            color: #333;
+        }
 
+        /* コンテンツのスタイル */
+        .content {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 16px; /* 角をさらに丸く */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            font-size: 1.1em;
+        }
 
+        h2 {
+            font-size: 2em; /* タイトルを少し小さく */
+            color: #FF8C42; /* 柔らかなオレンジ色 */
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        p {
+            font-size: 1.1em; /* 少し小さめのフォント */
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        strong {
+            color: #FF8C42; /* 強調部分もオレンジ色 */
+        }
+
+        /* ボタンのスタイル */
+        .button {
+            padding: 14px 28px;
+            font-size: 1em; /* ボタンのフォントサイズを少し小さめ */
+            background-color: #FF8C42; /* オレンジ色 */
+            color: white;
+            border: none;
+            border-radius: 12px; /* さらに丸みを帯びたボタン */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 30px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #FF7A29; /* ホバー時に少し濃いオレンジ */
+            transform: scale(1.03); /* ボタンの動きを穏やかに */
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.8em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
 <body>
-    <header class="header">
-        <div class="navivon">
-            <button class="back" name=Arrow_btn  onclick="location.href='contactbook.jsp'">←</button>
-        </div>
-    </header>
-    <main>
-        <div class="main">
+    <div class="content">
+        <h2>連絡帳詳細</h2>
 
-         <div class="g">
-            <table class="book" id="gr">
-                <tr>
-                    <td>2024-12-24</td>
-                    <td>生徒氏名</td>
-                </tr>
+        <%
+            ContactBook contactBook = (ContactBook) request.getAttribute("contactBook");
+            if (contactBook != null) {
+        %>
 
-                <tr>
-                    <th class="a">体調</th>
-                    <td>良い、鼻水</td>
-                </tr>
+            <p><strong>日付:</strong> <%= contactBook.getDay() %></p>
+            <p><strong>連絡内容:</strong> <%= contactBook.getContactDetails() %></p>
+        <%
+            } else {
+        %>
+            <p>連絡帳の詳細情報がありません。</p>
+        <%
+            }
+        %>
 
-                <tr>
-                    <th class="a">体温</th>
-                    <td>36.6</td>
-                </tr>
-
-                <tr>
-                    <th class="a">排便</th>
-                    <td>2024-12-24 <br> 12:00</td>
-                </tr>
-
-                <tr>
-                    <th class="a">睡眠時間</th>
-                    <td>22:00 ~ 7:30</td>
-                </tr>
-
-                <tr>
-                    <th class="a">家庭から</th>
-                    <td>かかれていたことをそのままもってくる。朝ごはんしっかり食べました。</td>
-                </tr>
-            </table>
-         </div>
-
-            <div class="t">
-                    <table class="book" id="tr">
-
-                        <tr>
-                            <th class="a">給食</th>
-                            <td></td>
-                        </tr>
-
-                        <tr>
-                            <th class="a">排便</th>
-                            <td></td>
-                        </tr>
-
-                        <tr>
-                            <th class="a">学校での様子</th>
-                            <td></td>
-                        </tr>
-                    </table>
-
-            </div>
-            </div>
-    </main>
+        <form action="../guardian/ContactBookList.action" method="get">
+            <!-- サーバーサイドの値を直接埋め込む -->
+            <input type="hidden" name="guardian_id" value="<%= contactBook.getGuardianId() %>">
+            <button type="submit" class="button">連絡帳閲覧</button>
+        </form>
+    </div>
 </body>
-
-
-<style>
-
-    body {
-        height: 100vh;
-        display: flex;
-        margin: 0;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--background-navbar);
-      position: fixed;
-      width: 100%;
-      height: 52px;
-      background-color: #757575;
-    }
-
-    main{
-        margin-top: 55px;
-        margin-left:  auto;
-        margin-right: auto;
-    }
-
-
-.main{
-    /* display: flex; */
-    height: 100%;
-}
-
-
-    button {
-      background-color: #757575;
-      height: 50px;
-      border: none;
-      width: 60px;
-      border-right: 1px solid #ddd;
-    }
-
-    .back{
-      font-size: 30px;
-      color: #ddd;
-    }
-
-    .book th{
-        font-weight: normal;
-    }
-
-
-    .book{
-        width: 100%;
-        border: 1px solid #08a3e5;
-        border-collapse: collapse;
-    }
-    .book td{
-        text-align: left;
-    }
-    .book th {
-        width: 35%;
-        text-align: center;
-    }
-    .book td,.book th{
-        border: solid 1px #08a3e5;
-    }
-
-    #tr{
-        border-top: 2px solid #08a3e5;
-    }
-</style>
+</html>
