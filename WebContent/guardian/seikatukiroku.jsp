@@ -91,7 +91,7 @@
 
 <style>
 main{
-    margin-top: 62px;
+    margin-top: 200px;
     margin-left:  auto;
     margin-right: auto;
     width: 100vw;
@@ -113,7 +113,7 @@ main{
 
 .tab-title {
   width: 20%;
-    padding: 5px 5px;
+    padding: 50px 10px;
     text-align: center;
     display: table;
     margin: 1px;
@@ -194,6 +194,8 @@ form{
     width: 40%;
   }
 }
+
+
 </style>
 
 

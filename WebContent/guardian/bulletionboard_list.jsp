@@ -6,7 +6,16 @@
     <title>お知らせ</title>
 </head>
 <body>
-    <h2>全体掲示板</h2>
+	<header class="header">
+    	<div class="navtext-container">
+        	<p class="navtext">お知らせ</p>
+    	</div>
+
+    	<%@include file="../common/G_header.jsp" %>
+	</header>
+
+    <main>
+    <br>
     <table border="1">
         <thead>
             <tr>
@@ -33,7 +42,7 @@
                 } else {
             %>
                 <tr>
-                    <td colspan="3">掲示板のデータがありません。</td>
+                    <td colspan="3">お知らせはありません。</td>
                 </tr>
             <%
                 }
@@ -41,8 +50,18 @@
         </tbody>
     </table>
 
-    <form action="../guardian/seikatukiroku.jsp" method="post">
-        <button type="submit">戻る</button>
-    </form>
+    </main>
 </body>
+
+<style>
+body{
+  overflow-y: scroll;
+}
+
+main {
+    margin-top: 52px;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
 </html>

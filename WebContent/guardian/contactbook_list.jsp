@@ -6,7 +6,15 @@
     <title>連絡帳一覧</title>
 </head>
 <body>
-    <h1>連絡帳一覧</h1>
+	<header class="header">
+    	<div class="navtext-container">
+        	<p class="navtext">連絡帳閲覧</p>
+    	</div>
+
+    	<%@include file="../common/G_header.jsp" %>
+	</header>
+	<main>
+	<br>
     <table border="1">
         <tr>
             <th>日付</th>
@@ -25,8 +33,18 @@
         </c:forEach>
     </table>
 
-    <form action="../guardian/seikatukiroku.jsp" method="post">
-        <button type="submit">戻る</button>
-    </form>
+
+    </main>
 </body>
+<style>
+body{
+  overflow-y: scroll;
+}
+
+main {
+    margin-top: 52px;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
 </html>

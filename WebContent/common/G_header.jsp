@@ -12,7 +12,7 @@
       <li><a href="../guardian/StudentRecord.action">生徒カルテを閲覧</a></li>
       <li><a href="../guardian/ContactBookList.action">連絡帳を見る</a></li>
       <li><a href="../guardian/ContactBookWrite.action">連絡帳を書く</a></li>
-      <li><a href="../guardian/BulletionBoardList.action">全体掲示板</a></li>
+      <li><a href="../guardian/BulletionBoardList.action">お知らせ</a></li>
       <li><a href="../guardian/Attendance.jsp">欠席連絡</a></li>
       <li><a href="../guardian/logout_guardian.jsp">ログアウト</a></li>
     </ul>
