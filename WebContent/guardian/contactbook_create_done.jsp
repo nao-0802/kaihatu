@@ -15,7 +15,7 @@
     <main>
         <p>送信完了</p>
 
-    <button onclick="location.href='../guardian/ContactBookList.action'">連絡帳一覧に戻る</button>
+    <button onclick="location.href='../guardian/LifeRecord.action'">生活記録に戻る</button>
     </main>
 
 </body>
