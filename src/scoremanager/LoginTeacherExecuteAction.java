@@ -63,7 +63,7 @@ public class LoginTeacherExecuteAction extends Action {
 			// 入力された教員IDをセット
 			req.setAttribute("teacherID", id);
 			//フォワード
-			url = "index_teacher.jsp";
+			url = "login_teacher.jsp";
 			req.getRequestDispatcher(url).forward(req, res);
 		}
 

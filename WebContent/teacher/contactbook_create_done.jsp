@@ -16,7 +16,9 @@
     <main>
         <p>送信完了</p>
 
-    <button onclick="location.href='./StudentListExecute.action'">生徒一覧に戻る</button>
+    <div class="back-link">
+    		<a href="javascript:history.back()">戻る</a>
+		</div>
     </main>
 
 </body>

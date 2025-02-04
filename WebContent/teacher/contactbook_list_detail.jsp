@@ -101,7 +101,7 @@
         <form action="../teacher/ContactBookListReturn.action" method="get">
             <!-- サーバーサイドの値を直接埋め込む -->
             <input type="hidden" name="guardian_id" value="<%= contactBook.getGuardianId() %>">
-            <button type="submit" class="button">連絡帳閲覧</button>
+            <button type="submit" class="button">連絡帳一覧</button>
         </form>
     </div>
 </body>

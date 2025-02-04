@@ -141,9 +141,8 @@
         </form>
 
         <div class="back-link">
-            <a href="./StudentListExecute.action">生徒一覧に戻る</a>
-        </div>
+    		<a href="javascript:history.back()">戻る</a>
+		</div>
     </main>
 </body>
 </html>
-	
