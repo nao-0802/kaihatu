@@ -2,13 +2,19 @@
 <%@ page import="java.util.List" %>
 <%@ page import="bean.ContactBook" %>
 
-
 <body>
-    <h2>連絡帳一覧</h2>
 
-    <table>
+    <header class="header">
+        <div class="navtext-container">
+            <p class="navtext">連絡帳</p>
+        </div>
+        <%@include file="../common/T_header.jsp" %>
+    </header>
+
+    <table class="contact-table">
         <thead>
             <tr>
+                <th>生徒名</th>
                 <th>日付</th>
                 <th>詳細</th>
             </tr>
@@ -39,177 +45,99 @@
             %>
         </tbody>
     </table>
+
 </body>
-
-
-<body onload="filterTable()">
-<header class="header">
-    <div class="navtext-container">
-        <p class="navtext">連絡帳</p>
-    </div>
-    <%@include file="../common/T_header.jsp" %>
-</header>
-
-<main>
-<div class="test">
-    <!-- 生徒名を表示 -->
-    <div class="student-info">
-        <p>名前: ${list.studentName} (${list.studentId})</p>
-    </div>
-
-    <div>
-      <input type="month" id="today" min="2020-04" value="">
-    </div>
-    <div class="m">
-
-    <table id="dataTable">
-        <tr>
-            <th>
-                <td hidden>日付</td>
-            </th>
-        </tr>
-
-        <tr>
-            <th>
-                <td>2025-01-04</td>
-            </th>
-        </tr>
-<tr>
-            <th>
-                <td>2024-11-04</td>
-            </th>
-        </tr>
-    </table>
-    </div>
-
-</div>
-
-
-
-
-    <%
-        ContactBook contactBook = (ContactBook) request.getAttribute("contactBook");
-        if (contactBook != null) {
-    %>
-
-        <p><strong>生徒氏名:</strong> <%= contactBook.getStudentName() %></p><!-- iranai? -->
-        <p><strong>日付:</strong> <%= contactBook.getDay() %></p>
-        <p><strong>連絡内容:</strong> <%= contactBook.getContactDetails() %></p>
-    <%
-        } else {
-    %>
-        <p>連絡帳がありません。</p>
-    <%
-        }
-    %>
-
-
-</main>
-</body>
-
-
-
 
 <style>
+    /* Body全体のスタイル */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        line-height: 1.6;
+        padding-top: 0.5px; /* ヘッダー分の余白を追加 */
+        text-align: center; /* 全体のテキストを中央寄せ */
+    }
 
-body{
-    overflow: hidden;
-}
+    /* ヘッダーのスタイル */
+    header {
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000; /* ヘッダーを最前面に表示 */
 
-main{
-margin-top:52px;
-margin-left:auto;
-margin-right:auto;
-}
+        color: white;
+        padding: 5px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-.test{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-    width: 100vw;
-    text-align:center;
-}
+    .navtext-container {
+        margin: 0;
+    }
 
-input{
-    text-align: center;
-    width: 200px;
-    height: 30px;
-}
+    /* テーブルのスタイル */
+    table.contact-table {
+        width: 90%;
+        margin: 120px auto 20px; /* ヘッダー下に余白を追加 */
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center; /* テーブル内全体を中央寄せ */
+    }
 
-.m{
-    overflow-y: scroll;
-}
+    table.contact-table th, table.contact-table td {
+        padding: 15px;
+        text-align: center; /* ヘッダーとデータのテキストを中央寄せ */
+        border-bottom: 1px solid #ddd;
+    }
 
-table{
-    width: 90%;
-    font-size: 20px;
-    padding: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
-}
+    table.contact-table th {
+        background-color: #fff; /* 背景色を白に設定 */
+        color: black; /* 文字色を黒に設定 */
+        font-weight: bold; /* 文字を太字に設定 */
+    }
 
-table td{
-  text-align: center;
-    border-bottom: solid 1px red;
-}
+    table.contact-table td {
+        color: #555;
+    }
 
-a{
-    color: black;
-    text-decoration: none;
-}
+    table.contact-table a {
+        color: #007bff;
+        text-decoration: none;
+        padding: 5px;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
 
+    table.contact-table a:hover {
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* 連絡帳がない場合のメッセージ */
+    table.contact-table td[colspan="3"] {
+        color: #888;
+        font-style: italic;
+    }
+
+    /* スマホ対応 */
+    @media (max-width: 768px) {
+        table.contact-table {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .navtext {
+            font-size: 2em;
+        }
+
+        body {
+            padding-top: 100px; /* スマホでヘッダー分余白を調整 */
+        }
+    }
 </style>
-
-<script>
-
-
-	//今日の日時を表示
-	function displayDataTime() {
-	    //今日の日時を表示
-	    var date = new Date()
-	    var year = date.getFullYear()
-	    var month = date.getMonth() + 1
-
-
-	    var toTwoDigits = function (num, digit) {
-	      num += ''
-	      if (num.length < digit) {
-	        num = '0' + num
-	      }
-	      return num
-	    }
-
-	    var yyyy = toTwoDigits(year, 4)
-	    var mm = toTwoDigits(month, 2)
-
-	    var ymd = yyyy + "-" + mm;
-
-	    return document.getElementById("today").value = ymd;
-	}
-	displayDataTime();
-
-  //検索.テーブル表示
-  function filterTable() {
-      const input = document.getElementById("today").value;
-      const table = document.getElementById("dataTable");
-      const tr = table.getElementsByTagName("tr");
-
-      for (let i = 1; i < tr.length; i++) {
-          const td = tr[i].getElementsByTagName("td")[0];
-          if (td) {
-              const txtValue = td.textContent || td.innerText;
-              if (txtValue.indexOf(input) > -1) {
-                  tr[i].style.display = "";
-              } else {
-                  tr[i].style.display = "none";
-              }
-          }
-      }
-  }
-
-
-  document.getElementById('today').addEventListener('input', function() {
-      filterTable()},);
-
-</script>
