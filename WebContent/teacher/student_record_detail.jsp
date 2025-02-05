@@ -69,23 +69,24 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 
 /* 全体の中央配置 */
 .zentai {
-  width: 90%;
-  max-width: 800px; /* 横幅を広げる */
+  width: 100%;
+  max-width: 1200px; /* PCでは最大1200pxまで広げる */
+  margin: auto;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding: 20px;
 }
 
 /* テーブル中央配置 */
 .kihon, #karute2 {
-  width: 100%;
-  margin: 20px 0;
+  width: 90%;
+  max-width: 900px; /* テーブルの最大幅を制限 */
+  margin: 20px auto;
 }
 
 #karute, #karute2 {
@@ -95,55 +96,71 @@ main {
 
 #karute th, #karute2 th {
   border-bottom: 2px solid rgb(128, 183, 225);
-  padding: 10px;
+  padding: 15px;
   text-align: center;
+  background-color: #f4f4f4;
 }
 
 #karute td, #karute2 td {
-  padding: 10px;
+  padding: 15px;
   border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
 /* ボタンエリア（ページ下部中央） */
 .buttons {
   width: 100%;
+  max-width: 500px; /* ボタンの最大幅を設定 */
   display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 30px;
+  justify-content: space-between; /* 均等配置 */
+  gap: 20px; /* ボタン間の間隔 */
+  margin: 30px auto;
 }
 
 button {
-  padding: 12px 24px;
-  font-size: 16px;
+  flex: 1; /* ボタンを均等に広げる */
+  padding: 14px 20px;
+  font-size: 18px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: 0.3s ease-in-out;
 }
 
+/* 編集ボタン */
 .edit-btn {
   background-color: rgb(0, 135, 208);
   color: white;
 }
 
+.edit-btn:hover {
+  background-color: rgb(0, 100, 180);
+  transform: scale(1.05);
+}
+
+/* 戻るボタン */
 .back-btn {
   background-color: rgb(128, 183, 225);
   color: white;
 }
 
-/* レスポンシブ対応 */
-@media screen and (max-width: 600px) {
-  .zentai {
-    width: 95%;
-  }
+.back-btn:hover {
+  background-color: rgb(98, 153, 195);
+  transform: scale(1.05);
+}
 
+/* スマホ表示時 */
+@media screen and (max-width: 768px) {
   .buttons {
     flex-direction: column;
     align-items: center;
+    width: 90%;
   }
 
   button {
-    width: 80%;
+    width: 100%;
     margin-bottom: 10px;
   }
 }

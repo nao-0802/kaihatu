@@ -1,4 +1,4 @@
-<%@ page import="bean.MealRecord, bean.SleepRecord, bean.ExcretionRecord" %>
+<%@ page import="bean.MealRecord, bean.SleepRecord, bean.ExcretionRecord, bean.MedicineRecord" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -9,7 +9,7 @@
     <div class="navtext-container">
         <p class="navtext">生活記録確認</p>
         </div>
-        <%@include file="../common/G_header.jsp" %>
+        <%@include file="../common/T_header.jsp" %>
 </header>
 
 
@@ -143,11 +143,32 @@
 
     <div class="tab-body" id="body4">
         <table>
-            <th>
-                <tr>
-                    <td>medcine</td>
-                </tr>
-            </th>
+
+             <tr>
+               	<th>日付</th>
+            	<th>時間</th>
+             </tr>
+             <%
+            List<MedicineRecord> medicineRecords = (List<MedicineRecord>) request.getAttribute("medicineRecords");
+            if (medicineRecords != null && !medicineRecords.isEmpty()) {
+                for (MedicineRecord record : medicineRecords) {
+
+        %>
+        <tr>
+            <td><%= record.getDay() %></td>
+            <td><%= record.getTime() %></td>
+        </tr>
+        <%
+                }
+            } else {
+        %>
+        <tr>
+            <td colspan="3">睡眠記録がありません。</td>
+        </tr>
+        <%
+            }
+        %>
+
         </table>
     </div>
 

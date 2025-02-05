@@ -32,6 +32,25 @@ public class MedicineRecordDao extends Dao {
         return list;
     }
 
+    public List<MedicineRecord> findByStudentId(String studentId) throws Exception {
+        List<MedicineRecord> medicineRecords = new ArrayList<>();
+        String sql = "SELECT * FROM t_medicine_record WHERE student_id = ? ORDER BY day, time";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    MedicineRecord record = new MedicineRecord();
+                    record.setDay(rs.getDate("day"));
+                    record.setTime(rs.getTime("time"));
+                    medicineRecords.add(record);
+                }
+            }
+        }
+        return medicineRecords;
+    }
+
     // 指定されたstudent_idのMedicineRecordを取得するメソッド
     public List<MedicineRecord> filter(String studentId) throws Exception {
         List<MedicineRecord> list = new ArrayList<>();
