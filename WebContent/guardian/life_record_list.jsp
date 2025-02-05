@@ -1,4 +1,4 @@
-<%@ page import="bean.MealRecord, bean.SleepRecord, bean.ExcretionRecord,bean.MedicineRecord" %>
+<%@ page import="bean.MealRecord, bean.SleepRecord, bean.ExcretionRecord, bean.MedicineRecord" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -15,7 +15,7 @@
 
 <main>
     <div class="day">
-        <input type="date">
+
     </div>
 
     <div class="container add-control">
@@ -141,41 +141,36 @@
         </table>
     </div>
 
-<div class="tab-body" id="body4">
-    <table>
-        <tr>
-            <th>日付</th>
-            <th>時間</th>
-            <th>詳細</th>
-        </tr>
-        <%
-        List<MedicineRecord> medicineRecords = (List<MedicineRecord>) request.getAttribute("medicineRecords");
-        if (medicineRecords != null && !medicineRecords.isEmpty()) {
-            for (MedicineRecord record : medicineRecords) {
-                // 服薬済みの場合のみ表示
-                if (record.getMedicine() != 0) {
-                    String medicineDetail = "服薬済み";  // 服薬済みの詳細を表示
+    <div class="tab-body" id="body4">
+        <table>
+
+             <tr>
+               	<th>日付</th>
+            	<th>時間</th>
+             </tr>
+             <%
+            List<MedicineRecord> medicineRecords = (List<MedicineRecord>) request.getAttribute("medicineRecords");
+            if (medicineRecords != null && !medicineRecords.isEmpty()) {
+                for (MedicineRecord record : medicineRecords) {
+
         %>
         <tr>
             <td><%= record.getDay() %></td>
             <td><%= record.getTime() %></td>
-            <td><%= medicineDetail %></td>
         </tr>
         <%
                 }
-            }
-        } else {
-
+            } else {
         %>
         <tr>
-            <td colspan="3">睡眠記録がありません。</td>
+            <td colspan="3">服薬記録がありません。</td>
         </tr>
         <%
-        }
+            }
         %>
-    </table>
-</div>
 
+        </table>
+    </div>
 
     <div id="life_record">
         <table>
@@ -219,145 +214,145 @@
 
 
 <style>
-body{
-  overflow: hidden;
-}
+	body{
+	  overflow: hidden;
+	}
 
-main{
-  margin-top: 52px;
-  margin-left:  auto;
-  margin-right: auto;
-  width: 100vw;
-  height: 100%;
-}
+	main{
+	  margin-top: 52px;
+	  margin-left:  auto;
+	  margin-right: auto;
+	  width: 100vw;
+	  height: 100%;
+	}
 
-.day{
-  padding: 10px;
-  text-align: center;
-}
-
-
-.title1, #body1 {
-  border: 2px solid rgb(0, 128, 0);
-}
-.title2, #body2 {
-  border: 2px solid rgb(230, 230, 0);
-}
-.title3, #body3 {
-  border: 2px solid rgb(200, 15, 15);
-}
-.title4, #body4 {
-border: 2px solid rgb(15, 104, 200);
-}
+	.day{
+	  padding: 10px;
+	  text-align: center;
+	}
 
 
-.tab-title {
-  width: 20%;
-  padding: 5px 5px;
-  text-align: center;
-  display: table;
-  margin: 1px;
-}
-
-.tab-body {
-  display: none;
-  width: 80%;
-  padding: 10px;
-  height: 60vh;
-  overflow-y: scroll;
-}
-
-/* radio non-display */
-.container .radio {
-display: none;
-}
-
-/* tabs position */
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.container::after {
-  content: "";
-  width: 100%;
-}
-
-.container .tab-body {
-  order: 1;
-  margin-top: 10px;
-}
-
-/* tab's body init */
+	.title1, #body1 {
+	  border: 2px solid rgb(0, 128, 0);
+	}
+	.title2, #body2 {
+	  border: 2px solid rgb(230, 230, 0);
+	}
+	.title3, #body3 {
+	  border: 2px solid rgb(200, 15, 15);
+	}
+	.title4, #body4 {
+	border: 2px solid rgb(15, 104, 200);
+	}
 
 
-/* tab's color */
-.add-control .radio:checked + .tab-title {
-  color: #000000;
-}
+	.tab-title {
+	  width: 20%;
+	  padding: 5px 5px;
+	  text-align: center;
+	  display: table;
+	  margin: 1px;
+	}
 
-#tab1:checked ~ .title1 {
-  background: rgba(0, 128, 0, 0.5);
-}
+	.tab-body {
+	  display: none;
+	  width: 80%;
+	  padding: 10px;
+	  height: 60vh;
+	  overflow-y: scroll;
+	}
 
-#tab2:checked ~ .title2 {
-  background: rgba(255, 255, 0, 0.5);
-}
+	/* radio non-display */
+	.container .radio {
+	display: none;
+	}
 
-#tab3:checked ~ .title3 {
-  background: rgba(255, 0, 0, 0.5);
-}
+	/* tabs position */
+	.container {
+	  display: flex;
+	  flex-wrap: wrap;
+	  justify-content: center;
+	}
 
-#tab4:checked ~ .title4 {
-background: rgba(0, 140, 255, 0.5);
-}
+	.container::after {
+	  content: "";
+	  width: 100%;
+	}
 
-#tab1:checked ~ #body1,
-#tab2:checked ~ #body2,
-#tab3:checked ~ #body3,
-#tab4:checked ~ #body4{
-display: block;
-}
+	.container .tab-body {
+	  order: 1;
+	  margin-top: 10px;
+	}
 
-
-
-table{
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  border-collapse: collapse;
-}
-
-
-table td{
-  border: 1px solid rgb(0, 0, 0);
-  white-space: nowrap;
-  width: 30%;
-}
+	/* tab's body init */
 
 
-#life_record{
-  margin-top: 15px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  height: 60vh;
-  overflow-y: scroll;
-}
+	/* tab's color */
+	.add-control .radio:checked + .tab-title {
+	  color: #000000;
+	}
 
-@media screen and (max-width: 426px) {
-.tab-title{
-  width: 40%;
-}
-.tab-body {
-  height: 50vh;
-}
-#life_record{
-  height: 50vh;
-}
-}
+	#tab1:checked ~ .title1 {
+	  background: rgba(0, 128, 0, 0.5);
+	}
+
+	#tab2:checked ~ .title2 {
+	  background: rgba(255, 255, 0, 0.5);
+	}
+
+	#tab3:checked ~ .title3 {
+	  background: rgba(255, 0, 0, 0.5);
+	}
+
+	#tab4:checked ~ .title4 {
+	background: rgba(0, 140, 255, 0.5);
+	}
+
+	#tab1:checked ~ #body1,
+	#tab2:checked ~ #body2,
+	#tab3:checked ~ #body3,
+	#tab4:checked ~ #body4{
+	display: block;
+	}
+
+
+
+	table{
+	  text-align: center;
+	  margin-left: auto;
+	  margin-right: auto;
+	  border-collapse: collapse;
+	}
+
+
+	table td{
+	  border: 1px solid rgb(0, 0, 0);
+	  white-space: nowrap;
+	  width: 30%;
+	}
+
+
+	#life_record{
+	  margin-top: 15px;
+	  text-align: center;
+	  margin-left: auto;
+	  margin-right: auto;
+	  width: 100%;
+	  height: 60vh;
+	  overflow-y: scroll;
+	}
+
+	@media screen and (max-width: 426px) {
+	.tab-title{
+	  width: 40%;
+	}
+	.tab-body {
+	  height: 50vh;
+	}
+	#life_record{
+	  height: 50vh;
+	}
+	}
 
 </style>
 </html>
