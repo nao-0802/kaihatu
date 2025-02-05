@@ -59,18 +59,7 @@
             margin-bottom: 15px;
         }
 
-        /* テキスト */
-        p {
-            font-size: 1em;
-            line-height: 1.5;
-            margin: 10px 0;
-        }
 
-        strong {
-            color: #007bff;
-            text-align: center; /* 強調部分を中央寄せ */
-            display: block; /* ブロック要素にして中央寄せ */
-        }
 
         /* ボタン */
         .button {
@@ -91,16 +80,24 @@
             background-color: #0056b3;
         }
 
-        /* スマホ対応 */
-        @media (max-width: 768px) {
-            h2 {
-                font-size: 1.4em;
-            }
 
-            p {
-                font-size: 0.95em;
-            }
-        }
+
+    /* 日付と連絡内容のスタイル */
+    strong {
+        font-size: 1.2m; /* 文字を大きく */
+        color: #007bff;
+        text-align: center;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    p {
+        font-size: 1.2em; /* 通常のテキストも少し大きく */
+        line-height: 1.6;
+        margin: 10px 0;
+    }
+
+
     </style>
 </head>
 <body>
@@ -119,10 +116,11 @@
             <p><strong>日付</strong> <%= contactBook.getDay() %></p>
             <p><strong>連絡内容</strong> <%= contactBook.getContactDetails() %></p>
 
-            <form action="../guardian/ContactBook.action" method="get">
-                <input type="hidden" name="guardian_id" value="<%= contactBook.getGuardianId() %>">
-                <button type="submit" class="button">連絡帳一覧</button>
-            </form>
+		<form action="../guardian/ContactBookList.action" method="get">
+		    <input type="hidden" name="guardian_id" value="<%= contactBook.getGuardianId() %>">
+		    <button type="submit" class="button">連絡帳一覧</button>
+		</form>
+
         <%
             } else {
         %>
