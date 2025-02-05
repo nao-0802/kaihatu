@@ -1,4 +1,4 @@
-<%@ page import="bean.MealRecord, bean.SleepRecord, bean.ExcretionRecord" %>
+<%@ page import="bean.MealRecord, bean.SleepRecord, bean.ExcretionRecord,bean.MedicineRecord" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -141,15 +141,41 @@
         </table>
     </div>
 
-    <div class="tab-body" id="body4">
-        <table>
-            <th>
-                <tr>
-                    <td>medcine</td>
-                </tr>
-            </th>
-        </table>
-    </div>
+<div class="tab-body" id="body4">
+    <table>
+        <tr>
+            <th>日付</th>
+            <th>時間</th>
+            <th>詳細</th>
+        </tr>
+        <%
+        List<MedicineRecord> medicineRecords = (List<MedicineRecord>) request.getAttribute("medicineRecords");
+        if (medicineRecords != null && !medicineRecords.isEmpty()) {
+            for (MedicineRecord record : medicineRecords) {
+                // 服薬済みの場合のみ表示
+                if (record.getMedicine() != 0) {
+                    String medicineDetail = "服薬済み";  // 服薬済みの詳細を表示
+        %>
+        <tr>
+            <td><%= record.getDay() %></td>
+            <td><%= record.getTime() %></td>
+            <td><%= medicineDetail %></td>
+        </tr>
+        <%
+                }
+            }
+        } else {
+
+        %>
+        <tr>
+            <td colspan="3">睡眠記録がありません。</td>
+        </tr>
+        <%
+        }
+        %>
+    </table>
+</div>
+
 
     <div id="life_record">
         <table>
