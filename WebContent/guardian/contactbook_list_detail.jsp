@@ -119,7 +119,7 @@
             <p><strong>日付</strong> <%= contactBook.getDay() %></p>
             <p><strong>連絡内容</strong> <%= contactBook.getContactDetails() %></p>
 
-            <form action="../guardian/ContactBookList.action" method="get">
+            <form action="../guardian/ContactBook.action" method="get">
                 <input type="hidden" name="guardian_id" value="<%= contactBook.getGuardianId() %>">
                 <button type="submit" class="button">連絡帳一覧</button>
             </form>
