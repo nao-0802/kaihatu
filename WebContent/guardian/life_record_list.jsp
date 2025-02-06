@@ -23,7 +23,7 @@
         <input type="checkbox" id="tab2" class="radio" name="tab" value="2" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title2" id="title2" for="tab2">ごはん</label>
         <input type="checkbox" id="tab3" class="radio" name="tab" value="3" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title3" id="title3" for="tab3">トイレ</label>
         <input type="checkbox" id="tab4" class="radio" name="tab" value="4" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title4" id="title4" for="tab4">くすり</label>
-
+  <button class="back-button" onclick="window.history.back();">戻る</button>
 
     <div class="tab-body" id="body1">
         <table>
@@ -180,8 +180,9 @@
                 </tr>
             </th>
         </table>
-    </div>
+
 </div>
+
 </main>
 </body>
 
@@ -353,6 +354,29 @@
 	  height: 50vh;
 	}
 	}
+
+
+	.back-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.back-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
 
 </style>
 </html>
