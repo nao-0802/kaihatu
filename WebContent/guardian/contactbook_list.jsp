@@ -66,7 +66,7 @@
     </style>
 </head>
 <body>
-<button class="back-btn" onclick="history.back()"> 戻る</button>
+<button class="back-btn" onclick="window.location.href='LifeRecord.action'">戻る</button>
 
     <header class="header">
         <div class="navtext-container">
