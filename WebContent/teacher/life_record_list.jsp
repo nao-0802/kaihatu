@@ -18,6 +18,12 @@
         <input type="date">
     </div>
 
+    <div class="buttons">
+            <form action="../teacher/StudentRecord.action" method="post">
+                <button class="back-btn" name="student_id" value="${studentId}">戻る</button>
+            </form>
+        </div>
+
     <div class="container add-control">
         <input type="checkbox" id="tab1" class="radio" name="tab" value="1" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title1" id="title1" for="tab1">睡眠</label>
         <input type="checkbox" id="tab2" class="radio" name="tab" value="2" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title2" id="title2" for="tab2">ごはん</label>
