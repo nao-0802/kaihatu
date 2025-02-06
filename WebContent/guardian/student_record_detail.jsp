@@ -40,6 +40,9 @@
                 </c:forEach>
             </ul>
         </div>
+        <div class="button-container">
+            <button onclick="history.back()">戻る</button>
+        </div>
     </main>
 </body>
 
@@ -61,10 +64,10 @@
     /* メインコンテンツ */
     main {
         max-width: 1200px;
-        margin: 40px auto;
-        padding: 30px;
+        padding: 40px;
+		margin: 44px auto;
         background-color: white;
-        border-radius: 20px;
+
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
@@ -76,8 +79,6 @@
     }
 
     /* テーブル */
-
-
     th, td {
         padding: 15px;
         text-align: left;
@@ -111,6 +112,26 @@
         padding-left: 0;
     }
 
+    /* ボタンのスタイル */
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+.button-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 30px; /* 横長にするために幅を増やす */
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px; /* ← ボタンの横幅を指定 */
+}
+
+
+    .button-container button:hover {
+        background-color: #45a049;
     }
 </style>
 </html>
