@@ -58,9 +58,9 @@ public class AttendanceDao extends Dao {
     public boolean save(Attendance attendance) throws Exception {
         String sql;
         if (getAttendance(attendance.getAttendanceId()) == null) {
-            sql = "INSERT INTO t_attendance (attendance_id, student_id, day, type, time, reason, symptom, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            sql = "INSERT INTO t_attendance (attendance_id, student_id, day, type, time, reason, notes, symptom) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         } else {
-            sql = "UPDATE t_attendance SET student_id = ?, day = ?, type = ?, time = ?, reason = ?, symptom = ?, notes = ? WHERE attendance_id = ?";
+            sql = "UPDATE t_attendance SET student_id = ?, day = ?, type = ?, time = ?, reason = ?, notes = ?, symptom = ? WHERE attendance_id = ?";
         }
 
         try (Connection connection = getConnection();
@@ -71,8 +71,8 @@ public class AttendanceDao extends Dao {
             statement.setString(4, attendance.getType());
             statement.setTime(5, attendance.getTime());
             statement.setString(6, attendance.getReason());
-            statement.setString(7, attendance.getSymptom());
-            statement.setString(8, attendance.getNotes());
+            statement.setString(7, attendance.getNotes());
+            statement.setString(8, attendance.getSymptom());
             return statement.executeUpdate() > 0;
         }
     }
@@ -138,6 +138,32 @@ public class AttendanceDao extends Dao {
         return attendanceList;
     }
 
+ // 日付で絞り込んで出席情報を取得
+    public List<Attendance> getAttendancesByDate(String teacherId, Date attendanceDate) throws Exception {
+        List<Attendance> attendanceList = new ArrayList<>();
+        String query = "SELECT * FROM attendance WHERE teacher_id = ? AND attendance_date = ?";
+
+        try (Connection con = getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, teacherId); // 教師IDをセット
+            stmt.setDate(2, new java.sql.Date(attendanceDate.getTime())); // 日付をセット
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Attendance attendance = new Attendance();
+                    attendance.setStudentId(rs.getString("student_id"));
+                    attendance.setStudentName(rs.getString("student_name"));
+                    attendance.setDay(rs.getDate("attendance_date"));
+                    attendance.setType(rs.getString("attendance_type"));
+                    attendance.setTime(rs.getTime("attendance_time"));
+                    attendance.setSymptom(rs.getString("symptom"));
+                    attendance.setReason(rs.getString("reason"));
+                    attendance.setNotes(rs.getString("notes"));
+                    attendanceList.add(attendance);
+                }
+            }
+        }
+        return attendanceList;
+    }
     // 複数の学生IDに基づく出席情報の取得
     public List<Attendance> getAttendancesByStudents(List<Student> students) throws Exception {
         List<String> studentIds = students.stream()

@@ -18,24 +18,45 @@
     }
 
     .button-container {
-        text-align: center;
-        display: flex;
-        justify-content: center;
+    display: flex;
+    justify-content: center; /* 中央揃え */
+    flex-wrap: wrap; /* 画面幅に応じて折り返す */
+    gap: 15px; /* ボタン間の余白 */
+    margin-top: 20px;
+}
+
+.button {
+    background-color: #4CAF50; /* 緑色の爽やかなボタン */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 12px 20px;
+    transition: background-color 0.3s, transform 0.2s;
+    min-width: 150px; /* ボタンの最小幅を統一 */
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #45a049; /* 少し濃い緑で強調 */
+    transform: scale(1.05); /* ほんの少し大きく */
+}
+
+/* スマホ用の調整 */
+@media screen and (max-width: 768px) {
+    .button-container {
+        flex-direction: column; /* 縦に並べる */
+        align-items: center;
     }
 
     .button {
-        background-color: #f0f0f0; /* 色を緩くする */
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        padding: 6px;
-        margin: 3px;
+        width: 80%; /* スマホでは横幅を広げる */
+        max-width: 300px;
     }
+}
 
-    .button:hover {
-        background-color: #e0e0e0;
-    }
 
     .title1, #body1 {
         border: 2px solid rgb(0, 128, 0);

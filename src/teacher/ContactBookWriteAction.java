@@ -48,6 +48,7 @@ public class ContactBookWriteAction extends Action{
             req.setAttribute("guardian", guardian);
             req.setAttribute("guardianId", guardian.getGuardianId());
             req.setAttribute("guardianName", guardian.getGuardianName());
+            req.setAttribute("studentId", studentId);
 
 
             // JSP にフォワード

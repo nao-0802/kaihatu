@@ -44,7 +44,7 @@ public class LifeRecordListAction extends Action {
         req.setAttribute("sleepRecords", sleepRecords);
         req.setAttribute("excretionRecords", excretionRecords);
         req.setAttribute("medicineRecords", medicineRecords);
-        req.setAttribute("studnetId", studentId);
+        req.setAttribute("studentId", studentId);
 
         // JSPへフォワード
         req.getRequestDispatcher("../teacher/life_record_list.jsp").forward(req, res);

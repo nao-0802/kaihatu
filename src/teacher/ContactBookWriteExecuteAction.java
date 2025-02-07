@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.ContactBook;
 import dao.ContactBookDao;
+import dao.GuardianDao;
 import dao.StudentRecordDao;  // 新しく追加
 import tool.Action;
 
@@ -20,6 +21,10 @@ public class ContactBookWriteExecuteAction extends Action {
         System.out.println(teacherId);
         String guardianId = req.getParameter("guardianId");
         String contactDetails = req.getParameter("contactDetails");
+
+        GuardianDao guardianDao = new GuardianDao();
+
+        String studentId = guardianDao.getStudentIdByGuardianId(guardianId);
 
 	//        // 入力チェック
 	//        if (guardianId == null || guardianId.isEmpty() || contactDetails == null || contactDetails.isEmpty()) {
@@ -48,6 +53,7 @@ public class ContactBookWriteExecuteAction extends Action {
         // 保存結果に応じてフォワード
         if (success) {
             req.setAttribute("message", "連絡帳が正常に保存されました。");
+            req.setAttribute("studentId", studentId);
             req.getRequestDispatcher("/teacher/contactbook_create_done.jsp").forward(req, res);
         } else {
             req.setAttribute("error", "連絡帳の保存中にエラーが発生しました。再試行してください。");

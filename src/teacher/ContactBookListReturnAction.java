@@ -61,6 +61,7 @@ public class ContactBookListReturnAction extends Action {
 
         // リクエスト属性に連絡帳リストを設定
         req.setAttribute("contactBookList", contactBookList);
+        req.setAttribute("studentId", studentId);
 
         // JSPへフォワード
         req.getRequestDispatcher("contactbook_list.jsp").forward(req, res);

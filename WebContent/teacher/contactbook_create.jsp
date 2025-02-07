@@ -100,6 +100,23 @@
             border-radius: 6px;
             display: none; /* 最初は非表示 */
         }
+        .back-btn {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background-color: #f1f1f1;
+    color: #6fa3ef;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #6fa3ef;
+    color: white;
+}
+
     </style>
     <script>
         function validateForm() {
@@ -140,9 +157,11 @@
             <button type="submit">送信</button>
         </form>
 
-        <div class="back-link">
-    		<a href="javascript:history.back()">戻る</a>
-		</div>
+        <div class="buttons">
+            <form action="LifeRecord.action" method="post">
+      			<button class="back-btn" name="student_id" value="${studentId}">戻る</button>
+    		</form>
+        </div>
     </main>
 </body>
 </html>

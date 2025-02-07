@@ -19,9 +19,9 @@
     </div>
 
     <div class="buttons">
-            <form action="../teacher/StudentRecord.action" method="post">
-                <button class="back-btn" name="student_id" value="${studentId}">戻る</button>
-            </form>
+            <form action="LifeRecord.action" method="post">
+      			<button class="back-btn" name="student_id" value="${studentId}">戻る</button>
+    		</form>
         </div>
 
     <div class="container add-control">
@@ -250,6 +250,26 @@
 	.title4, #body4 {
 	border: 2px solid rgb(15, 104, 200);
 	}
+	.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.back-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #0056b3;
+}
 
 
 	.tab-title {
