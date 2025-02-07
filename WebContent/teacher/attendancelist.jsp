@@ -1,285 +1,173 @@
-<%@page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="bean.StudentRecord, java.util.List"%>
+
 <head>
-    <meta charset="UTF-8">
-    <title>生活記録</title>
-    <script>
-        // 記録成功時にアラートを表示する関数
-        function showSuccessAlert() {
-            alert("記録が正常に保存されました！");
-        }
-    </script>
-    <style>
-        main {
-        margin-top: 52px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+<style type="text/css">
+/* 全体のレイアウト */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  overflow-x: hidden; /* 横スクロールを無効化 */
+}
 
-    .button-container {
-        text-align: center;
-        display: flex;
-        justify-content: center;
-    }
 
-    .button {
-        background-color: #f0f0f0; /* 色を緩くする */
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        padding: 6px;
-        margin: 3px;
-    }
 
-    .button:hover {
-        background-color: #e0e0e0;
-    }
+main {
+  margin: 50px auto;
+  width: 90%;
+  max-width: 1200px;
+  padding: 50px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-    .title1, #body1 {
-        border: 2px solid rgb(0, 128, 0);
-    }
-    .title2, #body2 {
-        border: 2px solid rgb(230, 230, 0);
-    }
-    .title3, #body3 {
-        border: 2px solid rgb(200, 15, 15);
-    }
-    .title4, #body4 {
-        border: 2px solid rgb(15, 104, 200);
-    }
+  position: absolute; /* 絶対位置に設定 */
+  bottom: -1; /* 画面の一番下に配置 */
+  left: 50%; /* 水平方向に中央に配置 */
+  transform: translateX(-50%); /* 中央揃えのために調整 */
 
-    .tab-title {
-        width: 85px;
-        padding: 5px 5px;
-        text-align: center;
-        display: table;
-    }
+  max-height: calc(100vh - 200px); /* 画面サイズに応じて高さ制限 */
+}
 
-    .tab-body {
-        display: none;
-        width: 220px;
-        height: 150px;
-        padding: 10px;
-    }
 
-    .container .radio {
-        display: none;
-    }
+/* 出席リストのコンテナ */
+#attendance-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+  padding-right: 10px;
+  overflow-y: auto; /* 縦スクロール */
+  max-height: 400px; /* 出席リストの最大高さ */
+}
 
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center; /* タブを中央に配置 */
-        align-items: center;     /* タブを垂直方向にも中央に配置 */
-        text-align: center;      /* テキストを中央揃えにする */
-    }
+/* 出席情報のカード */
+.attendance-item {
+  border: 1px solid #ddd; /* 枠線の色は維持 */
+  border-radius: 8px;
+  width: 220px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background-color: transparent; /* 背景を透明に設定 */
+}
 
-    .container::after {
-        content: "";
-        width: 100%;
-    }
+.attendance-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
 
-    .container .tab-body {
-        order: 1;
-        margin-top: 10px;
-    }
+/* 詳細ボタン */
+.details-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+  display: block;
+}
 
-    .add-control .radio:checked + .tab-title {
-        color: #000000;
-    }
+.details-btn:hover {
+  background-color: #0056b3;
+}
 
-    #tab1:checked ~ .title1 {
-        background: rgba(0, 128, 0, 0.5);
-    }
+/* 詳細の内容 */
+.details-content {
+  display: none;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
 
-    #tab2:checked ~ .title2 {
-        background: rgba(255, 255, 0, 0.5);
-    }
+.details-content p {
+  margin: 5px 0;
+}
 
-    #tab3:checked ~ .title3 {
-        background: rgba(255, 0, 0, 0.5);
-    }
+/* スマートフォン向け */
+@media screen and (max-width: 426px) {
+  #attendance-list {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    #tab4:checked ~ .title4 {
-        background: rgba(0, 140, 255, 0.5);
-    }
+  .attendance-item {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+</style>
 
-    #tab1:checked ~ #body1,
-    #tab2:checked ~ #body2,
-    #tab3:checked ~ #body3,
-    #tab4:checked ~ #body4 {
-        display: block;
-    }
-
-    form {
-        text-align: center;
-    }
-
-    .kiroku {
-        width: 100px;
-        margin-top: 10px;
-    }
-
-    .student-info {
-        font-size: 18px;
-        margin-bottom: 10px;
-        text-align: center; /* 中央に表示 */
-    }
-    @media screen and (max-width: 376px) {
-        .tab-body{
-          width: 200px;
-        }
-      }
-
-      @media screen and (max-width: 426px) {
-        aside{
-          width: 35vw;
-        }
-
-      .side{
-        width: 100%;
-      }
-
-        .tab-title{
-          width: 40%;
-        }
-      }    </style>
-</head>
-
-<script>
-    function onlyOne(checkbox) {
-        var checkboxes = document.getElementsByName('tab');
-        checkboxes.forEach((item) => {
-            if (item !== checkbox) item.checked = false;
-        });
-    }
-
-    function autoCheck(textValue, radioId) {
-        document.getElementById(radioId).checked = textValue.length > 0;
-    }
-
-    window.addEventListener('pageshow', () => {
-        if (window.performance.navigation.type == 2) location.reload();
-    });
+<script type="text/javascript">
+/* 詳細を表示/非表示に切り替える関数 */
+function toggleDetails(button) {
+  const content = button.nextElementSibling;
+  if (content.style.display === "none" || content.style.display === "") {
+    content.style.display = "block";
+    button.textContent = "詳細を隠す";
+  } else {
+    content.style.display = "none";
+    button.textContent = "詳細を見る";
+  }
+}
 </script>
+
+</head>
 
 <body>
 <header class="header">
     <div class="navtext-container">
-        <p class="navtext">生活記録</p>
+      <p class="navtext">出欠席状況</p>
     </div>
-    <%@include file="../common/T_header.jsp" %>
+<%@include file="../common/T_header.jsp" %>
 </header>
 
 <main>
-    <!-- 生徒名を表示 -->
-    <div class="student-info">
-        <p>名前: ${list.studentName} (${list.studentId})</p>
-    </div>
+    <h2>クラスの出席状況</h2>
 
-    <div class="button-container">
-        <!-- 連絡帳書くボタン -->
-        <form action="../teacher/ContactBookWrite.action" method="get">
-            <input type="hidden" name="student_id" value="${list.studentId}">
-            <button type="submit" class="button">連絡帳を書く</button>
-        </form>
+    <!-- 出席情報が空の場合にメッセージを表示 -->
+    <c:if test="${empty attendanceList}">
+        <p>現在、出席情報はありません。</p>
+    </c:if>
 
-        <!-- 連絡帳閲覧ボタン -->
-        <form action="../teacher/ContactBookList.action" method="get">
-            <input type="hidden" name="student_id" value="${list.studentId}">
-            <button type="submit" class="button">連絡帳閲覧</button>
-        </form>
+    <!-- 出席情報がある場合、繰り返し表示 -->
+    <div id="attendance-list">
+        <c:forEach var="attendance" items="${attendanceList}">
+            <div class="attendance-item">
+                <!-- 生徒名と出席状況 -->
+                <p><strong>生徒名:</strong> ${attendance.studentName}</p>
+                <p><strong>出席状況:</strong> ${attendance.type}
+                    <c:choose>
+                        <c:when test="${attendance.type == '遅刻' || attendance.type == '早退'}">
+                            (${attendance.time})
+                        </c:when>
+                    </c:choose>
+                </p>
 
-        <!-- カルテ閲覧ボタン -->
-        <form action="../teacher/StudentRecord.action" method="get">
-            <input type="hidden" name="student_id" value="${list.studentId}">
-            <button type="submit" class="button">カルテ閲覧</button>
-        </form>
-       <!-- 生活記録閲覧ボタン -->
-        <form action="../teacher/LifeRecordList.action" method="get">
-            <input type="hidden" name="student_id" value="${list.studentId}">
-            <button type="submit" class="button">生活記録閲覧</button>
-        </form>
-    </div>
+                <!-- 詳細ボタン -->
+                <button class="details-btn" onclick="toggleDetails(this)">詳細を見る</button>
 
-    <div class="container add-control">
-        <input type="checkbox" id="tab1" class="radio" name="tab" onclick="onlyOne(this)">
-        <label class="tab-title title1" id="title1" for="tab1">睡眠</label>
-        <input type="checkbox" id="tab2" class="radio" name="tab" onclick="onlyOne(this)">
-        <label class="tab-title title2" id="title2" for="tab2">給食</label>
-        <input type="checkbox" id="tab3" class="radio" name="tab" onclick="onlyOne(this)">
-        <label class="tab-title title3" id="title3" for="tab3">排泄</label>
-        <input type="checkbox" id="tab4" class="radio" name="tab" onclick="onlyOne(this)">
-        <label class="tab-title title4" id="title4" for="tab4">服薬</label>
-
-        <!-- 睡眠 -->
-        <div class="tab-body" id="body1">
-            <form action="../teacher/SleepRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
-                <input type="hidden" name="student_id" value="${list.studentId}">
-                <table>
-                    <tr>
-                        <td><label><input type="radio" name="sleep" value="0" required>寝た</label></td>
-                    </tr>
-                    <tr>
-                        <td><label><input type="radio" name="sleep" value="1" required>起きた</label></td>
-                    </tr>
-                </table>
-                <button type="submit" class="kiroku">記録</button>
-            </form>
-        </div>
-
-        <!-- ごはん -->
-        <div class="tab-body" id="body2">
-            <form action="../teacher/MealRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
-                <input type="hidden" name="student_id" value="${list.studentId}">
-                <div>
-                    <label><input type="radio" name="meal_amount" value="0">全量</label><br>
-                    <label><input type="radio" name="meal_amount" value="1">半量</label><br>
-                    <label><input type="radio" name="meal_amount" value="2">少量</label><br>
-                    <button type="submit" class="kiroku">記録</button>
+                <!-- 詳細情報 -->
+                <div class="details-content">
+                    <p><strong>生徒ID:</strong> ${attendance.studentId}</p>
+                    <p><strong>日付:</strong> ${attendance.day}</p>
+                    <p><strong>症状:</strong> ${attendance.symptom}</p>
+                    <p><strong>理由:</strong> ${attendance.reason}</p>
+                    <p><strong>備考:</strong> ${attendance.notes}</p>
                 </div>
-            </form>
-        </div>
-
-        <!-- 排泄 -->
-        <div class="tab-body" id="body3">
-            <form action="../teacher/ExcretionRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
-                <input type="hidden" name="student_id" value="${list.studentId}">
-                <div>
-                <table>
-                    <tr>
-                        <td><label><input type="radio" name="type" value="0">かたい</label></td>
-                    </tr>
-                    <tr>
-                        <td><label><input type="radio" name="type" value="1">やわらかい</label></td>
-                    </tr>
-                    <tr>
-                        <td><label>その他：</label></td>
-                    </tr>
-                </table>
-                    <input type="text" name="excretion_detail" placeholder="詳細を記入"><br>
-                </div>
-                <button type="submit" class="kiroku">記録</button>
-            </form>
-        </div>
-
-        <!-- 服薬 -->
-        <div class="tab-body" id="body4">
-            <form action="../teacher/MedicineRecordExecute.action" method="post" onsubmit="showSuccessAlert();">
-                <input type="hidden" name="student_id" value="${list.studentId}">
-                <div>
-                    <label><input type="radio" name="medicine" value="0" checked>服薬済み</label><br>
-                    <button type="submit" class="kiroku">記録</button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </c:forEach>
     </div>
 </main>
-
 </body>
-
 
 
 
