@@ -13,6 +13,6 @@
         <input type="text" id="className" name="className" required>
         <button type="submit">作成</button>
     </form>
-    <a href="../scoremanager/AccountListAction">戻る</a>
+    <a href="../scoremanager/AccountList.action">戻る</a>
 </body>
 </html>
