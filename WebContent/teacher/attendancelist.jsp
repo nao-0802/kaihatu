@@ -14,21 +14,31 @@ body {
 
 
 
+/* ヘッダーのスタイル */
+header {
+  position: fixed; /* 画面上部に固定 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white; /* 背景色を指定 */
+  z-index: 1000; /* 最前面に配置 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を追加して視認性向上 */
+}
+
+/* メインコンテンツのスタイル */
 main {
-  margin: 50px auto;
+  margin: 80px auto 50px; /* ヘッダーの高さ分、上にマージンを追加 */
   width: 90%;
   max-width: 1200px;
   padding: 50px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  position: absolute; /* 絶対位置に設定 */
-  bottom: -1; /* 画面の一番下に配置 */
-  left: 50%; /* 水平方向に中央に配置 */
-  transform: translateX(-50%); /* 中央揃えのために調整 */
-
-  max-height: calc(100vh - 200px); /* 画面サイズに応じて高さ制限 */
+  position: relative; /* relative に変更 */
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: calc(100vh - 200px);
 }
+
 
 
 /* 出席リストのコンテナ */
