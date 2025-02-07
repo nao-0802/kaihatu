@@ -57,9 +57,25 @@
         .detail-link:hover {
             background: #45a049;
         }
+
+        .back-btn {
+    padding: 10px 15px;
+    background-color: #7FBF7F;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 20%; /* 画面中央に設定 */
+    left: 200px; /* 左側に配置 */
+    transform: translateY(-50%); /* 垂直方向に中央揃え */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
     </style>
 </head>
 <body>
+<button class="back-btn" onclick="window.location.href='LifeRecord.action'">戻る</button>
+
     <header class="header">
         <div class="navtext-container">
             <p class="navtext">お知らせ</p>
