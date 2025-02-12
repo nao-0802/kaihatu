@@ -11,6 +11,7 @@
             background-color: #F4F6F8;
             font-family: 'Arial', sans-serif;
             margin: 0;
+            height: 100vh;
         }
 
         header {
@@ -36,7 +37,7 @@
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
-            background-color: #fff;
+
             border-radius: 8px;
         }
 
@@ -47,7 +48,7 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: center;
             border: 1px solid #ddd;
         }
@@ -107,6 +108,15 @@
         .form-container button:hover {
             background-color: #1e88e5;
         }
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 <body>
