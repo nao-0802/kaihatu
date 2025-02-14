@@ -15,15 +15,25 @@
 
 <main>
     <div class="day">
-
+        <form action="LifeRecordList.action" method="get">
+            <input type="hidden" name="student_id" value="${studentId}">
+            <input type="date" name="date" value="${selectedDate}">
+            <button type="submit">表示</button>
+        </form>
     </div>
+
+    <div class="buttons">
+            <form action="LifeRecord.action" method="post">
+      			<button class="back-btn" name="student_id" value="${studentId}">戻る</button>
+    		</form>
+        </div>
 
     <div class="container add-control">
         <input type="checkbox" id="tab1" class="radio" name="tab" value="1" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title1" id="title1" for="tab1">睡眠</label>
         <input type="checkbox" id="tab2" class="radio" name="tab" value="2" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title2" id="title2" for="tab2">ごはん</label>
         <input type="checkbox" id="tab3" class="radio" name="tab" value="3" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title3" id="title3" for="tab3">トイレ</label>
         <input type="checkbox" id="tab4" class="radio" name="tab" value="4" onclick="onlyOne(this)" onchange="change()"><label class="tab-title title4" id="title4" for="tab4">くすり</label>
-  <button class="back-button" onclick="window.history.back();">戻る</button>
+
 
     <div class="tab-body" id="body1">
         <table>
@@ -163,7 +173,7 @@
             } else {
         %>
         <tr>
-            <td colspan="3">服薬記録がありません。</td>
+            <td colspan="3">睡眠記録がありません。</td>
         </tr>
         <%
             }
@@ -172,17 +182,8 @@
         </table>
     </div>
 
-    <div id="life_record">
-        <table>
-            <th>
-                <tr>
-                    <td>life_record</td>
-                </tr>
-            </th>
-        </table>
 
 </div>
-
 </main>
 </body>
 
@@ -245,6 +246,26 @@
 	.title4, #body4 {
 	border: 2px solid rgb(15, 104, 200);
 	}
+	.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.back-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #0056b3;
+}
 
 
 	.tab-title {
@@ -354,29 +375,6 @@
 	  height: 50vh;
 	}
 	}
-
-
-	.back-button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.back-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.back-button:hover {
-    background-color: #0056b3;
-}
-
 
 </style>
 </html>

@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +36,7 @@ public class SleepRecordDao extends Dao {
 
     public List<SleepRecord> findByStudentId(String studentId) throws Exception {
         List<SleepRecord> sleepRecords = new ArrayList<>();
-        String sql = "SELECT * FROM t_sleep_record WHERE student_id = ? ORDER BY day, time";
+        String sql = "SELECT * FROM t_sleep_record WHERE student_id = ? ORDER BY day DESC, time DESC";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -52,6 +53,29 @@ public class SleepRecordDao extends Dao {
         }
         return sleepRecords;
     }
+    public List<SleepRecord> findByStudentIdAndDate(String studentId, String date) throws Exception {
+        List<SleepRecord> records = new ArrayList<>();
+        String sql = "SELECT * FROM t_sleep_record WHERE student_id = ? AND day = ?";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, studentId);
+            ps.setDate(2, Date.valueOf(date)); // DATE型に変換
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                SleepRecord record = new SleepRecord();
+                record.setDay(rs.getDate("day")); // yyyy-MM-dd 形式で取得
+                record.setTime(rs.getTime("time"));
+                record.setSleep(rs.getInt("sleep"));
+                records.add(record);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return records;
+    }
+
 
     // 指定されたstudent_idのSleepRecordを取得するメソッド
     public List<SleepRecord> filter(String studentId) throws Exception {

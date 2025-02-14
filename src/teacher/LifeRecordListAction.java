@@ -1,5 +1,6 @@
 package teacher;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +22,16 @@ public class LifeRecordListAction extends Action {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
         String studentId = req.getParameter("student_id");
-        System.out.println(studentId);
+        String date = req.getParameter("date");
+
         if (studentId == null) {
             res.sendRedirect("login.jsp");
             return;
+        }
+
+        // 日付が未指定の場合は今日の日付を設定
+        if (date == null || date.isEmpty()) {
+            date = LocalDate.now().toString(); // yyyy-MM-dd 形式
         }
 
         // DAOインスタンスを作成
@@ -33,11 +40,11 @@ public class LifeRecordListAction extends Action {
         ExcretionRecordDao excretionRecordDao = new ExcretionRecordDao();
         MedicineRecordDao medicineRecordDao = new MedicineRecordDao();
 
-        // 各テーブルのデータを取得
-        List<MealRecord> mealRecords = mealRecordDao.findByStudentId(studentId);
-        List<SleepRecord> sleepRecords = sleepRecordDao.findByStudentId(studentId);
-        List<ExcretionRecord> excretionRecords = excretionRecordDao.findByStudentId(studentId);
-        List<MedicineRecord> medicineRecords = medicineRecordDao.findByStudentId(studentId);
+        // 各テーブルのデータを取得（選択した日付のみ）
+        List<MealRecord> mealRecords = mealRecordDao.findByStudentIdAndDate(studentId, date);
+        List<SleepRecord> sleepRecords = sleepRecordDao.findByStudentIdAndDate(studentId, date);
+        List<ExcretionRecord> excretionRecords = excretionRecordDao.findByStudentIdAndDate(studentId, date);
+        List<MedicineRecord> medicineRecords = medicineRecordDao.findByStudentIdAndDate(studentId, date);
 
         // リクエストスコープにセット
         req.setAttribute("mealRecords", mealRecords);
@@ -45,6 +52,7 @@ public class LifeRecordListAction extends Action {
         req.setAttribute("excretionRecords", excretionRecords);
         req.setAttribute("medicineRecords", medicineRecords);
         req.setAttribute("studentId", studentId);
+        req.setAttribute("selectedDate", date);
 
         // JSPへフォワード
         req.getRequestDispatcher("../teacher/life_record_list.jsp").forward(req, res);

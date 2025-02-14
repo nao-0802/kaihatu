@@ -15,7 +15,11 @@
 
 <main>
     <div class="day">
-        <input type="date">
+        <form action="LifeRecordList.action" method="get">
+            <input type="hidden" name="student_id" value="${studentId}">
+            <input type="date" name="date" value="${selectedDate}">
+            <button type="submit">表示</button>
+        </form>
     </div>
 
     <div class="buttons">
@@ -178,15 +182,7 @@
         </table>
     </div>
 
-    <div id="life_record">
-        <table>
-            <th>
-                <tr>
-                    <td>life_record</td>
-                </tr>
-            </th>
-        </table>
-    </div>
+
 </div>
 </main>
 </body>

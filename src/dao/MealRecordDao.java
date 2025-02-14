@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class MealRecordDao extends Dao {
 
     public List<MealRecord> findByStudentId(String studentId) throws Exception {
         List<MealRecord> mealRecords = new ArrayList<>();
-        String sql = "SELECT * FROM t_meal_record WHERE student_id = ? ORDER BY day, time";
+        String sql = "SELECT * FROM t_meal_record WHERE student_id = ? ORDER BY day DESC, time DESC";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -52,6 +53,28 @@ public class MealRecordDao extends Dao {
             }
         }
         return mealRecords;
+    }
+    public List<MealRecord> findByStudentIdAndDate(String studentId, String date) throws Exception {
+        List<MealRecord> records = new ArrayList<>();
+        String sql = "SELECT * FROM t_meal_record WHERE student_id = ? AND day = ?";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, studentId);
+            ps.setDate(2, Date.valueOf(date)); // DATE型に変換
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                MealRecord record = new MealRecord();
+                record.setDay(rs.getDate("day")); // yyyy-MM-dd 形式で取得
+                record.setTime(rs.getTime("time"));
+                record.setMealAmount(rs.getInt("meal_amount"));
+                records.add(record);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return records;
     }
 
     // 指定されたstudent_idのMealRecordを取得するメソッド

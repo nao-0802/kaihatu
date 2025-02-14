@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +35,7 @@ public class MedicineRecordDao extends Dao {
 
     public List<MedicineRecord> findByStudentId(String studentId) throws Exception {
         List<MedicineRecord> medicineRecords = new ArrayList<>();
-        String sql = "SELECT * FROM t_medicine_record WHERE student_id = ? ORDER BY day, time";
+        String sql = "SELECT * FROM t_medicine_record WHERE student_id = ? ORDER BY day DESC, time DESC";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -49,6 +50,27 @@ public class MedicineRecordDao extends Dao {
             }
         }
         return medicineRecords;
+    }
+    public List<MedicineRecord> findByStudentIdAndDate(String studentId, String date) throws Exception {
+        List<MedicineRecord> records = new ArrayList<>();
+        String sql = "SELECT * FROM t_medicine_record WHERE student_id = ? AND day = ?";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, studentId);
+            ps.setDate(2, Date.valueOf(date)); // DATE型に変換
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                MedicineRecord record = new MedicineRecord();
+                record.setDay(rs.getDate("day")); // yyyy-MM-dd 形式で取得
+                record.setTime(rs.getTime("time"));
+                records.add(record);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return records;
     }
 
     // 指定されたstudent_idのMedicineRecordを取得するメソッド
