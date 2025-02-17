@@ -385,8 +385,9 @@ public class StudentDao extends Dao {
         List<Student> list = new ArrayList<>();
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(
-                 "SELECT * FROM t_student WHERE class_id = ?")) {
+                 "SELECT * FROM t_student WHERE class_id = ? and flag = ?")) {
             ps.setString(1, classId);
+            ps.setInt(2, 0);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Student student = new Student();

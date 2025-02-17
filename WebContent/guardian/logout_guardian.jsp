@@ -9,7 +9,7 @@
         </div>
 
         <div class="button">
-            <form action="../scoremanager/LogoutExecute.action">
+            <form action="../scoremanager/LogoutGuardianExecute.action">
                 <div><button class="btn yes-btn" name="yes_btn">はい</button></div>
             </form>
 

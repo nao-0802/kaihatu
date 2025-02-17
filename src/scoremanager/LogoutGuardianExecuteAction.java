@@ -6,13 +6,13 @@ import javax.servlet.http.HttpSession;
 
 import tool.Action;
 
-public class LogoutExecuteAction extends Action {
+public class LogoutGuardianExecuteAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         HttpSession session = req.getSession(false);
         if (session != null) {
             session.invalidate();
         }
-        res.sendRedirect("../scoremanager/LoginAdmin.action");
+        res.sendRedirect("../scoremanager/LoginGuardian.action");
     }
 }

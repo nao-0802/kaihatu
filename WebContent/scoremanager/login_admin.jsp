@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,100 +10,109 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
         }
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            background: #fff;
+
+        .login-container {
+            background: white;
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
         }
+
         h2 {
             margin-bottom: 20px;
-            text-align: center;
+            color: #333;
         }
-        .form-group {
-            margin-bottom: 15px;
+
+        p {
+            text-align: left;
+            margin: 10px 0;
         }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .form-group input {
+
+        input {
             width: 100%;
             padding: 10px;
+            margin-top: 5px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
-        .btn {
+
+        button {
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
+            margin-top: 15px;
+            background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
         }
-        .btn:hover {
-            background-color: #0056b3;
+
+        button:hover {
+            background-color: #45a049;
         }
+
         .error {
             color: red;
             margin-bottom: 15px;
+            text-align: center;
         }
+
         .signup-link {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 15px;
         }
+
         .signup-link a {
             color: #007bff;
             text-decoration: none;
         }
+
         .signup-link a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
+
 <body>
-<div class="container">
-    <h2>管理者ログイン</h2>
-    <form action="LoginAdminExecute.action" method="post">
-        <!-- エラーメッセージ表示 -->
-        <c:if test="${not empty errors}">
-            <div class="error">
-                <ul>
-                    <c:forEach var="error" items="${errors}">
-                        <li>${error}</li>
-                    </c:forEach>
-                </ul>
-            </div>
-        </c:if>
+    <div class="login-container">
+        <form action="LoginAdminExecute.action" method="post">
+            <h2>管理者ログイン</h2>
 
-        <!-- 入力フィールド -->
-        <div class="form-group">
-            <label for="admin_id">管理者ID</label>
-            <input type="text" id="admin_id" name="admin_id" value="${adminId}" placeholder="管理者IDを入力してください">
-        </div>
-        <div class="form-group">
-            <label for="password">パスワード</label>
-            <input type="password" id="password" name="password" placeholder="パスワードを入力してください">
-        </div>
+            <!-- エラーメッセージ表示 -->
+            <c:if test="${not empty errors}">
+                <div class="error">
+                    <ul>
+                        <c:forEach var="error" items="${errors}">
+                            <li>${error}</li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </c:if>
 
-        <!-- ログインボタン -->
-        <button type="submit" class="btn">ログイン</button>
-    </form>
+            <!-- 入力フィールド -->
+            <p>管理者ID:<input type="text" name="admin_id" value="${adminId}"></p>
+            <p>パスワード:<input type="password" name="password"></p>
 
-    <!-- 新規登録リンク -->
+            <!-- ログインボタン -->
+            <button type="submit">ログイン</button>
+        </form>
 
+        <!-- 新規登録リンク -->
         <div class="signup-link">
             <p><a href="../admin/AdminSignup.action">新規登録はこちら</a></p>
         </div>
-
-</div>
+    </div>
 </body>
+
 </html>

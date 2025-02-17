@@ -22,6 +22,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 400px;
+            box-sizing: border-box;
         }
         h2 {
             text-align: center;
@@ -35,9 +36,7 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
@@ -47,30 +46,29 @@
         .btn {
             width: 100%;
             padding: 10px;
-            background-color: #28a745; /* 緑色 */
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
         }
         .btn:hover {
-            background-color: #218838; /* 濃い緑 */
+            background-color: #218838;
         }
         .btn-back {
             width: 100%;
             padding: 10px;
-            background-color: #007bff; /* 青色 */
+            background-color: #007bff;
             color: white;
-            border: none;
+            text-decoration: none;
             border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
+            display: inline-block;
+            text-align: center;
             margin-top: 10px;
+            box-sizing: border-box;
         }
         .btn-back:hover {
-            background-color: #0056b3; /* 濃い青 */
+            background-color: #0056b3;
         }
         .error-message {
             color: red;
